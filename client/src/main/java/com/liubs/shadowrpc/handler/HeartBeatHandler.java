@@ -13,13 +13,14 @@ import io.netty.handler.timeout.IdleStateHandler;
 
 public class HeartBeatHandler extends IdleStateHandler {
 
-    public HeartBeatHandler() {
+    public HeartBeatHandler(int heartBeatWaitSeconds) {
         super(0, 0, 3);
     }
 
 
     @Override
-    protected void channelIdle(ChannelHandlerContext ctx, IdleStateEvent evt) throws Exception {
+    protected void channelIdle(ChannelHandlerContext ctx, IdleStateEvent evt) {
+        System.out.println("发送心跳消息...");
         ctx.writeAndFlush(HeartBeatMessage.SINGLETON);
     }
 }

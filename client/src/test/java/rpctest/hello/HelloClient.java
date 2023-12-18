@@ -1,5 +1,6 @@
 package rpctest.hello;
 
+import com.liubs.shadowrpc.config.ShadowClientConfig;
 import com.liubs.shadowrpc.init.ShadowClient;
 import com.liubs.shadowrpc.proxy.RemoteServerProxy;
 import org.junit.Test;
@@ -92,5 +93,17 @@ public class HelloClient {
 
         executorService.shutdownNow();
         shadowClient.close();
+    }
+
+    //测试心跳
+    @Test
+    public void testHeartBeat() throws InterruptedException {
+        ShadowClientConfig.getInstance().setHeartBeat(true);
+        ShadowClientConfig.getInstance().setHeartBeatWaitSeconds(3);
+        ShadowClient shadowClient = new ShadowClient();
+        shadowClient.init("127.0.0.1",2023);
+        while(true){
+            Thread.sleep(1000);
+        }
     }
 }
