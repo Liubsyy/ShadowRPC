@@ -11,8 +11,10 @@
 
     <modules>
         <module>protocol</module>
+        <module>registry</module>
         <module>client</module>
         <module>server</module>
+
 
     </modules>
 

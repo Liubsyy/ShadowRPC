@@ -21,7 +21,12 @@
             <version>1.0.0</version>
         </dependency>
 
-
+        <dependency>
+            <groupId>io.github.liubsyy</groupId>
+            <artifactId>com.liubs.shadowrpc.registry</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
 
         <dependency>
             <groupId>io.netty</groupId>

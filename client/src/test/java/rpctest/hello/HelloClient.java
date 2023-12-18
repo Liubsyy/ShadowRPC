@@ -2,6 +2,7 @@ package rpctest.hello;
 
 import com.liubs.shadowrpc.config.ShadowClientConfig;
 import com.liubs.shadowrpc.init.ShadowClient;
+import com.liubs.shadowrpc.init.ShadowClientsManager;
 import com.liubs.shadowrpc.proxy.RemoteServerProxy;
 import org.junit.Test;
 import rpctest.entity.MyMessage;
@@ -20,7 +21,18 @@ import java.util.concurrent.Executors;
 
 public class HelloClient {
 
-    private static void helloTest(IHello helloService){
+
+    /**
+     * 调用hello方法
+     */
+    @Test
+    public void helloClient() {
+        ShadowClient shadowClient = new ShadowClient();
+        shadowClient.init("127.0.0.1",2023);
+
+
+        IHello helloService = RemoteServerProxy.create(shadowClient.getChannel(),IHello.class,"helloservice");
+
         System.out.println("发送 hello 消息");
         String helloResponse = helloService.hello("Tom");
         System.out.println("hello 服务端响应:"+helloResponse);
@@ -32,21 +44,6 @@ public class HelloClient {
         System.out.printf("发送请求 : %s\n",message);
         MyMessage response = helloService.say(message);
         System.out.printf("接收服务端消息 : %s\n",response);
-
-
-    }
-
-    /**
-     * 调用hello方法
-     */
-    @Test
-    public void helloClient() {
-        ShadowClient shadowClient = new ShadowClient();
-        shadowClient.init("127.0.0.1",2023);
-
-
-        IHello helloService1 = RemoteServerProxy.create(shadowClient.getChannel(),IHello.class,"helloservice");
-        helloTest(helloService1);
     }
 
     /**
@@ -106,4 +103,6 @@ public class HelloClient {
             Thread.sleep(1000);
         }
     }
+
+
 }
