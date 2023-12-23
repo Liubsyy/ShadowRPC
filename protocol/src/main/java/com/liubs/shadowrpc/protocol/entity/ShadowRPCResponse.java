@@ -15,10 +15,10 @@ public class ShadowRPCResponse {
     private String traceId;
 
     @ShadowField(2)
-    private boolean isSuccess;
+    private int code;
 
     @ShadowField(3)
-    private String error;
+    private String errorMsg;
 
     @ShadowField(4)
     private Object result;
@@ -31,20 +31,21 @@ public class ShadowRPCResponse {
         this.traceId = traceId;
     }
 
-    public boolean isSuccess() {
-        return isSuccess;
+
+    public int getCode() {
+        return code;
     }
 
-    public void setSuccess(boolean success) {
-        isSuccess = success;
+    public void setCode(int code) {
+        this.code = code;
     }
 
-    public String getError() {
-        return error;
+    public String getErrorMsg() {
+        return errorMsg;
     }
 
-    public void setError(String error) {
-        this.error = error;
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
     }
 
     public Object getResult() {

@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+option java_package="serializetest.entity";
+option java_outer_classname="PersonProto";
+
+message Person {
+    int32 age = 1;
+    double height = 2;
+    float weight = 3;
+    int64 money = 4;
+    string name = 5;
+}

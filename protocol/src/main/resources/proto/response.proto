@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+
+option java_package="com.liubs.shadowrpc.protocol.protobuf";
+option java_outer_classname="ShadowRPCResponseProto";
+
+message ShadowRPCResponse {
+    string traceId = 1;
+    int32 code = 2;
+    string errorMsg = 3;
+    repeated google.protobuf.Any result = 4;
+}

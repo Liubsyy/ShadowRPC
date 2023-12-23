@@ -89,9 +89,13 @@ public class ZooKeeperClient {
         curatorCache.listenable().addListener(cacheListener);
 
 
-        //等待初始化结束，先暂定5s吧，超时了就不等了
+
         try {
-            countDownLatch.await(5, TimeUnit.SECONDS);
+            countDownLatch.await();
+
+            //等待初始化结束，先暂定5s吧，超时了就不等了
+//            countDownLatch.await(5, TimeUnit.SECONDS);
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

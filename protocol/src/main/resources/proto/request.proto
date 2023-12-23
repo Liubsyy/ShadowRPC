@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+
+option java_package="com.liubs.shadowrpc.protocol.protobuf";
+option java_outer_classname="ShadowRPCRequestProto";
+
+message ShadowRPCRequest {
+    string traceId = 1;
+    string serviceName = 2;
+    string methodName = 3;
+    repeated google.protobuf.Any params = 4;
+}

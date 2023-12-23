@@ -1,5 +1,6 @@
 package com.liubs.shadowrpc.handler;
 
+import com.liubs.shadowrpc.protocol.constant.ResponseCode;
 import com.liubs.shadowrpc.protocol.entity.ShadowRPCRequest;
 import com.liubs.shadowrpc.protocol.entity.ShadowRPCResponse;
 import com.liubs.shadowrpc.service.ServerManager;
@@ -29,7 +30,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<ShadowRPCRequest>
 
             ShadowRPCResponse response = new ShadowRPCResponse();
             response.setTraceId(request.getTraceId());
-            response.setSuccess(true);
+            response.setCode(ResponseCode.SUCCESS.getCode());
             response.setResult(result);
 
             // 响应客户端
