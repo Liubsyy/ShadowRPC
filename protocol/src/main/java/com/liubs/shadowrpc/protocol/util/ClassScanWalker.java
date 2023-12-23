@@ -1,52 +1,41 @@
-package com.liubs.shadowrpc.util;
-
-
-
-import com.liubs.shadowrpc.protocol.annotation.ShadowServiceHolder;
+package com.liubs.shadowrpc.protocol.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
+import java.util.function.Consumer;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 /**
  * @author Liubsyy
- * @date 2023/12/12 21:54
- */
-public class AnnotationScanner {
-
-
-    public static <T extends Annotation>  List<ShadowServiceHolder<T>> scanAnnotations(String packageName, Class<T> annotation) throws IOException {
+ * @date 2023/12/24 1:18 AM
+ **/
+public class ClassScanWalker {
+    public static void scanPackage(String packageName, Consumer<Class<?>> consumer) throws IOException {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-
-        return scanAnnotations(classLoader,packageName,annotation);
+        scanPackage(classLoader,packageName,consumer);
     }
 
-    private static <T extends Annotation> List<ShadowServiceHolder<T>> scanAnnotations(ClassLoader classLoader, String packageName, Class<T> annotation) throws IOException {
+    private static void scanPackage(ClassLoader classLoader, String packageName, Consumer<Class<?>> consumer) throws IOException {
         String packagePath = packageName.replace('.', '/');
         Enumeration<URL> resources = classLoader.getResources(packagePath);
 
-        List<ShadowServiceHolder<T>> allResults = new ArrayList<>();
 
         while (resources.hasMoreElements()) {
             URL resource = resources.nextElement();
             if (resource.getProtocol().equals("jar")) {
                 String jarPath = resource.getPath().substring(5, resource.getPath().indexOf("!"));
-                scanFromJar(classLoader,jarPath,packagePath,annotation, allResults );
+                scanFromJar(classLoader,jarPath,packagePath,consumer );
             } else {
-                scanFromDir(classLoader,new File(resource.getFile()),packageName,annotation,allResults);
+                scanFromDir(classLoader,new File(resource.getFile()),packageName,consumer);
             }
         }
 
-        return allResults;
     }
 
-    private static <T extends Annotation> void scanFromJar(ClassLoader classLoader,String jarPath,String packagePath , Class<? extends Annotation> annoCls,List<ShadowServiceHolder<T>> allResults) throws IOException {
+    private static <T> void scanFromJar(ClassLoader classLoader,String jarPath,String packagePath ,  Consumer<Class<?>> consumer) throws IOException {
         JarFile jar = new JarFile(jarPath);
 
         // 遍历JAR文件中的条目
@@ -63,20 +52,17 @@ public class AnnotationScanner {
                 try {
                     clazz = classLoader.loadClass(className);
                 } catch (ClassNotFoundException e) {
-                   e.printStackTrace();
+                    e.printStackTrace();
                 }
                 if(null != clazz) {
-                    T shadowServiceAnno = (T)clazz.getAnnotation(annoCls);
-                    if (shadowServiceAnno != null) {
-                        allResults.add(new ShadowServiceHolder<>(shadowServiceAnno, clazz));
-                    }
+                    consumer.accept(clazz);
                 }
             }
         }
         jar.close();
     }
 
-    private static <T extends Annotation> void scanFromDir(ClassLoader classLoader,File directory, String packageName,Class<? extends Annotation> annoCls,List<ShadowServiceHolder<T>> allResults) {
+    private static void scanFromDir(ClassLoader classLoader,File directory, String packageName, Consumer<Class<?>> consumer) {
         if (!directory.exists()) {
             return;
         }
@@ -84,7 +70,7 @@ public class AnnotationScanner {
         if (files != null) {
             for (File file : files) {
                 if (file.isDirectory()) {
-                    scanFromDir(classLoader,file, packageName + "." + file.getName(),annoCls,allResults);
+                    scanFromDir(classLoader,file, packageName + "." + file.getName(),consumer);
                 } else if (file.getName().endsWith(".class")) {
                     Class<?> clazz = null;
                     try {
@@ -94,14 +80,10 @@ public class AnnotationScanner {
                         e.printStackTrace();
                     }
                     if(null != clazz) {
-                        T shadowServiceAnno = (T)clazz.getAnnotation(annoCls);
-                        if (shadowServiceAnno != null) {
-                            allResults.add(new ShadowServiceHolder<>(shadowServiceAnno,clazz));
-                        }
+                        consumer.accept(clazz);
                     }
                 }
             }
         }
     }
-
 }

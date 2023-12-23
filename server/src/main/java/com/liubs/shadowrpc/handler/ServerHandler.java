@@ -1,22 +1,18 @@
 package com.liubs.shadowrpc.handler;
 
-import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.MessageLite;
-import com.liubs.shadowrpc.protocol.annotation.ShadowField;
 import com.liubs.shadowrpc.protocol.constant.ResponseCode;
 import com.liubs.shadowrpc.protocol.entity.ShadowRPCRequest;
 import com.liubs.shadowrpc.protocol.entity.ShadowRPCRequestProto;
 import com.liubs.shadowrpc.protocol.entity.ShadowRPCResponse;
 import com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto;
+import com.liubs.shadowrpc.protocol.serializer.protobuf.ParserForType;
 import com.liubs.shadowrpc.service.ServerManager;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.channel.SimpleChannelInboundHandler;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Liubsyy
@@ -50,29 +46,34 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
             ShadowRPCRequestProto.ShadowRPCRequest request = (ShadowRPCRequestProto.ShadowRPCRequest)msg;
             Object targetRPC = ServerManager.getInstance().getService(request.getServiceName());
 
-            Class<?>[] paramTypes = new Class<?>[request.getClassesList().size()];
-            Object[] params = new Object[request.getClassesList().size()];
+            Class<?>[] paramTypes = new Class<?>[request.getParamTypesCount()];
+            Object[] params = new Object[request.getParamsCount()];
 
-            for(int i = 0,len=request.getClassesList().size() ; i<len ;i++) {
-                String serviceName = request.getClassesList().get(i);
-                ByteString bytes = request.getDataList().get(i);
+            for(int i = 0,len=request.getParamsCount() ; i<len ;i++) {
+                String serviceName = request.getParamTypes(i);
+                ByteString bytes = request.getParams(i);
 
-                Class<?> aClass = Class.forName(serviceName);
-                Method parseFrom = aClass.getDeclaredMethod("parseFrom", ByteString.class);
-                Object obj = parseFrom.invoke(null, bytes);
+                Object obj = ParserForType.getMessage(serviceName);
+                if(null == obj) {
+                    //没有注册，容错处理，反射扫描
+                    Class<?> aClass = Class.forName(serviceName);
+                    Method parseFrom = aClass.getDeclaredMethod("parseFrom", ByteString.class);
+                    obj = parseFrom.invoke(null, bytes);
+                }
 
-                paramTypes[i]  = aClass;
+                paramTypes[i]  = obj.getClass();
                 params[i]  = obj;
             }
 
             targetMethod = targetRPC.getClass().getDeclaredMethod(request.getMethodName(), paramTypes);
             targetMethod.setAccessible(true);
 
-            Object result = (MessageLite)targetMethod.invoke(targetRPC, params);
+            MessageLite result = (MessageLite)targetMethod.invoke(targetRPC, params);
             ShadowRPCResponseProto.ShadowRPCResponse.Builder response = ShadowRPCResponseProto.ShadowRPCResponse.newBuilder();
             response.setTraceId(request.getTraceId());
             response.setCode(ResponseCode.SUCCESS.getCode());
-            //response.setResult(result);
+            response.setResultClass(result.getClass().getName());
+            response.setResult(result.toByteString());
 
             // 响应客户端
             ctx.writeAndFlush(response);

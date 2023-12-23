@@ -8,7 +8,7 @@ message ShadowRPCRequest {
     string traceId = 1;
     string serviceName = 2;
     string methodName = 3;
-    repeated string classes = 4;    //参数类名
-    repeated bytes data = 5;    //bytes类型充当参数
+    repeated string paramTypes = 4;    //参数类名
+    repeated bytes params = 5;         //bytes类型充当参数
 
 }

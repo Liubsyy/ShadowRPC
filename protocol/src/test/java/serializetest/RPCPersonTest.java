@@ -1,17 +1,20 @@
 package serializetest;
 
+import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
+import com.google.protobuf.MessageLite;
 import com.liubs.shadowrpc.protocol.entity.ShadowRPCRequest;
 import com.liubs.shadowrpc.protocol.entity.ShadowRPCRequestAnyProto;
 import com.liubs.shadowrpc.protocol.entity.ShadowRPCRequestProto;
+import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
 import com.liubs.shadowrpc.protocol.serializer.kryo.KryoSerializer;
+import com.liubs.shadowrpc.protocol.serializer.protobuf.ParserForType;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import serializetest.entity.Person;
 import serializetest.entity.PersonProto;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +33,7 @@ public class RPCPersonTest {
     private static List<Person> persons = new ArrayList<>();
     private static List<PersonProto.Person> personsProto = new ArrayList<>();
 
-    final static int count = 1;
+    final static int count = 10000;
 
     @BeforeClass
     public static void init(){
@@ -55,6 +58,8 @@ public class RPCPersonTest {
             persons.add(person);
             personsProto.add(personProto);
         }
+
+        SerializerManager.getInstance().init("serializetest.entity");
     }
 
     @Test
@@ -100,16 +105,15 @@ public class RPCPersonTest {
                     }
                 });
 
-
-        System.out.println("*** protobuf序列化和反序列化 *** ");
+        System.out.println("*** protobuf序列化和反序列化(反射person参数) *** ");
         PersonTest.runSerialize(count,personsProto,p-> {
                     ShadowRPCRequestProto.ShadowRPCRequest request = ShadowRPCRequestProto.ShadowRPCRequest
                             .newBuilder()
                             .setTraceId("asd123")
                             .setServiceName("PersonService")
                             .setMethodName("getPerson")
-                            .addClasses(p.getClass().getName())
-                            .addData(p.toByteString())
+                            .addParamTypes(p.getClass().getName())
+                            .addParams(p.toByteString())
                             .build();
                     return request.toByteArray();
                 },
@@ -117,18 +121,52 @@ public class RPCPersonTest {
                 bytes -> {
                     try {
                         ShadowRPCRequestProto.ShadowRPCRequest request = ShadowRPCRequestProto.ShadowRPCRequest.parseFrom(bytes);
-                        Class<?> classz = Class.forName(request.getClasses(0));
-                        ByteString data = request.getData(0);
 
+                        ByteString data = request.getParams(0);
+
+                        //反射严重影响性能
+                        Class<?> classz = Class.forName(request.getParamTypes(0));
                         Method parseFrom = classz.getDeclaredMethod("parseFrom", ByteString.class);
                         Object obj = parseFrom.invoke(null, data);
 
                         PersonProto.Person person = (PersonProto.Person)obj;
                         return person;
+
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 });
+
+        System.out.println("*** protobuf序列化和反序列化 *** ");
+
+        PersonTest.runSerialize(count,personsProto,p-> {
+                    ShadowRPCRequestProto.ShadowRPCRequest request = ShadowRPCRequestProto.ShadowRPCRequest
+                            .newBuilder()
+                            .setTraceId("asd123")
+                            .setServiceName("PersonService")
+                            .setMethodName("getPerson")
+                            .addParamTypes(p.getClass().getName())
+                            .addParams(p.toByteString())
+                            .build();
+                    return request.toByteArray();
+                },
+
+                bytes -> {
+                    try {
+                        ShadowRPCRequestProto.ShadowRPCRequest request = ShadowRPCRequestProto.ShadowRPCRequest.parseFrom(bytes);
+
+                        MessageLite messageLite = ParserForType.getMessage(request.getParamTypes(0));
+                        ByteString data = request.getParams(0);
+                        return ParserForType.parseFrom(messageLite, data.toByteArray());
+
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+
+
+
     }
 
 

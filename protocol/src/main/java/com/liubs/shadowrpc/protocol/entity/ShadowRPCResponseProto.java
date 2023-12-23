@@ -50,28 +50,22 @@ public final class ShadowRPCResponseProto {
         getErrorMsgBytes();
 
     /**
-     * <code>repeated .google.protobuf.Any result = 4;</code>
+     * <code>string resultClass = 4;</code>
+     * @return The resultClass.
      */
-    java.util.List<com.google.protobuf.Any> 
-        getResultList();
+    java.lang.String getResultClass();
     /**
-     * <code>repeated .google.protobuf.Any result = 4;</code>
+     * <code>string resultClass = 4;</code>
+     * @return The bytes for resultClass.
      */
-    com.google.protobuf.Any getResult(int index);
+    com.google.protobuf.ByteString
+        getResultClassBytes();
+
     /**
-     * <code>repeated .google.protobuf.Any result = 4;</code>
+     * <code>bytes result = 5;</code>
+     * @return The result.
      */
-    int getResultCount();
-    /**
-     * <code>repeated .google.protobuf.Any result = 4;</code>
-     */
-    java.util.List<? extends com.google.protobuf.AnyOrBuilder> 
-        getResultOrBuilderList();
-    /**
-     * <code>repeated .google.protobuf.Any result = 4;</code>
-     */
-    com.google.protobuf.AnyOrBuilder getResultOrBuilder(
-        int index);
+    com.google.protobuf.ByteString getResult();
   }
   /**
    * Protobuf type {@code ShadowRPCResponse}
@@ -88,7 +82,8 @@ public final class ShadowRPCResponseProto {
     private ShadowRPCResponse() {
       traceId_ = "";
       errorMsg_ = "";
-      result_ = java.util.Collections.emptyList();
+      resultClass_ = "";
+      result_ = com.google.protobuf.ByteString.EMPTY;
     }
 
     @java.lang.Override
@@ -200,45 +195,54 @@ public final class ShadowRPCResponseProto {
       }
     }
 
-    public static final int RESULT_FIELD_NUMBER = 4;
+    public static final int RESULTCLASS_FIELD_NUMBER = 4;
     @SuppressWarnings("serial")
-    private java.util.List<com.google.protobuf.Any> result_;
+    private volatile java.lang.Object resultClass_ = "";
     /**
-     * <code>repeated .google.protobuf.Any result = 4;</code>
+     * <code>string resultClass = 4;</code>
+     * @return The resultClass.
      */
     @java.lang.Override
-    public java.util.List<com.google.protobuf.Any> getResultList() {
+    public java.lang.String getResultClass() {
+      java.lang.Object ref = resultClass_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        resultClass_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string resultClass = 4;</code>
+     * @return The bytes for resultClass.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getResultClassBytes() {
+      java.lang.Object ref = resultClass_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        resultClass_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int RESULT_FIELD_NUMBER = 5;
+    private com.google.protobuf.ByteString result_ = com.google.protobuf.ByteString.EMPTY;
+    /**
+     * <code>bytes result = 5;</code>
+     * @return The result.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString getResult() {
       return result_;
-    }
-    /**
-     * <code>repeated .google.protobuf.Any result = 4;</code>
-     */
-    @java.lang.Override
-    public java.util.List<? extends com.google.protobuf.AnyOrBuilder> 
-        getResultOrBuilderList() {
-      return result_;
-    }
-    /**
-     * <code>repeated .google.protobuf.Any result = 4;</code>
-     */
-    @java.lang.Override
-    public int getResultCount() {
-      return result_.size();
-    }
-    /**
-     * <code>repeated .google.protobuf.Any result = 4;</code>
-     */
-    @java.lang.Override
-    public com.google.protobuf.Any getResult(int index) {
-      return result_.get(index);
-    }
-    /**
-     * <code>repeated .google.protobuf.Any result = 4;</code>
-     */
-    @java.lang.Override
-    public com.google.protobuf.AnyOrBuilder getResultOrBuilder(
-        int index) {
-      return result_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -264,8 +268,11 @@ public final class ShadowRPCResponseProto {
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(errorMsg_)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, errorMsg_);
       }
-      for (int i = 0; i < result_.size(); i++) {
-        output.writeMessage(4, result_.get(i));
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(resultClass_)) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, resultClass_);
+      }
+      if (!result_.isEmpty()) {
+        output.writeBytes(5, result_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -286,9 +293,12 @@ public final class ShadowRPCResponseProto {
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(errorMsg_)) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, errorMsg_);
       }
-      for (int i = 0; i < result_.size(); i++) {
+      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(resultClass_)) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, resultClass_);
+      }
+      if (!result_.isEmpty()) {
         size += com.google.protobuf.CodedOutputStream
-          .computeMessageSize(4, result_.get(i));
+          .computeBytesSize(5, result_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -311,8 +321,10 @@ public final class ShadowRPCResponseProto {
           != other.getCode()) return false;
       if (!getErrorMsg()
           .equals(other.getErrorMsg())) return false;
-      if (!getResultList()
-          .equals(other.getResultList())) return false;
+      if (!getResultClass()
+          .equals(other.getResultClass())) return false;
+      if (!getResult()
+          .equals(other.getResult())) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -330,10 +342,10 @@ public final class ShadowRPCResponseProto {
       hash = (53 * hash) + getCode();
       hash = (37 * hash) + ERRORMSG_FIELD_NUMBER;
       hash = (53 * hash) + getErrorMsg().hashCode();
-      if (getResultCount() > 0) {
-        hash = (37 * hash) + RESULT_FIELD_NUMBER;
-        hash = (53 * hash) + getResultList().hashCode();
-      }
+      hash = (37 * hash) + RESULTCLASS_FIELD_NUMBER;
+      hash = (53 * hash) + getResultClass().hashCode();
+      hash = (37 * hash) + RESULT_FIELD_NUMBER;
+      hash = (53 * hash) + getResult().hashCode();
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -468,13 +480,8 @@ public final class ShadowRPCResponseProto {
         traceId_ = "";
         code_ = 0;
         errorMsg_ = "";
-        if (resultBuilder_ == null) {
-          result_ = java.util.Collections.emptyList();
-        } else {
-          result_ = null;
-          resultBuilder_.clear();
-        }
-        bitField0_ = (bitField0_ & ~0x00000008);
+        resultClass_ = "";
+        result_ = com.google.protobuf.ByteString.EMPTY;
         return this;
       }
 
@@ -501,22 +508,9 @@ public final class ShadowRPCResponseProto {
       @java.lang.Override
       public com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse buildPartial() {
         com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse result = new com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse(this);
-        buildPartialRepeatedFields(result);
         if (bitField0_ != 0) { buildPartial0(result); }
         onBuilt();
         return result;
-      }
-
-      private void buildPartialRepeatedFields(com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse result) {
-        if (resultBuilder_ == null) {
-          if (((bitField0_ & 0x00000008) != 0)) {
-            result_ = java.util.Collections.unmodifiableList(result_);
-            bitField0_ = (bitField0_ & ~0x00000008);
-          }
-          result.result_ = result_;
-        } else {
-          result.result_ = resultBuilder_.build();
-        }
       }
 
       private void buildPartial0(com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse result) {
@@ -529,6 +523,12 @@ public final class ShadowRPCResponseProto {
         }
         if (((from_bitField0_ & 0x00000004) != 0)) {
           result.errorMsg_ = errorMsg_;
+        }
+        if (((from_bitField0_ & 0x00000008) != 0)) {
+          result.resultClass_ = resultClass_;
+        }
+        if (((from_bitField0_ & 0x00000010) != 0)) {
+          result.result_ = result_;
         }
       }
 
@@ -589,31 +589,13 @@ public final class ShadowRPCResponseProto {
           bitField0_ |= 0x00000004;
           onChanged();
         }
-        if (resultBuilder_ == null) {
-          if (!other.result_.isEmpty()) {
-            if (result_.isEmpty()) {
-              result_ = other.result_;
-              bitField0_ = (bitField0_ & ~0x00000008);
-            } else {
-              ensureResultIsMutable();
-              result_.addAll(other.result_);
-            }
-            onChanged();
-          }
-        } else {
-          if (!other.result_.isEmpty()) {
-            if (resultBuilder_.isEmpty()) {
-              resultBuilder_.dispose();
-              resultBuilder_ = null;
-              result_ = other.result_;
-              bitField0_ = (bitField0_ & ~0x00000008);
-              resultBuilder_ = 
-                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders ?
-                   getResultFieldBuilder() : null;
-            } else {
-              resultBuilder_.addAllMessages(other.result_);
-            }
-          }
+        if (!other.getResultClass().isEmpty()) {
+          resultClass_ = other.resultClass_;
+          bitField0_ |= 0x00000008;
+          onChanged();
+        }
+        if (other.getResult() != com.google.protobuf.ByteString.EMPTY) {
+          setResult(other.getResult());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
@@ -657,18 +639,15 @@ public final class ShadowRPCResponseProto {
                 break;
               } // case 26
               case 34: {
-                com.google.protobuf.Any m =
-                    input.readMessage(
-                        com.google.protobuf.Any.parser(),
-                        extensionRegistry);
-                if (resultBuilder_ == null) {
-                  ensureResultIsMutable();
-                  result_.add(m);
-                } else {
-                  resultBuilder_.addMessage(m);
-                }
+                resultClass_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000008;
                 break;
               } // case 34
+              case 42: {
+                result_ = input.readBytes();
+                bitField0_ |= 0x00000010;
+                break;
+              } // case 42
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -862,244 +841,108 @@ public final class ShadowRPCResponseProto {
         return this;
       }
 
-      private java.util.List<com.google.protobuf.Any> result_ =
-        java.util.Collections.emptyList();
-      private void ensureResultIsMutable() {
-        if (!((bitField0_ & 0x00000008) != 0)) {
-          result_ = new java.util.ArrayList<com.google.protobuf.Any>(result_);
-          bitField0_ |= 0x00000008;
-         }
+      private java.lang.Object resultClass_ = "";
+      /**
+       * <code>string resultClass = 4;</code>
+       * @return The resultClass.
+       */
+      public java.lang.String getResultClass() {
+        java.lang.Object ref = resultClass_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          resultClass_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string resultClass = 4;</code>
+       * @return The bytes for resultClass.
+       */
+      public com.google.protobuf.ByteString
+          getResultClassBytes() {
+        java.lang.Object ref = resultClass_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          resultClass_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string resultClass = 4;</code>
+       * @param value The resultClass to set.
+       * @return This builder for chaining.
+       */
+      public Builder setResultClass(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        resultClass_ = value;
+        bitField0_ |= 0x00000008;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string resultClass = 4;</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearResultClass() {
+        resultClass_ = getDefaultInstance().getResultClass();
+        bitField0_ = (bitField0_ & ~0x00000008);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string resultClass = 4;</code>
+       * @param value The bytes for resultClass to set.
+       * @return This builder for chaining.
+       */
+      public Builder setResultClassBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        resultClass_ = value;
+        bitField0_ |= 0x00000008;
+        onChanged();
+        return this;
       }
 
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> resultBuilder_;
-
+      private com.google.protobuf.ByteString result_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>repeated .google.protobuf.Any result = 4;</code>
+       * <code>bytes result = 5;</code>
+       * @return The result.
        */
-      public java.util.List<com.google.protobuf.Any> getResultList() {
-        if (resultBuilder_ == null) {
-          return java.util.Collections.unmodifiableList(result_);
-        } else {
-          return resultBuilder_.getMessageList();
-        }
+      @java.lang.Override
+      public com.google.protobuf.ByteString getResult() {
+        return result_;
       }
       /**
-       * <code>repeated .google.protobuf.Any result = 4;</code>
+       * <code>bytes result = 5;</code>
+       * @param value The result to set.
+       * @return This builder for chaining.
        */
-      public int getResultCount() {
-        if (resultBuilder_ == null) {
-          return result_.size();
-        } else {
-          return resultBuilder_.getCount();
-        }
-      }
-      /**
-       * <code>repeated .google.protobuf.Any result = 4;</code>
-       */
-      public com.google.protobuf.Any getResult(int index) {
-        if (resultBuilder_ == null) {
-          return result_.get(index);
-        } else {
-          return resultBuilder_.getMessage(index);
-        }
-      }
-      /**
-       * <code>repeated .google.protobuf.Any result = 4;</code>
-       */
-      public Builder setResult(
-          int index, com.google.protobuf.Any value) {
-        if (resultBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureResultIsMutable();
-          result_.set(index, value);
-          onChanged();
-        } else {
-          resultBuilder_.setMessage(index, value);
-        }
+      public Builder setResult(com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        result_ = value;
+        bitField0_ |= 0x00000010;
+        onChanged();
         return this;
       }
       /**
-       * <code>repeated .google.protobuf.Any result = 4;</code>
-       */
-      public Builder setResult(
-          int index, com.google.protobuf.Any.Builder builderForValue) {
-        if (resultBuilder_ == null) {
-          ensureResultIsMutable();
-          result_.set(index, builderForValue.build());
-          onChanged();
-        } else {
-          resultBuilder_.setMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .google.protobuf.Any result = 4;</code>
-       */
-      public Builder addResult(com.google.protobuf.Any value) {
-        if (resultBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureResultIsMutable();
-          result_.add(value);
-          onChanged();
-        } else {
-          resultBuilder_.addMessage(value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .google.protobuf.Any result = 4;</code>
-       */
-      public Builder addResult(
-          int index, com.google.protobuf.Any value) {
-        if (resultBuilder_ == null) {
-          if (value == null) {
-            throw new NullPointerException();
-          }
-          ensureResultIsMutable();
-          result_.add(index, value);
-          onChanged();
-        } else {
-          resultBuilder_.addMessage(index, value);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .google.protobuf.Any result = 4;</code>
-       */
-      public Builder addResult(
-          com.google.protobuf.Any.Builder builderForValue) {
-        if (resultBuilder_ == null) {
-          ensureResultIsMutable();
-          result_.add(builderForValue.build());
-          onChanged();
-        } else {
-          resultBuilder_.addMessage(builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .google.protobuf.Any result = 4;</code>
-       */
-      public Builder addResult(
-          int index, com.google.protobuf.Any.Builder builderForValue) {
-        if (resultBuilder_ == null) {
-          ensureResultIsMutable();
-          result_.add(index, builderForValue.build());
-          onChanged();
-        } else {
-          resultBuilder_.addMessage(index, builderForValue.build());
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .google.protobuf.Any result = 4;</code>
-       */
-      public Builder addAllResult(
-          java.lang.Iterable<? extends com.google.protobuf.Any> values) {
-        if (resultBuilder_ == null) {
-          ensureResultIsMutable();
-          com.google.protobuf.AbstractMessageLite.Builder.addAll(
-              values, result_);
-          onChanged();
-        } else {
-          resultBuilder_.addAllMessages(values);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .google.protobuf.Any result = 4;</code>
+       * <code>bytes result = 5;</code>
+       * @return This builder for chaining.
        */
       public Builder clearResult() {
-        if (resultBuilder_ == null) {
-          result_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000008);
-          onChanged();
-        } else {
-          resultBuilder_.clear();
-        }
+        bitField0_ = (bitField0_ & ~0x00000010);
+        result_ = getDefaultInstance().getResult();
+        onChanged();
         return this;
-      }
-      /**
-       * <code>repeated .google.protobuf.Any result = 4;</code>
-       */
-      public Builder removeResult(int index) {
-        if (resultBuilder_ == null) {
-          ensureResultIsMutable();
-          result_.remove(index);
-          onChanged();
-        } else {
-          resultBuilder_.remove(index);
-        }
-        return this;
-      }
-      /**
-       * <code>repeated .google.protobuf.Any result = 4;</code>
-       */
-      public com.google.protobuf.Any.Builder getResultBuilder(
-          int index) {
-        return getResultFieldBuilder().getBuilder(index);
-      }
-      /**
-       * <code>repeated .google.protobuf.Any result = 4;</code>
-       */
-      public com.google.protobuf.AnyOrBuilder getResultOrBuilder(
-          int index) {
-        if (resultBuilder_ == null) {
-          return result_.get(index);  } else {
-          return resultBuilder_.getMessageOrBuilder(index);
-        }
-      }
-      /**
-       * <code>repeated .google.protobuf.Any result = 4;</code>
-       */
-      public java.util.List<? extends com.google.protobuf.AnyOrBuilder> 
-           getResultOrBuilderList() {
-        if (resultBuilder_ != null) {
-          return resultBuilder_.getMessageOrBuilderList();
-        } else {
-          return java.util.Collections.unmodifiableList(result_);
-        }
-      }
-      /**
-       * <code>repeated .google.protobuf.Any result = 4;</code>
-       */
-      public com.google.protobuf.Any.Builder addResultBuilder() {
-        return getResultFieldBuilder().addBuilder(
-            com.google.protobuf.Any.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .google.protobuf.Any result = 4;</code>
-       */
-      public com.google.protobuf.Any.Builder addResultBuilder(
-          int index) {
-        return getResultFieldBuilder().addBuilder(
-            index, com.google.protobuf.Any.getDefaultInstance());
-      }
-      /**
-       * <code>repeated .google.protobuf.Any result = 4;</code>
-       */
-      public java.util.List<com.google.protobuf.Any.Builder> 
-           getResultBuilderList() {
-        return getResultFieldBuilder().getBuilderList();
-      }
-      private com.google.protobuf.RepeatedFieldBuilderV3<
-          com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder> 
-          getResultFieldBuilder() {
-        if (resultBuilder_ == null) {
-          resultBuilder_ = new com.google.protobuf.RepeatedFieldBuilderV3<
-              com.google.protobuf.Any, com.google.protobuf.Any.Builder, com.google.protobuf.AnyOrBuilder>(
-                  result_,
-                  ((bitField0_ & 0x00000008) != 0),
-                  getParentForChildren(),
-                  isClean());
-          result_ = null;
-        }
-        return resultBuilder_;
       }
       @java.lang.Override
       public final Builder setUnknownFields(
@@ -1180,11 +1023,11 @@ public final class ShadowRPCResponseProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\016response.proto\032\031google/protobuf/any.pr" +
-      "oto\"j\n\021ShadowRPCResponse\022\017\n\007traceId\030\001 \001(" +
-      "\t\022\014\n\004code\030\002 \001(\005\022\020\n\010errorMsg\030\003 \001(\t\022$\n\006res" +
-      "ult\030\004 \003(\0132\024.google.protobuf.AnyB=\n#com.l" +
-      "iubs.shadowrpc.protocol.entityB\026ShadowRP" +
-      "CResponseProtob\006proto3"
+      "oto\"i\n\021ShadowRPCResponse\022\017\n\007traceId\030\001 \001(" +
+      "\t\022\014\n\004code\030\002 \001(\005\022\020\n\010errorMsg\030\003 \001(\t\022\023\n\013res" +
+      "ultClass\030\004 \001(\t\022\016\n\006result\030\005 \001(\014B=\n#com.li" +
+      "ubs.shadowrpc.protocol.entityB\026ShadowRPC" +
+      "ResponseProtob\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -1196,7 +1039,7 @@ public final class ShadowRPCResponseProto {
     internal_static_ShadowRPCResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_ShadowRPCResponse_descriptor,
-        new java.lang.String[] { "TraceId", "Code", "ErrorMsg", "Result", });
+        new java.lang.String[] { "TraceId", "Code", "ErrorMsg", "ResultClass", "Result", });
     com.google.protobuf.AnyProto.getDescriptor();
   }
 

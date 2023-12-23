@@ -9,5 +9,7 @@ message ShadowRPCResponse {
     string traceId = 1;
     int32 code = 2;
     string errorMsg = 3;
-    repeated google.protobuf.Any result = 4;
+
+    string resultClass = 4;
+    bytes result = 5;
 }

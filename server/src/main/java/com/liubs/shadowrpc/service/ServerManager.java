@@ -2,7 +2,7 @@ package com.liubs.shadowrpc.service;
 
 import com.liubs.shadowrpc.protocol.annotation.ShadowServiceHolder;
 import com.liubs.shadowrpc.protocol.annotation.ShadowService;
-import com.liubs.shadowrpc.util.AnnotationScanner;
+import com.liubs.shadowrpc.protocol.util.AnnotationScanner;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,8 +23,7 @@ public class ServerManager {
 
     //所有服务
     private Map<String,Object> allRPC = new ConcurrentHashMap<>();
-    
-    
+
 
     public void addRPCInterface(String serviceName,Object obj) {
         allRPC.put(serviceName,obj);

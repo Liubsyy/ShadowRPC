@@ -60,70 +60,70 @@ public final class ShadowRPCRequestProto {
      *参数类名
      * </pre>
      *
-     * <code>repeated string classes = 4;</code>
-     * @return A list containing the classes.
+     * <code>repeated string paramTypes = 4;</code>
+     * @return A list containing the paramTypes.
      */
     java.util.List<java.lang.String>
-        getClassesList();
+        getParamTypesList();
     /**
      * <pre>
      *参数类名
      * </pre>
      *
-     * <code>repeated string classes = 4;</code>
-     * @return The count of classes.
+     * <code>repeated string paramTypes = 4;</code>
+     * @return The count of paramTypes.
      */
-    int getClassesCount();
+    int getParamTypesCount();
     /**
      * <pre>
      *参数类名
      * </pre>
      *
-     * <code>repeated string classes = 4;</code>
+     * <code>repeated string paramTypes = 4;</code>
      * @param index The index of the element to return.
-     * @return The classes at the given index.
+     * @return The paramTypes at the given index.
      */
-    java.lang.String getClasses(int index);
+    java.lang.String getParamTypes(int index);
     /**
      * <pre>
      *参数类名
      * </pre>
      *
-     * <code>repeated string classes = 4;</code>
+     * <code>repeated string paramTypes = 4;</code>
      * @param index The index of the value to return.
-     * @return The bytes of the classes at the given index.
+     * @return The bytes of the paramTypes at the given index.
      */
     com.google.protobuf.ByteString
-        getClassesBytes(int index);
+        getParamTypesBytes(int index);
 
     /**
      * <pre>
      *bytes类型充当参数
      * </pre>
      *
-     * <code>repeated bytes data = 5;</code>
-     * @return A list containing the data.
+     * <code>repeated bytes params = 5;</code>
+     * @return A list containing the params.
      */
-    java.util.List<com.google.protobuf.ByteString> getDataList();
+    java.util.List<com.google.protobuf.ByteString> getParamsList();
     /**
      * <pre>
      *bytes类型充当参数
      * </pre>
      *
-     * <code>repeated bytes data = 5;</code>
-     * @return The count of data.
+     * <code>repeated bytes params = 5;</code>
+     * @return The count of params.
      */
-    int getDataCount();
+    int getParamsCount();
     /**
      * <pre>
      *bytes类型充当参数
      * </pre>
      *
-     * <code>repeated bytes data = 5;</code>
+     * <code>repeated bytes params = 5;</code>
      * @param index The index of the element to return.
-     * @return The data at the given index.
+     * @return The params at the given index.
      */
-    com.google.protobuf.ByteString getData(int index);
+    com.google.protobuf.ByteString getParams(int index);
   }
   /**
    * Protobuf type {@code com.liubs.shadowrpc.protocol.entity.ShadowRPCRequest}
@@ -141,9 +141,9 @@ public final class ShadowRPCRequestProto {
       traceId_ = "";
       serviceName_ = "";
       methodName_ = "";
-      classes_ =
+      paramTypes_ =
           com.google.protobuf.LazyStringArrayList.emptyList();
-      data_ = emptyList(com.google.protobuf.ByteString.class);
+      params_ = emptyList(com.google.protobuf.ByteString.class);
     }
 
     @java.lang.Override
@@ -283,98 +283,98 @@ public final class ShadowRPCRequestProto {
       }
     }
 
-    public static final int CLASSES_FIELD_NUMBER = 4;
+    public static final int PARAMTYPES_FIELD_NUMBER = 4;
     @SuppressWarnings("serial")
-    private com.google.protobuf.LazyStringArrayList classes_ =
+    private com.google.protobuf.LazyStringArrayList paramTypes_ =
         com.google.protobuf.LazyStringArrayList.emptyList();
     /**
      * <pre>
      *参数类名
      * </pre>
      *
-     * <code>repeated string classes = 4;</code>
-     * @return A list containing the classes.
+     * <code>repeated string paramTypes = 4;</code>
+     * @return A list containing the paramTypes.
      */
     public com.google.protobuf.ProtocolStringList
-        getClassesList() {
-      return classes_;
+        getParamTypesList() {
+      return paramTypes_;
     }
     /**
      * <pre>
      *参数类名
      * </pre>
      *
-     * <code>repeated string classes = 4;</code>
-     * @return The count of classes.
+     * <code>repeated string paramTypes = 4;</code>
+     * @return The count of paramTypes.
      */
-    public int getClassesCount() {
-      return classes_.size();
+    public int getParamTypesCount() {
+      return paramTypes_.size();
     }
     /**
      * <pre>
      *参数类名
      * </pre>
      *
-     * <code>repeated string classes = 4;</code>
+     * <code>repeated string paramTypes = 4;</code>
      * @param index The index of the element to return.
-     * @return The classes at the given index.
+     * @return The paramTypes at the given index.
      */
-    public java.lang.String getClasses(int index) {
-      return classes_.get(index);
+    public java.lang.String getParamTypes(int index) {
+      return paramTypes_.get(index);
     }
     /**
      * <pre>
      *参数类名
      * </pre>
      *
-     * <code>repeated string classes = 4;</code>
+     * <code>repeated string paramTypes = 4;</code>
      * @param index The index of the value to return.
-     * @return The bytes of the classes at the given index.
+     * @return The bytes of the paramTypes at the given index.
      */
     public com.google.protobuf.ByteString
-        getClassesBytes(int index) {
-      return classes_.getByteString(index);
+        getParamTypesBytes(int index) {
+      return paramTypes_.getByteString(index);
     }
 
-    public static final int DATA_FIELD_NUMBER = 5;
+    public static final int PARAMS_FIELD_NUMBER = 5;
     @SuppressWarnings("serial")
-    private com.google.protobuf.Internal.ProtobufList<com.google.protobuf.ByteString> data_ =
+    private com.google.protobuf.Internal.ProtobufList<com.google.protobuf.ByteString> params_ =
         emptyList(com.google.protobuf.ByteString.class);
     /**
      * <pre>
      *bytes类型充当参数
      * </pre>
      *
-     * <code>repeated bytes data = 5;</code>
-     * @return A list containing the data.
+     * <code>repeated bytes params = 5;</code>
+     * @return A list containing the params.
      */
     @java.lang.Override
     public java.util.List<com.google.protobuf.ByteString>
-        getDataList() {
-      return data_;
+        getParamsList() {
+      return params_;
     }
     /**
      * <pre>
      *bytes类型充当参数
      * </pre>
      *
-     * <code>repeated bytes data = 5;</code>
-     * @return The count of data.
+     * <code>repeated bytes params = 5;</code>
+     * @return The count of params.
      */
-    public int getDataCount() {
-      return data_.size();
+    public int getParamsCount() {
+      return params_.size();
     }
     /**
      * <pre>
      *bytes类型充当参数
      * </pre>
      *
-     * <code>repeated bytes data = 5;</code>
+     * <code>repeated bytes params = 5;</code>
      * @param index The index of the element to return.
-     * @return The data at the given index.
+     * @return The params at the given index.
      */
-    public com.google.protobuf.ByteString getData(int index) {
-      return data_.get(index);
+    public com.google.protobuf.ByteString getParams(int index) {
+      return params_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
@@ -400,11 +400,11 @@ public final class ShadowRPCRequestProto {
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(methodName_)) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, methodName_);
       }
-      for (int i = 0; i < classes_.size(); i++) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, classes_.getRaw(i));
+      for (int i = 0; i < paramTypes_.size(); i++) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, paramTypes_.getRaw(i));
       }
-      for (int i = 0; i < data_.size(); i++) {
-        output.writeBytes(5, data_.get(i));
+      for (int i = 0; i < params_.size(); i++) {
+        output.writeBytes(5, params_.get(i));
       }
       getUnknownFields().writeTo(output);
     }
@@ -426,20 +426,20 @@ public final class ShadowRPCRequestProto {
       }
       {
         int dataSize = 0;
-        for (int i = 0; i < classes_.size(); i++) {
-          dataSize += computeStringSizeNoTag(classes_.getRaw(i));
+        for (int i = 0; i < paramTypes_.size(); i++) {
+          dataSize += computeStringSizeNoTag(paramTypes_.getRaw(i));
         }
         size += dataSize;
-        size += 1 * getClassesList().size();
+        size += 1 * getParamTypesList().size();
       }
       {
         int dataSize = 0;
-        for (int i = 0; i < data_.size(); i++) {
+        for (int i = 0; i < params_.size(); i++) {
           dataSize += com.google.protobuf.CodedOutputStream
-            .computeBytesSizeNoTag(data_.get(i));
+            .computeBytesSizeNoTag(params_.get(i));
         }
         size += dataSize;
-        size += 1 * getDataList().size();
+        size += 1 * getParamsList().size();
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -462,10 +462,10 @@ public final class ShadowRPCRequestProto {
           .equals(other.getServiceName())) return false;
       if (!getMethodName()
           .equals(other.getMethodName())) return false;
-      if (!getClassesList()
-          .equals(other.getClassesList())) return false;
-      if (!getDataList()
-          .equals(other.getDataList())) return false;
+      if (!getParamTypesList()
+          .equals(other.getParamTypesList())) return false;
+      if (!getParamsList()
+          .equals(other.getParamsList())) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -483,13 +483,13 @@ public final class ShadowRPCRequestProto {
       hash = (53 * hash) + getServiceName().hashCode();
       hash = (37 * hash) + METHODNAME_FIELD_NUMBER;
       hash = (53 * hash) + getMethodName().hashCode();
-      if (getClassesCount() > 0) {
-        hash = (37 * hash) + CLASSES_FIELD_NUMBER;
-        hash = (53 * hash) + getClassesList().hashCode();
+      if (getParamTypesCount() > 0) {
+        hash = (37 * hash) + PARAMTYPES_FIELD_NUMBER;
+        hash = (53 * hash) + getParamTypesList().hashCode();
       }
-      if (getDataCount() > 0) {
-        hash = (37 * hash) + DATA_FIELD_NUMBER;
-        hash = (53 * hash) + getDataList().hashCode();
+      if (getParamsCount() > 0) {
+        hash = (37 * hash) + PARAMS_FIELD_NUMBER;
+        hash = (53 * hash) + getParamsList().hashCode();
       }
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
@@ -625,9 +625,9 @@ public final class ShadowRPCRequestProto {
         traceId_ = "";
         serviceName_ = "";
         methodName_ = "";
-        classes_ =
+        paramTypes_ =
             com.google.protobuf.LazyStringArrayList.emptyList();
-        data_ = emptyList(com.google.protobuf.ByteString.class);
+        params_ = emptyList(com.google.protobuf.ByteString.class);
         return this;
       }
 
@@ -671,12 +671,12 @@ public final class ShadowRPCRequestProto {
           result.methodName_ = methodName_;
         }
         if (((from_bitField0_ & 0x00000008) != 0)) {
-          classes_.makeImmutable();
-          result.classes_ = classes_;
+          paramTypes_.makeImmutable();
+          result.paramTypes_ = paramTypes_;
         }
         if (((from_bitField0_ & 0x00000010) != 0)) {
-          data_.makeImmutable();
-          result.data_ = data_;
+          params_.makeImmutable();
+          result.params_ = params_;
         }
       }
 
@@ -739,24 +739,24 @@ public final class ShadowRPCRequestProto {
           bitField0_ |= 0x00000004;
           onChanged();
         }
-        if (!other.classes_.isEmpty()) {
-          if (classes_.isEmpty()) {
-            classes_ = other.classes_;
+        if (!other.paramTypes_.isEmpty()) {
+          if (paramTypes_.isEmpty()) {
+            paramTypes_ = other.paramTypes_;
             bitField0_ |= 0x00000008;
           } else {
-            ensureClassesIsMutable();
-            classes_.addAll(other.classes_);
+            ensureParamTypesIsMutable();
+            paramTypes_.addAll(other.paramTypes_);
           }
           onChanged();
         }
-        if (!other.data_.isEmpty()) {
-          if (data_.isEmpty()) {
-            data_ = other.data_;
-            data_.makeImmutable();
+        if (!other.params_.isEmpty()) {
+          if (params_.isEmpty()) {
+            params_ = other.params_;
+            params_.makeImmutable();
             bitField0_ |= 0x00000010;
           } else {
-            ensureDataIsMutable();
-            data_.addAll(other.data_);
+            ensureParamsIsMutable();
+            params_.addAll(other.params_);
           }
           onChanged();
         }
@@ -803,14 +803,14 @@ public final class ShadowRPCRequestProto {
               } // case 26
               case 34: {
                 java.lang.String s = input.readStringRequireUtf8();
-                ensureClassesIsMutable();
-                classes_.add(s);
+                ensureParamTypesIsMutable();
+                paramTypes_.add(s);
                 break;
               } // case 34
               case 42: {
                 com.google.protobuf.ByteString v = input.readBytes();
-                ensureDataIsMutable();
-                data_.add(v);
+                ensureParamsIsMutable();
+                params_.add(v);
                 break;
               } // case 42
               default: {
@@ -1046,11 +1046,11 @@ public final class ShadowRPCRequestProto {
         return this;
       }
 
-      private com.google.protobuf.LazyStringArrayList classes_ =
+      private com.google.protobuf.LazyStringArrayList paramTypes_ =
           com.google.protobuf.LazyStringArrayList.emptyList();
-      private void ensureClassesIsMutable() {
-        if (!classes_.isModifiable()) {
-          classes_ = new com.google.protobuf.LazyStringArrayList(classes_);
+      private void ensureParamTypesIsMutable() {
+        if (!paramTypes_.isModifiable()) {
+          paramTypes_ = new com.google.protobuf.LazyStringArrayList(paramTypes_);
         }
         bitField0_ |= 0x00000008;
       }
@@ -1059,65 +1059,65 @@ public final class ShadowRPCRequestProto {
        *参数类名
        * </pre>
        *
-       * <code>repeated string classes = 4;</code>
-       * @return A list containing the classes.
+       * <code>repeated string paramTypes = 4;</code>
+       * @return A list containing the paramTypes.
        */
       public com.google.protobuf.ProtocolStringList
-          getClassesList() {
-        classes_.makeImmutable();
-        return classes_;
+          getParamTypesList() {
+        paramTypes_.makeImmutable();
+        return paramTypes_;
       }
       /**
        * <pre>
        *参数类名
        * </pre>
        *
-       * <code>repeated string classes = 4;</code>
-       * @return The count of classes.
+       * <code>repeated string paramTypes = 4;</code>
+       * @return The count of paramTypes.
        */
-      public int getClassesCount() {
-        return classes_.size();
+      public int getParamTypesCount() {
+        return paramTypes_.size();
       }
       /**
        * <pre>
        *参数类名
        * </pre>
        *
-       * <code>repeated string classes = 4;</code>
+       * <code>repeated string paramTypes = 4;</code>
        * @param index The index of the element to return.
-       * @return The classes at the given index.
+       * @return The paramTypes at the given index.
        */
-      public java.lang.String getClasses(int index) {
-        return classes_.get(index);
+      public java.lang.String getParamTypes(int index) {
+        return paramTypes_.get(index);
       }
       /**
        * <pre>
        *参数类名
        * </pre>
        *
-       * <code>repeated string classes = 4;</code>
+       * <code>repeated string paramTypes = 4;</code>
        * @param index The index of the value to return.
-       * @return The bytes of the classes at the given index.
+       * @return The bytes of the paramTypes at the given index.
        */
       public com.google.protobuf.ByteString
-          getClassesBytes(int index) {
-        return classes_.getByteString(index);
+          getParamTypesBytes(int index) {
+        return paramTypes_.getByteString(index);
       }
       /**
        * <pre>
        *参数类名
        * </pre>
        *
-       * <code>repeated string classes = 4;</code>
+       * <code>repeated string paramTypes = 4;</code>
        * @param index The index to set the value at.
-       * @param value The classes to set.
+       * @param value The paramTypes to set.
        * @return This builder for chaining.
        */
-      public Builder setClasses(
+      public Builder setParamTypes(
           int index, java.lang.String value) {
         if (value == null) { throw new NullPointerException(); }
-        ensureClassesIsMutable();
-        classes_.set(index, value);
+        ensureParamTypesIsMutable();
+        paramTypes_.set(index, value);
         bitField0_ |= 0x00000008;
         onChanged();
         return this;
@@ -1127,15 +1127,15 @@ public final class ShadowRPCRequestProto {
        *参数类名
        * </pre>
        *
-       * <code>repeated string classes = 4;</code>
-       * @param value The classes to add.
+       * <code>repeated string paramTypes = 4;</code>
+       * @param value The paramTypes to add.
        * @return This builder for chaining.
        */
-      public Builder addClasses(
+      public Builder addParamTypes(
           java.lang.String value) {
         if (value == null) { throw new NullPointerException(); }
-        ensureClassesIsMutable();
-        classes_.add(value);
+        ensureParamTypesIsMutable();
+        paramTypes_.add(value);
         bitField0_ |= 0x00000008;
         onChanged();
         return this;
@@ -1145,15 +1145,15 @@ public final class ShadowRPCRequestProto {
        *参数类名
        * </pre>
        *
-       * <code>repeated string classes = 4;</code>
-       * @param values The classes to add.
+       * <code>repeated string paramTypes = 4;</code>
+       * @param values The paramTypes to add.
        * @return This builder for chaining.
        */
-      public Builder addAllClasses(
+      public Builder addAllParamTypes(
           java.lang.Iterable<java.lang.String> values) {
-        ensureClassesIsMutable();
+        ensureParamTypesIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, classes_);
+            values, paramTypes_);
         bitField0_ |= 0x00000008;
         onChanged();
         return this;
@@ -1163,11 +1163,11 @@ public final class ShadowRPCRequestProto {
        *参数类名
        * </pre>
        *
-       * <code>repeated string classes = 4;</code>
+       * <code>repeated string paramTypes = 4;</code>
        * @return This builder for chaining.
        */
-      public Builder clearClasses() {
-        classes_ =
+      public Builder clearParamTypes() {
+        paramTypes_ =
           com.google.protobuf.LazyStringArrayList.emptyList();
         bitField0_ = (bitField0_ & ~0x00000008);;
         onChanged();
@@ -1178,25 +1178,25 @@ public final class ShadowRPCRequestProto {
        *参数类名
        * </pre>
        *
-       * <code>repeated string classes = 4;</code>
-       * @param value The bytes of the classes to add.
+       * <code>repeated string paramTypes = 4;</code>
+       * @param value The bytes of the paramTypes to add.
        * @return This builder for chaining.
        */
-      public Builder addClassesBytes(
+      public Builder addParamTypesBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) { throw new NullPointerException(); }
         checkByteStringIsUtf8(value);
-        ensureClassesIsMutable();
-        classes_.add(value);
+        ensureParamTypesIsMutable();
+        paramTypes_.add(value);
         bitField0_ |= 0x00000008;
         onChanged();
         return this;
       }
 
-      private com.google.protobuf.Internal.ProtobufList<com.google.protobuf.ByteString> data_ = emptyList(com.google.protobuf.ByteString.class);
-      private void ensureDataIsMutable() {
-        if (!data_.isModifiable()) {
-          data_ = makeMutableCopy(data_);
+      private com.google.protobuf.Internal.ProtobufList<com.google.protobuf.ByteString> params_ = emptyList(com.google.protobuf.ByteString.class);
+      private void ensureParamsIsMutable() {
+        if (!params_.isModifiable()) {
+          params_ = makeMutableCopy(params_);
         }
         bitField0_ |= 0x00000010;
       }
@@ -1205,52 +1205,52 @@ public final class ShadowRPCRequestProto {
        *bytes类型充当参数
        * </pre>
        *
-       * <code>repeated bytes data = 5;</code>
-       * @return A list containing the data.
+       * <code>repeated bytes params = 5;</code>
+       * @return A list containing the params.
        */
       public java.util.List<com.google.protobuf.ByteString>
-          getDataList() {
-        data_.makeImmutable();
-        return data_;
+          getParamsList() {
+        params_.makeImmutable();
+        return params_;
       }
       /**
        * <pre>
        *bytes类型充当参数
        * </pre>
        *
-       * <code>repeated bytes data = 5;</code>
-       * @return The count of data.
+       * <code>repeated bytes params = 5;</code>
+       * @return The count of params.
        */
-      public int getDataCount() {
-        return data_.size();
+      public int getParamsCount() {
+        return params_.size();
       }
       /**
        * <pre>
        *bytes类型充当参数
        * </pre>
        *
-       * <code>repeated bytes data = 5;</code>
+       * <code>repeated bytes params = 5;</code>
        * @param index The index of the element to return.
-       * @return The data at the given index.
+       * @return The params at the given index.
        */
-      public com.google.protobuf.ByteString getData(int index) {
-        return data_.get(index);
+      public com.google.protobuf.ByteString getParams(int index) {
+        return params_.get(index);
       }
       /**
        * <pre>
        *bytes类型充当参数
        * </pre>
        *
-       * <code>repeated bytes data = 5;</code>
+       * <code>repeated bytes params = 5;</code>
        * @param index The index to set the value at.
-       * @param value The data to set.
+       * @param value The params to set.
        * @return This builder for chaining.
        */
-      public Builder setData(
+      public Builder setParams(
           int index, com.google.protobuf.ByteString value) {
         if (value == null) { throw new NullPointerException(); }
-        ensureDataIsMutable();
-        data_.set(index, value);
+        ensureParamsIsMutable();
+        params_.set(index, value);
         bitField0_ |= 0x00000010;
         onChanged();
         return this;
@@ -1260,14 +1260,14 @@ public final class ShadowRPCRequestProto {
        *bytes类型充当参数
        * </pre>
        *
-       * <code>repeated bytes data = 5;</code>
-       * @param value The data to add.
+       * <code>repeated bytes params = 5;</code>
+       * @param value The params to add.
        * @return This builder for chaining.
        */
-      public Builder addData(com.google.protobuf.ByteString value) {
+      public Builder addParams(com.google.protobuf.ByteString value) {
         if (value == null) { throw new NullPointerException(); }
-        ensureDataIsMutable();
-        data_.add(value);
+        ensureParamsIsMutable();
+        params_.add(value);
         bitField0_ |= 0x00000010;
         onChanged();
         return this;
@@ -1277,15 +1277,15 @@ public final class ShadowRPCRequestProto {
        *bytes类型充当参数
        * </pre>
        *
-       * <code>repeated bytes data = 5;</code>
-       * @param values The data to add.
+       * <code>repeated bytes params = 5;</code>
+       * @param values The params to add.
        * @return This builder for chaining.
        */
-      public Builder addAllData(
+      public Builder addAllParams(
           java.lang.Iterable<? extends com.google.protobuf.ByteString> values) {
-        ensureDataIsMutable();
+        ensureParamsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, data_);
+            values, params_);
         bitField0_ |= 0x00000010;
         onChanged();
         return this;
@@ -1295,11 +1295,11 @@ public final class ShadowRPCRequestProto {
        *bytes类型充当参数
        * </pre>
        *
-       * <code>repeated bytes data = 5;</code>
+       * <code>repeated bytes params = 5;</code>
        * @return This builder for chaining.
        */
-      public Builder clearData() {
-        data_ = emptyList(com.google.protobuf.ByteString.class);
+      public Builder clearParams() {
+        params_ = emptyList(com.google.protobuf.ByteString.class);
         bitField0_ = (bitField0_ & ~0x00000010);
         onChanged();
         return this;
@@ -1383,10 +1383,10 @@ public final class ShadowRPCRequestProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\rrequest.proto\022#com.liubs.shadowrpc.pro" +
-      "tocol.entity\"k\n\020ShadowRPCRequest\022\017\n\007trac" +
+      "tocol.entity\"p\n\020ShadowRPCRequest\022\017\n\007trac" +
       "eId\030\001 \001(\t\022\023\n\013serviceName\030\002 \001(\t\022\022\n\nmethod" +
-      "Name\030\003 \001(\t\022\017\n\007classes\030\004 \003(\t\022\014\n\004data\030\005 \003(" +
-      "\014B\027B\025ShadowRPCRequestProtob\006proto3"
+      "Name\030\003 \001(\t\022\022\n\nparamTypes\030\004 \003(\t\022\016\n\006params" +
+      "\030\005 \003(\014B\027B\025ShadowRPCRequestProtob\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -1397,7 +1397,7 @@ public final class ShadowRPCRequestProto {
     internal_static_com_liubs_shadowrpc_protocol_entity_ShadowRPCRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_liubs_shadowrpc_protocol_entity_ShadowRPCRequest_descriptor,
-        new java.lang.String[] { "TraceId", "ServiceName", "MethodName", "Classes", "Data", });
+        new java.lang.String[] { "TraceId", "ServiceName", "MethodName", "ParamTypes", "Params", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
