@@ -3,6 +3,8 @@ package com.liubs.shadowrpc.protocol.entity;
 import com.liubs.shadowrpc.protocol.annotation.ShadowEntity;
 import com.liubs.shadowrpc.protocol.annotation.ShadowField;
 
+import java.util.Arrays;
+
 /**
  * @author Liubsyy
  * @date 2023/12/18 10:38 PM
@@ -63,5 +65,16 @@ public class ShadowRPCRequest {
 
     public void setParams(Object[] params) {
         this.params = params;
+    }
+
+    @Override
+    public String toString() {
+        return "ShadowRPCRequest{" +
+                "traceId='" + traceId + '\'' +
+                ", serviceName='" + serviceName + '\'' +
+                ", methodName='" + methodName + '\'' +
+                ", paramTypes=" + Arrays.toString(paramTypes) +
+                ", params=" + Arrays.toString(params) +
+                '}';
     }
 }

@@ -58,7 +58,7 @@ public class PersonTest {
         }
     }
 
-    public static  <T> void runSerialize(List<T> persons,Function<T,byte[]> serialize, Function<byte[],T> deserialize) {
+    public static  <T> void runSerialize(int count,List<T> persons,Function<T,byte[]> serialize, Function<byte[],T> deserialize) {
 
         long serializeTime = 0;
         long deserializeTime = 0;
@@ -92,11 +92,11 @@ public class PersonTest {
     public void test(){
 
         System.out.println("*** kryo序列化和反序列化 ***");
-        runSerialize(persons, p-> kryoSerializer.serialize(p),
+        runSerialize(count,persons, p-> kryoSerializer.serialize(p),
                 bytes-> kryoSerializer.deserialize(bytes, Person.class) );
 
         System.out.println("*** protobuf序列化和反序列化 *** ");
-        runSerialize(personsProto, AbstractMessageLite::toByteArray,
+        runSerialize(count,personsProto, AbstractMessageLite::toByteArray,
                 bytes -> {
                     try {
                         return PersonProto.Person.parseFrom(bytes);

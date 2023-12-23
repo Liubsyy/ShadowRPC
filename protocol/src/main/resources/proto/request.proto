@@ -1,13 +1,14 @@
 syntax = "proto3";
 
-import "google/protobuf/any.proto";
 
-option java_package="com.liubs.shadowrpc.protocol.protobuf";
+package com.liubs.shadowrpc.protocol.entity;
 option java_outer_classname="ShadowRPCRequestProto";
 
 message ShadowRPCRequest {
     string traceId = 1;
     string serviceName = 2;
     string methodName = 3;
-    repeated google.protobuf.Any params = 4;
+    repeated string classes = 4;    //参数类名
+    repeated bytes data = 5;    //bytes类型充当参数
+
 }

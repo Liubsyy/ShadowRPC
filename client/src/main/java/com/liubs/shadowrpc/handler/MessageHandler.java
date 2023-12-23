@@ -3,6 +3,7 @@ package com.liubs.shadowrpc.handler;
 import com.liubs.shadowrpc.protocol.entity.HeartBeatMessage;
 import com.liubs.shadowrpc.protocol.entity.ShadowRPCResponse;
 import com.liubs.shadowrpc.protocol.serializer.ISerializer;
+import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageCodec;
@@ -23,7 +24,7 @@ public class MessageHandler extends ByteToMessageCodec<Object> {
             //心跳消息
             data = HeartBeatMessage.getHearBeatMsg();
         }else {
-            data = ISerializer.DEFAULT_SERIALIZER.serialize(msg);
+            data = SerializerManager.getInstance().serialize(msg);
         }
 
         int dataLength = data.length;
@@ -44,7 +45,7 @@ public class MessageHandler extends ByteToMessageCodec<Object> {
         if(HeartBeatMessage.isHeartBeatMsg(data)) {
             System.out.println("收到心跳消息...");
         }else {
-            Object obj = ISerializer.DEFAULT_SERIALIZER.deserialize(data, ShadowRPCResponse.class);
+            Object obj = SerializerManager.getInstance().deserializeResponse(data);
             out.add(obj);
         }
     }

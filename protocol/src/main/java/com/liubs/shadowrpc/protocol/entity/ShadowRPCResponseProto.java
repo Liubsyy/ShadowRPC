@@ -2,7 +2,7 @@
 // source: response.proto
 
 // Protobuf Java Version: 3.25.1
-package com.liubs.shadowrpc.protocol.protobuf;
+package com.liubs.shadowrpc.protocol.entity;
 
 public final class ShadowRPCResponseProto {
   private ShadowRPCResponseProto() {}
@@ -100,15 +100,15 @@ public final class ShadowRPCResponseProto {
 
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.internal_static_ShadowRPCResponse_descriptor;
+      return com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.internal_static_ShadowRPCResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.internal_static_ShadowRPCResponse_fieldAccessorTable
+      return com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.internal_static_ShadowRPCResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse.class, com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse.Builder.class);
+              com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse.class, com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse.Builder.class);
     }
 
     public static final int TRACEID_FIELD_NUMBER = 1;
@@ -300,10 +300,10 @@ public final class ShadowRPCResponseProto {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse)) {
+      if (!(obj instanceof com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse)) {
         return super.equals(obj);
       }
-      com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse other = (com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse) obj;
+      com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse other = (com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse) obj;
 
       if (!getTraceId()
           .equals(other.getTraceId())) return false;
@@ -339,44 +339,44 @@ public final class ShadowRPCResponseProto {
       return hash;
     }
 
-    public static com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse parseFrom(
+    public static com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse parseFrom(
+    public static com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse parseFrom(
+    public static com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse parseFrom(
+    public static com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse parseFrom(byte[] data)
+    public static com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse parseFrom(
+    public static com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse parseFrom(java.io.InputStream input)
+    public static com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse parseFrom(
+    public static com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -384,26 +384,26 @@ public final class ShadowRPCResponseProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse parseDelimitedFrom(java.io.InputStream input)
+    public static com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse parseDelimitedFrom(
+    public static com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse parseFrom(
+    public static com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse parseFrom(
+    public static com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -416,7 +416,7 @@ public final class ShadowRPCResponseProto {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse prototype) {
+    public static Builder newBuilder(com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -437,21 +437,21 @@ public final class ShadowRPCResponseProto {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:ShadowRPCResponse)
-        com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponseOrBuilder {
+        com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.internal_static_ShadowRPCResponse_descriptor;
+        return com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.internal_static_ShadowRPCResponse_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.internal_static_ShadowRPCResponse_fieldAccessorTable
+        return com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.internal_static_ShadowRPCResponse_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse.class, com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse.Builder.class);
+                com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse.class, com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse.Builder.class);
       }
 
-      // Construct using com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse.newBuilder()
+      // Construct using com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse.newBuilder()
       private Builder() {
 
       }
@@ -481,17 +481,17 @@ public final class ShadowRPCResponseProto {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.internal_static_ShadowRPCResponse_descriptor;
+        return com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.internal_static_ShadowRPCResponse_descriptor;
       }
 
       @java.lang.Override
-      public com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse getDefaultInstanceForType() {
-        return com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse.getDefaultInstance();
+      public com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse getDefaultInstanceForType() {
+        return com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse.getDefaultInstance();
       }
 
       @java.lang.Override
-      public com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse build() {
-        com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse result = buildPartial();
+      public com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse build() {
+        com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -499,15 +499,15 @@ public final class ShadowRPCResponseProto {
       }
 
       @java.lang.Override
-      public com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse buildPartial() {
-        com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse result = new com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse(this);
+      public com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse buildPartial() {
+        com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse result = new com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse(this);
         buildPartialRepeatedFields(result);
         if (bitField0_ != 0) { buildPartial0(result); }
         onBuilt();
         return result;
       }
 
-      private void buildPartialRepeatedFields(com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse result) {
+      private void buildPartialRepeatedFields(com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse result) {
         if (resultBuilder_ == null) {
           if (((bitField0_ & 0x00000008) != 0)) {
             result_ = java.util.Collections.unmodifiableList(result_);
@@ -519,7 +519,7 @@ public final class ShadowRPCResponseProto {
         }
       }
 
-      private void buildPartial0(com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse result) {
+      private void buildPartial0(com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.traceId_ = traceId_;
@@ -566,16 +566,16 @@ public final class ShadowRPCResponseProto {
       }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse) {
-          return mergeFrom((com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse)other);
+        if (other instanceof com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse) {
+          return mergeFrom((com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse other) {
-        if (other == com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse other) {
+        if (other == com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse.getDefaultInstance()) return this;
         if (!other.getTraceId().isEmpty()) {
           traceId_ = other.traceId_;
           bitField0_ |= 0x00000001;
@@ -1118,12 +1118,12 @@ public final class ShadowRPCResponseProto {
     }
 
     // @@protoc_insertion_point(class_scope:ShadowRPCResponse)
-    private static final com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse DEFAULT_INSTANCE;
+    private static final com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse();
+      DEFAULT_INSTANCE = new com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse();
     }
 
-    public static com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse getDefaultInstance() {
+    public static com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1159,7 +1159,7 @@ public final class ShadowRPCResponseProto {
     }
 
     @java.lang.Override
-    public com.liubs.shadowrpc.protocol.protobuf.ShadowRPCResponseProto.ShadowRPCResponse getDefaultInstanceForType() {
+    public com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto.ShadowRPCResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1182,9 +1182,9 @@ public final class ShadowRPCResponseProto {
       "\n\016response.proto\032\031google/protobuf/any.pr" +
       "oto\"j\n\021ShadowRPCResponse\022\017\n\007traceId\030\001 \001(" +
       "\t\022\014\n\004code\030\002 \001(\005\022\020\n\010errorMsg\030\003 \001(\t\022$\n\006res" +
-      "ult\030\004 \003(\0132\024.google.protobuf.AnyB?\n%com.l" +
-      "iubs.shadowrpc.protocol.protobufB\026Shadow" +
-      "RPCResponseProtob\006proto3"
+      "ult\030\004 \003(\0132\024.google.protobuf.AnyB=\n#com.l" +
+      "iubs.shadowrpc.protocol.entityB\026ShadowRP" +
+      "CResponseProtob\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

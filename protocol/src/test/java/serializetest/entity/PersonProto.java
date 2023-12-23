@@ -16,7 +16,7 @@ public final class PersonProto {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   public interface PersonOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:Person)
+      // @@protoc_insertion_point(interface_extends:serializetest.entity.Person)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -56,11 +56,11 @@ public final class PersonProto {
         getNameBytes();
   }
   /**
-   * Protobuf type {@code Person}
+   * Protobuf type {@code serializetest.entity.Person}
    */
   public static final class Person extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:Person)
+      // @@protoc_insertion_point(message_implements:serializetest.entity.Person)
       PersonOrBuilder {
   private static final long serialVersionUID = 0L;
     // Use Person.newBuilder() to construct.
@@ -80,13 +80,13 @@ public final class PersonProto {
 
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return PersonProto.internal_static_Person_descriptor;
+      return PersonProto.internal_static_serializetest_entity_Person_descriptor;
     }
 
     @Override
     protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return PersonProto.internal_static_Person_fieldAccessorTable
+      return PersonProto.internal_static_serializetest_entity_Person_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               Person.class, Builder.class);
     }
@@ -380,26 +380,26 @@ public final class PersonProto {
       return builder;
     }
     /**
-     * Protobuf type {@code Person}
+     * Protobuf type {@code serializetest.entity.Person}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:Person)
+        // @@protoc_insertion_point(builder_implements:serializetest.entity.Person)
         PersonOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return PersonProto.internal_static_Person_descriptor;
+        return PersonProto.internal_static_serializetest_entity_Person_descriptor;
       }
 
       @Override
       protected FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return PersonProto.internal_static_Person_fieldAccessorTable
+        return PersonProto.internal_static_serializetest_entity_Person_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
                 Person.class, Builder.class);
       }
 
-      // Construct using com.liubs.shadowrpc.protol.protobuf.PersonProto.Person.newBuilder()
+      // Construct using serializetest.entity.PersonProto.Person.newBuilder()
       private Builder() {
 
       }
@@ -424,7 +424,7 @@ public final class PersonProto {
       @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return PersonProto.internal_static_Person_descriptor;
+        return PersonProto.internal_static_serializetest_entity_Person_descriptor;
       }
 
       @Override
@@ -809,10 +809,10 @@ public final class PersonProto {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:Person)
+      // @@protoc_insertion_point(builder_scope:serializetest.entity.Person)
     }
 
-    // @@protoc_insertion_point(class_scope:Person)
+    // @@protoc_insertion_point(class_scope:serializetest.entity.Person)
     private static final Person DEFAULT_INSTANCE;
     static {
       DEFAULT_INSTANCE = new Person();
@@ -861,10 +861,10 @@ public final class PersonProto {
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_Person_descriptor;
+    internal_static_serializetest_entity_Person_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_Person_fieldAccessorTable;
+      internal_static_serializetest_entity_Person_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -874,21 +874,20 @@ public final class PersonProto {
       descriptor;
   static {
     String[] descriptorData = {
-      "\n\021PersonProto.proto\"R\n\006Person\022\013\n\003age\030\001 \001" +
-      "(\005\022\016\n\006height\030\002 \001(\001\022\016\n\006weight\030\003 \001(\002\022\r\n\005mo" +
-      "ney\030\004 \001(\003\022\014\n\004name\030\005 \001(\tB2\n#com.liubs.sha" +
-      "dowrpc.protol.protobufB\013PersonProtob\006pro" +
-      "to3"
+      "\n\021PersonProto.proto\022\024serializetest.entit" +
+      "y\"R\n\006Person\022\013\n\003age\030\001 \001(\005\022\016\n\006height\030\002 \001(\001" +
+      "\022\016\n\006weight\030\003 \001(\002\022\r\n\005money\030\004 \001(\003\022\014\n\004name\030" +
+      "\005 \001(\tB\rB\013PersonProtob\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         });
-    internal_static_Person_descriptor =
+    internal_static_serializetest_entity_Person_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_Person_fieldAccessorTable = new
+    internal_static_serializetest_entity_Person_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_Person_descriptor,
+        internal_static_serializetest_entity_Person_descriptor,
         new String[] { "Age", "Height", "Weight", "Money", "Name", });
   }
 

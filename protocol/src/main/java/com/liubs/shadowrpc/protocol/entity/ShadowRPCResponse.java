@@ -55,4 +55,14 @@ public class ShadowRPCResponse {
     public void setResult(Object result) {
         this.result = result;
     }
+
+    @Override
+    public String toString() {
+        return "ShadowRPCResponse{" +
+                "traceId='" + traceId + '\'' +
+                ", code=" + code +
+                ", errorMsg='" + errorMsg + '\'' +
+                ", result=" + result +
+                '}';
+    }
 }

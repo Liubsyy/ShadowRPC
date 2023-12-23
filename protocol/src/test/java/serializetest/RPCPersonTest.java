@@ -1,14 +1,18 @@
 package serializetest;
 
+import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.liubs.shadowrpc.protocol.entity.ShadowRPCRequest;
-import com.liubs.shadowrpc.protocol.protobuf.ShadowRPCRequestProto;
+import com.liubs.shadowrpc.protocol.entity.ShadowRPCRequestAnyProto;
+import com.liubs.shadowrpc.protocol.entity.ShadowRPCRequestProto;
 import com.liubs.shadowrpc.protocol.serializer.kryo.KryoSerializer;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import serializetest.entity.Person;
 import serializetest.entity.PersonProto;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,7 +30,7 @@ public class RPCPersonTest {
     private static List<Person> persons = new ArrayList<>();
     private static List<PersonProto.Person> personsProto = new ArrayList<>();
 
-    final static int count = 10000;
+    final static int count = 1;
 
     @BeforeClass
     public static void init(){
@@ -57,7 +61,7 @@ public class RPCPersonTest {
     public void test(){
         System.out.println("*** kryo序列化和反序列化 ***");
 
-        PersonTest.runSerialize(persons,
+        PersonTest.runSerialize(count,persons,
                 p-> {
                     ShadowRPCRequest request = new ShadowRPCRequest();
                     request.setTraceId("asd123");
@@ -73,9 +77,9 @@ public class RPCPersonTest {
                 });
 
 
-        System.out.println("*** protobuf序列化和反序列化 *** ");
-        PersonTest.runSerialize(personsProto,p-> {
-                    ShadowRPCRequestProto.ShadowRPCRequest request = ShadowRPCRequestProto.ShadowRPCRequest
+        System.out.println("*** protobuf(any)序列化和反序列化 *** ");
+        PersonTest.runSerialize(count,personsProto,p-> {
+                    ShadowRPCRequestAnyProto.ShadowRPCRequestAny request = ShadowRPCRequestAnyProto.ShadowRPCRequestAny
                             .newBuilder()
                             .setTraceId("asd123")
                             .setServiceName("PersonService")
@@ -88,10 +92,40 @@ public class RPCPersonTest {
 
                 bytes -> {
                     try {
-                        ShadowRPCRequestProto.ShadowRPCRequest request = ShadowRPCRequestProto.ShadowRPCRequest.parseFrom(bytes);
+                        ShadowRPCRequestAnyProto.ShadowRPCRequestAny request = ShadowRPCRequestAnyProto.ShadowRPCRequestAny.parseFrom(bytes);
                         PersonProto.Person person = request.getParamsList().get(0).unpack(PersonProto.Person.class);
                         return person;
                     } catch (InvalidProtocolBufferException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+
+        System.out.println("*** protobuf序列化和反序列化 *** ");
+        PersonTest.runSerialize(count,personsProto,p-> {
+                    ShadowRPCRequestProto.ShadowRPCRequest request = ShadowRPCRequestProto.ShadowRPCRequest
+                            .newBuilder()
+                            .setTraceId("asd123")
+                            .setServiceName("PersonService")
+                            .setMethodName("getPerson")
+                            .addClasses(p.getClass().getName())
+                            .addData(p.toByteString())
+                            .build();
+                    return request.toByteArray();
+                },
+
+                bytes -> {
+                    try {
+                        ShadowRPCRequestProto.ShadowRPCRequest request = ShadowRPCRequestProto.ShadowRPCRequest.parseFrom(bytes);
+                        Class<?> classz = Class.forName(request.getClasses(0));
+                        ByteString data = request.getData(0);
+
+                        Method parseFrom = classz.getDeclaredMethod("parseFrom", ByteString.class);
+                        Object obj = parseFrom.invoke(null, data);
+
+                        PersonProto.Person person = (PersonProto.Person)obj;
+                        return person;
+                    } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 });
