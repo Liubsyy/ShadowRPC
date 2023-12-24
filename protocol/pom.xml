@@ -17,13 +17,13 @@
         <dependency>
             <groupId>com.esotericsoftware</groupId>
             <artifactId>kryo</artifactId>
-            <version>5.5.0</version>
+            <version>${kryo.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
-            <version>3.25.1</version>
+            <version>${protobuf.java.version}</version>
         </dependency>
 
     </dependencies>
@@ -52,21 +52,38 @@
                 <version>0.6.1</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <!-- .proto 文件的目录-->
-                    <protoSourceRoot>src/main/resources/proto</protoSourceRoot>
-                    <!-- 编译后的文件存放目录 -->
-                    <outputDirectory>${project.build.sourceDirectory}/</outputDirectory>
                     <!--是否每次执行都清除输出目录-->
                     <clearOutputDirectory>false</clearOutputDirectory>
-                    <protocArtifact>com.google.protobuf:protoc:3.25.1:exe:${os.detected.classifier}</protocArtifact>
+                    <!--suppress UnresolvedMavenProperty -->
+                    <protocArtifact>com.google.protobuf:protoc:${protobuf.java.version}:exe:${os.detected.classifier}</protocArtifact>
+
                 </configuration>
                 <executions>
                     <execution>
-                        <phase>generate-sources</phase>
+                        <id>compile-main-protos</id>
+                        <phase>compile</phase>
                         <goals>
                             <goal>compile</goal>
-                            <goal>test-compile</goal>
                         </goals>
+                        <configuration>
+                            <!-- .proto 文件的目录-->
+                            <protoSourceRoot>src/main/resources/proto</protoSourceRoot>
+                            <!-- 编译后的文件存放目录 -->
+                            <outputDirectory>${project.build.sourceDirectory}/</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>compile-test-protos</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <!-- .proto 文件的目录-->
+                            <protoSourceRoot>src/test/resources/proto</protoSourceRoot>
+                            <!-- 编译后的文件存放目录 -->
+                            <outputDirectory>${project.build.testSourceDirectory}/</outputDirectory>
+                        </configuration>
                     </execution>
                 </executions>
 
