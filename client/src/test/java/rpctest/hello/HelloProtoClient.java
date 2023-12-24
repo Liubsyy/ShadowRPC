@@ -1,6 +1,8 @@
 package rpctest.hello;
 
 import com.liubs.shadowrpc.init.ShadowClient;
+import com.liubs.shadowrpc.protocol.serializer.SerializerEnum;
+import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
 import com.liubs.shadowrpc.proxy.RemoteServerProxy;
 import org.junit.Test;
 import rpctest.entity.MyMessageProto;
@@ -14,12 +16,13 @@ public class HelloProtoClient {
 
     @Test
     public void helloClient() {
+        SerializerManager.getInstance().setSerializer(SerializerEnum.PROTOBUF);
+        SerializerManager.getInstance().init("rpctest.entity");
+
         ShadowClient shadowClient = new ShadowClient();
         shadowClient.init("127.0.0.1",2023);
 
-
         IHelloProto helloService = RemoteServerProxy.create(shadowClient.getChannel(),IHelloProto.class,"helloprotoservice");
-
         MyMessageProto.MyMessage message =  MyMessageProto.MyMessage.newBuilder()
                 .setNum(100)
                 .setContent("Hello, Server!")

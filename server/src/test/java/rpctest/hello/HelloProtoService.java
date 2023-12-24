@@ -1,6 +1,8 @@
 package rpctest.hello;
 
 import com.liubs.shadowrpc.protocol.annotation.ShadowService;
+import com.liubs.shadowrpc.protocol.serializer.SerializerEnum;
+import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
 import com.liubs.shadowrpc.service.ServerManager;
 import org.junit.Test;
 import rpctest.entity.MyMessageProto;
@@ -27,6 +29,7 @@ public class HelloProtoService implements IHelloProto{
     //启动服务端
     @Test
     public void helloServiceStart() {
+        SerializerManager.getInstance().setSerializer(SerializerEnum.PROTOBUF);
         ServerManager.getInstance()
                 .scanService("rpctest.entity","rpctest.hello")
                 .startServer(2023)
