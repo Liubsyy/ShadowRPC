@@ -6,6 +6,7 @@ import org.junit.Test;
 import rpctest.entity.MyMessage;
 
 /**
+ * 一个helloservice服务
  * @author Liubsyy
  * @date 2023/12/18 11:01 PM
  **/

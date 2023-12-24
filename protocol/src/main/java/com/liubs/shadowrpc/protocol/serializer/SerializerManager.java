@@ -48,6 +48,9 @@ public class SerializerManager {
     }
 
 
+    public SerializerEnum getSerializer() {
+        return serializer;
+    }
 
     public byte[] serialize(Object obj) {
         return serializer.getSerializer().serialize(obj);

@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package rpctest.entity;
+
+option java_outer_classname="MyMessageProto";
+
+message MyMessage {
+    string content = 1;
+    int32 num = 2;
+}

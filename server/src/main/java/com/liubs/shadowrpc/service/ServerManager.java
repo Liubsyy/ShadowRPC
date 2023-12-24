@@ -2,6 +2,7 @@ package com.liubs.shadowrpc.service;
 
 import com.liubs.shadowrpc.protocol.annotation.ShadowServiceHolder;
 import com.liubs.shadowrpc.protocol.annotation.ShadowService;
+import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
 import com.liubs.shadowrpc.protocol.util.AnnotationScanner;
 
 import java.io.IOException;
@@ -45,6 +46,10 @@ public class ServerManager {
 
     public ServerManager scanService(String ... packageNames){
 
+        //序列化模块初始化
+        SerializerManager.getInstance().init(packageNames);
+
+        //初始化服务
         List<ShadowServiceHolder<ShadowService>> shadowServices = new ArrayList<>();
 
         for(String packageName : packageNames) {

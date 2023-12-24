@@ -53,16 +53,19 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                 String serviceName = request.getParamTypes(i);
                 ByteString bytes = request.getParams(i);
 
-                Object obj = ParserForType.getMessage(serviceName);
-                if(null == obj) {
+                MessageLite defaultInstance = ParserForType.getMessage(serviceName);
+                Object paramObj;
+                if(null == defaultInstance) {
                     //没有注册，容错处理，反射扫描
                     Class<?> aClass = Class.forName(serviceName);
                     Method parseFrom = aClass.getDeclaredMethod("parseFrom", ByteString.class);
-                    obj = parseFrom.invoke(null, bytes);
+                    paramObj = parseFrom.invoke(null, bytes);
+                }else {
+                    paramObj = defaultInstance.getParserForType().parseFrom(bytes);
                 }
 
-                paramTypes[i]  = obj.getClass();
-                params[i]  = obj;
+                paramTypes[i]  = paramObj.getClass();
+                params[i]  = paramObj;
             }
 
             targetMethod = targetRPC.getClass().getDeclaredMethod(request.getMethodName(), paramTypes);
