@@ -9,6 +9,9 @@ import com.liubs.shadowrpc.protocol.entity.ShadowRPCRequest;
 import com.liubs.shadowrpc.protocol.entity.ShadowRPCRequestProto;
 import com.liubs.shadowrpc.protocol.entity.ShadowRPCResponse;
 import com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto;
+import com.liubs.shadowrpc.protocol.model.IModelParser;
+import com.liubs.shadowrpc.protocol.model.RequestModel;
+import com.liubs.shadowrpc.protocol.model.ResponseModel;
 import com.liubs.shadowrpc.protocol.serializer.SerializerEnum;
 import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
 import com.liubs.shadowrpc.protocol.serializer.protobuf.ParserForType;
@@ -17,6 +20,7 @@ import io.netty.channel.Channel;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -38,54 +42,33 @@ public class RemoteServerProxy {
 
                 (proxy, method, args) -> {
 
-                    if(SerializerManager.getInstance().getSerializer() == SerializerEnum.PROTOBUF) {
-                        ShadowRPCRequestProto.ShadowRPCRequest request = ShadowRPCRequestProto.ShadowRPCRequest.newBuilder()
-                                .setServiceName(serviceName)
-                                .setMethodName(method.getName())
-                                .addAllParamTypes(Arrays.stream(method.getParameterTypes()).map(Class::getName).collect(Collectors.toList()))
-                                .addAllParams(Arrays.stream(args).map(c->((MessageLite)c).toByteString()).collect(Collectors.toList())).build();
-
-                        channel.writeAndFlush(request);
-
-                        ShadowRPCResponseProto.ShadowRPCResponse response = (ShadowRPCResponseProto.ShadowRPCResponse)ReceiveHolder.getInstance().poll();
-                        if(response != null) {
-                            String resultClass = response.getResultClass();
-                            ByteString resultBytes = response.getResult();
-
-
-                            MessageLite defaultInstance = ParserForType.getMessage(resultClass);
-                            Object resultObj;
-                            if(null == defaultInstance) {
-                                //没有注册，容错处理，反射扫描
-                                Class<?> aClass = Class.forName(resultClass);
-                                Method parseFrom = aClass.getDeclaredMethod("parseFrom", ByteString.class);
-                                resultObj = parseFrom.invoke(null, resultBytes);
-                            }else {
-                                resultObj = defaultInstance.getParserForType().parseFrom(resultBytes);
-                            }
-                            return resultObj;
-                        }else {
-                            System.out.println("超时请求");
-                            return null;
-                        }
-                    }else {
-                        ShadowRPCRequest request = new ShadowRPCRequest();
-                        request.setServiceName(serviceName);
-                        request.setMethodName(method.getName());
-                        request.setParamTypes(method.getParameterTypes());
-                        request.setParams(args);
-                        channel.writeAndFlush(request);
-
-                        ShadowRPCResponse response = (ShadowRPCResponse)ReceiveHolder.getInstance().poll();
-                        if(response != null) {
-                            return response.getResult();
-                        }else {
-                            System.out.println("超时请求");
-                            return null;
-                        }
+                    if(method.getName().equals("toString")) {
+                        System.out.println();
                     }
 
+                    RequestModel requestModel = new RequestModel();
+                    requestModel.setTraceId(UUID.randomUUID().toString());
+                    requestModel.setServiceName(serviceName);
+                    requestModel.setMethodName(method.getName());
+                    requestModel.setParamTypes(method.getParameterTypes());
+                    requestModel.setParams(args);
 
+
+                    IModelParser modelParser = SerializerManager.getInstance().getSerializer().getModelParser();
+                    channel.writeAndFlush(modelParser.toRequest(requestModel));
+
+
+                    Object response = ReceiveHolder.getInstance().poll();
+                    if(null == response) {
+                        return null;
+                    }
+                    ResponseModel responseModel = modelParser.fromResponse(response);
+                    if(responseModel != null) {
+                        return responseModel.getResult();
+                    }else {
+                        System.out.println("超时请求");
+                        return null;
+                    }
                 }
         );
 

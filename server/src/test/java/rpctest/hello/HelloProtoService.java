@@ -32,7 +32,7 @@ public class HelloProtoService implements IHelloProto{
         SerializerManager.getInstance().setSerializer(SerializerEnum.PROTOBUF);
         ServerManager.getInstance()
                 .scanService("rpctest.entity","rpctest.hello")
-                .startServer(2023)
+                .startServer(2024)
                 .keep();
     }
 }

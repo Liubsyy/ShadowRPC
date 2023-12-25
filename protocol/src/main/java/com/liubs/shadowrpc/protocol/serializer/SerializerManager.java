@@ -15,7 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 public class SerializerManager {
     private static SerializerManager instance = new SerializerManager();
 
-    private SerializerEnum serializer = SerializerEnum.PROTOBUF;
+    private SerializerEnum serializer = SerializerEnum.KRYO;
 
     public static SerializerManager getInstance() {
         return instance;
