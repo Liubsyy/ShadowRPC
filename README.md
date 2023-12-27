@@ -30,7 +30,7 @@ message MyMessage {
 然后直接用maven插件protobuf-maven-plugin生成实体
 
 <br>
-2. 编写接口如果是protobuf方式，因为要跨语言，所以所有函数参数类型和返回类型都必须是proto文件定义的类型
+2. 编写接口加上@ShadowInterface注解，如果是protobuf方式，因为要跨语言，所以所有函数参数类型和返回类型都必须是proto文件定义的类型
 
 ```java
 @ShadowInterface
@@ -40,7 +40,7 @@ public interface IHello {
 }
 ```
 
-编写服务实现类
+然后编写服务实现类
 ```java
 @ShadowService(serviceName = "helloservice")
 public class HelloService implements IHello {
@@ -58,7 +58,6 @@ public class HelloService implements IHello {
 }
 ```
 
-<br>
 3. 指定序列化类型和端口，启动服务端
 
 <br>
@@ -109,7 +108,7 @@ System.out.printf("接收服务端消息 : %s\n",response);
 
 <br>
 
-使用zk作为服务发现复杂均衡调用各个服务器：
+使用zk作为服务发现负载均衡调用各个服务器：
 ```java
 String ZK_URL = "localhost:2181";
 ShadowClientsManager.getInstance().connectZk(ZK_URL);
