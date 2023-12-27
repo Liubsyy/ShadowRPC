@@ -57,7 +57,14 @@ public class HelloService implements IHello {
     }
 }
 ```
+
+<br>
 3. 指定序列化类型和端口，启动服务端
+
+<br>
+
+  
+单点启动模式如下: 
 ```java
 SerializerManager.getInstance().setSerializer(SerializerEnum.KRYO);
 ServerManager.getInstance()
@@ -66,7 +73,20 @@ ServerManager.getInstance()
                 .keep();
 ```
 
-客户端用接口调用远程函数
+使用zk作为集群模式启动
+```java
+String ZK_URL = "localhost:2181";
+SerializerManager.getInstance().setSerializer(SerializerEnum.KRYO);
+ServerManager.getInstance()
+                .scanService("rpctest.hello")
+                .startServer(ZK_URL,2023)
+                .keep();
+```
+
+
+
+4. 客户端用接口调用远程函数
+   
 ```java
 ShadowClient shadowClient = new ShadowClient();
 shadowClient.init("127.0.0.1",2023);
@@ -86,6 +106,25 @@ System.out.printf("发送请求 : %s\n",message);
 MyMessage response = helloService.say(message);
 System.out.printf("接收服务端消息 : %s\n",response);
 ```
+
+<br>
+
+使用zk作为服务发现复杂均衡调用各个服务器：
+```java
+String ZK_URL = "localhost:2181";
+ShadowClientsManager.getInstance().connectZk(ZK_URL);
+List<ShadowClient> shadowClientList = ShadowClientsManager.getInstance().getShadowClients();
+
+System.out.println("所有服务器: "+shadowClientList.stream().map(ShadowClient::getConnectionUrl).collect(Collectors.toList()));
+
+IHello helloService = RemoteServerProxy.create(IHello.class,"helloservice");
+
+int helloCount = shadowClientList.size() * 5;
+for(int i = 0 ;i<helloCount; i++) {
+    helloService.hello(i+"");
+}
+```
+
 
 <br>
 目前框架刚刚搭建，可以说只是demo级的，后续我将深入研究并打磨一款真正实用的RPC框架
