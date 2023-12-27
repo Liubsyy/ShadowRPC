@@ -1,16 +1,17 @@
 package com.liubs.shadowrpc.handler;
 
 
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.TimeUnit;
+import com.liubs.shadowrpc.protocol.model.ResponseModel;
+
+import java.util.Map;
+import java.util.concurrent.*;
 
 /**
  * @author Liubsyy
  * @date 2023/12/3 11:32 PM
  **/
 public class ReceiveHolder {
-    public BlockingQueue<Object> queue = new LinkedBlockingQueue<>();
+    public Map<String, CompletableFuture<Object>> futureMap = new ConcurrentHashMap<>();
 
     private static ReceiveHolder instance = new ReceiveHolder();
     public static ReceiveHolder getInstance() {
@@ -18,11 +19,18 @@ public class ReceiveHolder {
     }
 
 
-    public Object poll() throws InterruptedException {
-        return queue.poll(3, TimeUnit.SECONDS);
+    public Future<?> initFuture(String uuid){
+        CompletableFuture<Object> completableFuture = new CompletableFuture<>();
+        futureMap.put(uuid,completableFuture);
+        return completableFuture;
     }
 
-    public void put(Object message){
-        queue.offer(message);
+
+    public void receiveData(ResponseModel responseModel){
+        CompletableFuture<Object> future = futureMap.remove(responseModel.getTraceId());
+        if(null != future) {
+            future.complete(responseModel);
+        }
     }
+
 }

@@ -80,9 +80,12 @@ public class HelloProtoClient {
             futureTaskList.add(() -> {
                 MyMessageProto.MyMessage message = MyMessageProto.MyMessage.newBuilder().setNum(j).setContent("Hello, Server!").build();
 
-                System.out.printf("发送请求%d : %s\n",j,message);
+                //打印消息影响速度，这里只打印编号
+//                System.out.printf("发送请求%d : %s\n",j,message);
+                System.out.printf("发送请求%d \n",j);
                 MyMessageProto.MyMessage response = helloService.say(message);
-                System.out.printf("接收服务端消息%d : %s\n",j,response);
+//                System.out.printf("接收服务端消息%d : %s\n",j,response);
+                System.out.printf("接收服务端消息%d \n",j);
 
                 return "success";
             });

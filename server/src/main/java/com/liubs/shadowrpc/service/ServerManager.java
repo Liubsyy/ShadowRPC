@@ -6,6 +6,8 @@ import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
 import com.liubs.shadowrpc.protocol.util.AnnotationScanner;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,15 +25,15 @@ public class ServerManager {
     private Server server;
 
     //所有服务
-    private Map<String,Object> allRPC = new ConcurrentHashMap<>();
+    private Map<ServiceLookUp,ServiceTarget> allRPC = new ConcurrentHashMap<>();
 
 
-    public void addRPCInterface(String serviceName,Object obj) {
-        allRPC.put(serviceName,obj);
+    public void addRPCInterface(ServiceLookUp lookUp,ServiceTarget obj) {
+        allRPC.put(lookUp,obj);
     }
 
-    public Object getRPC(String serviceName) {
-        return allRPC.get(serviceName);
+    public ServiceTarget getRPC(ServiceLookUp lookUp) {
+        return allRPC.get(lookUp);
     }
     
 
@@ -65,7 +67,25 @@ public class ServerManager {
             Class<?> serviceClass = ShadowServiceHolder.getClassz();
             try {
                 Object o = serviceClass.newInstance();
-                addRPCInterface(serviceAnnotation.serviceName(),o);
+
+
+                for(Method method : serviceClass.getMethods()) {
+
+                    if(Modifier.isStatic(method.getModifiers()) || !Modifier.isPublic(method.getModifiers())){
+                        continue;
+                    }
+
+                    ServiceLookUp serviceLookUp = new ServiceLookUp();
+                    serviceLookUp.setServiceName(serviceAnnotation.serviceName());
+                    serviceLookUp.setMethodName(method.getName());
+                    serviceLookUp.setParamTypes(method.getParameterTypes());
+
+                    ServiceTarget serviceTarget = new ServiceTarget();
+                    serviceTarget.setTargetObj(o);
+                    serviceTarget.setMethod(method);
+                    addRPCInterface(serviceLookUp,serviceTarget);
+                }
+
             } catch (InstantiationException | IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
@@ -97,8 +117,5 @@ public class ServerManager {
 
 
 
-    public Object getService(String serviceName) {
-        return getRPC(serviceName);
-    }
 
 }
