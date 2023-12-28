@@ -28,12 +28,13 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         // 假设msg已经是解码后的对象
-        System.out.println("Server received: " + msg);
+//        System.out.println("Server received: " + msg);
 
         IModelParser modelParser = SerializerManager.getInstance().getSerializer().getModelParser();
 
         RequestModel requestModel = modelParser.fromRequest(msg);
 
+        System.out.println("Server received: " + requestModel.getTraceId());
 
         executorService.execute(()->{
             try {
