@@ -12,8 +12,6 @@ import com.liubs.shadowrpc.service.ServiceTarget;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -27,14 +25,13 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        // 假设msg已经是解码后的对象
+
+        // 打印验证影响速度，压测时去掉
 //        System.out.println("Server received: " + msg);
 
         IModelParser modelParser = SerializerManager.getInstance().getSerializer().getModelParser();
 
         RequestModel requestModel = modelParser.fromRequest(msg);
-
-        System.out.println("Server received: " + requestModel.getTraceId());
 
         executorService.execute(()->{
             try {

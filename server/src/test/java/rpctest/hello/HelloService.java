@@ -1,6 +1,9 @@
 package rpctest.hello;
 
+import com.liubs.shadowrpc.config.ShadowServerConfig;
 import com.liubs.shadowrpc.protocol.annotation.ShadowService;
+import com.liubs.shadowrpc.protocol.serializer.SerializerEnum;
+import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
 import com.liubs.shadowrpc.service.ServerManager;
 import org.junit.Test;
 import rpctest.entity.MyMessage;
@@ -31,6 +34,8 @@ public class HelloService implements IHello {
     //启动服务端
     @Test
     public void helloServiceStart() {
+        ShadowServerConfig.getInstance().setQpsStat(true);  //统计qps
+        SerializerManager.getInstance().setSerializer(SerializerEnum.KRYO); //kryo序列化方式
         ServerManager.getInstance()
                 .scanService("rpctest.hello")
                 .startServer(2023)

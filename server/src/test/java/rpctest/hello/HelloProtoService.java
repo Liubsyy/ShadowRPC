@@ -1,5 +1,6 @@
 package rpctest.hello;
 
+import com.liubs.shadowrpc.config.ShadowServerConfig;
 import com.liubs.shadowrpc.protocol.annotation.ShadowService;
 import com.liubs.shadowrpc.protocol.serializer.SerializerEnum;
 import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
@@ -29,7 +30,8 @@ public class HelloProtoService implements IHelloProto{
     //启动服务端
     @Test
     public void helloServiceStart() {
-        SerializerManager.getInstance().setSerializer(SerializerEnum.PROTOBUF);
+        ShadowServerConfig.getInstance().setQpsStat(true);  //统计qps
+        SerializerManager.getInstance().setSerializer(SerializerEnum.PROTOBUF); //protobuf序列化方式
         ServerManager.getInstance()
                 .scanService("rpctest.entity","rpctest.hello")
                 .startServer(2024)
