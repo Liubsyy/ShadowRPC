@@ -11,6 +11,8 @@ import com.liubs.shadowrpc.service.ServiceLookUp;
 import com.liubs.shadowrpc.service.ServiceTarget;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -20,6 +22,8 @@ import java.util.concurrent.Executors;
  * @date 2023/12/3 10:23 PM
  **/
 public class ServerHandler extends ChannelInboundHandlerAdapter {
+    private static final Logger logger = LoggerFactory.getLogger(ServerHandler.class);
+
 
     private ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
@@ -27,7 +31,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
         // 打印验证影响速度，压测时去掉
-       //System.out.println("Server received: " + msg);
+        //logger.info("Server received: " + msg);
 
         IModelParser modelParser = SerializerManager.getInstance().getSerializer().getModelParser();
 

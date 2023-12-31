@@ -2,9 +2,10 @@ package rpctest.hello;
 
 import com.liubs.shadowrpc.config.ShadowClientConfig;
 import com.liubs.shadowrpc.init.ShadowClient;
-import com.liubs.shadowrpc.init.ShadowClientsManager;
 import com.liubs.shadowrpc.proxy.RemoteServerProxy;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import rpctest.entity.MyMessage;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.concurrent.Executors;
 
 public class HelloClient {
 
+    private static final Logger logger = LoggerFactory.getLogger(HelloClient.class);
 
     /**
      * 调用hello方法
@@ -31,11 +33,11 @@ public class HelloClient {
         shadowClient.init("127.0.0.1",2023);
 
 
-        IHello helloService = RemoteServerProxy.create(shadowClient.getChannel(),IHello.class,"helloservice");
+        IHello helloService = RemoteServerProxy.create(shadowClient,IHello.class,"helloservice");
 
-        System.out.println("发送 hello 消息");
+        logger.info("发送 hello 消息");
         String helloResponse = helloService.hello("Tom");
-        System.out.println("hello 服务端响应:"+helloResponse);
+        logger.info("hello 服务端响应:"+helloResponse);
 
         MyMessage message = new MyMessage();
         message.setNum(100);
@@ -55,7 +57,7 @@ public class HelloClient {
         shadowClient.init("127.0.0.1",2023);
 
         //调用远程RPC接口
-        IHello helloService = RemoteServerProxy.create(shadowClient.getChannel(),IHello.class,"helloservice");
+        IHello helloService = RemoteServerProxy.create(shadowClient,IHello.class,"helloservice");
 
         System.out.println("发送 hello 消息");
         String helloResponse = helloService.hello("Tom");

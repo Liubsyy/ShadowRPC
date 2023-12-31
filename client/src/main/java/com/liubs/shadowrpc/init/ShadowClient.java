@@ -25,6 +25,9 @@ public class ShadowClient {
     public ShadowClient() {
         group = new NioEventLoopGroup();
     }
+    public ShadowClient(EventLoopGroup group) {
+        this.group = group;
+    }
 
     public void init(String host, int port){
 

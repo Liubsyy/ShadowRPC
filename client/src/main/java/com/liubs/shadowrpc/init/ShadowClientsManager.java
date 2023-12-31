@@ -2,13 +2,10 @@ package com.liubs.shadowrpc.init;
 
 import com.liubs.shadowrpc.registry.access.ServiceDiscovery;
 import com.liubs.shadowrpc.registry.constant.ServerChangeType;
-import com.liubs.shadowrpc.registry.constant.ServiceRegistryConstant;
 import com.liubs.shadowrpc.registry.entity.ServerNode;
 import com.liubs.shadowrpc.registry.listener.ServiceListener;
-import com.liubs.shadowrpc.registry.zk.ZooKeeperClient;
-import org.apache.curator.framework.CuratorFramework;
-import org.apache.curator.framework.recipes.cache.PathChildrenCacheEvent;
-import org.apache.curator.framework.recipes.cache.PathChildrenCacheListener;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,6 +17,8 @@ import java.util.List;
  **/
 public class ShadowClientsManager {
     private static ShadowClientsManager instance = new ShadowClientsManager();
+
+    private EventLoopGroup eventLoopGroup = new NioEventLoopGroup();;
 
     private ServiceDiscovery serviceDiscovery;
     //private ZooKeeperClient zooKeeperClient;
@@ -44,7 +43,7 @@ public class ShadowClientsManager {
                 if(changeType == ServerChangeType.SERVER_ADDED) {
                     System.out.println("Child added: " + serverNode);
 
-                    ShadowClient shadowClient = new ShadowClient();
+                    ShadowClient shadowClient = new ShadowClient(eventLoopGroup);
                     shadowClient.init(serverNode.getIp(),serverNode.getPort());
                     shadowClients.add(shadowClient);
                 }else if(changeType == ServerChangeType.SERVER_REMOVED){

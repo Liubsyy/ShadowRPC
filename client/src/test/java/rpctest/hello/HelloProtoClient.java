@@ -6,7 +6,6 @@ import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
 import com.liubs.shadowrpc.proxy.RemoteServerProxy;
 import org.junit.Before;
 import org.junit.Test;
-import rpctest.entity.MyMessage;
 import rpctest.entity.MyMessageProto;
 
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class HelloProtoClient {
         ShadowClient shadowClient = new ShadowClient();
         shadowClient.init("127.0.0.1",2024);
 
-        IHelloProto helloService = RemoteServerProxy.create(shadowClient.getChannel(),IHelloProto.class,"helloprotoservice");
+        IHelloProto helloService = RemoteServerProxy.create(shadowClient,IHelloProto.class,"helloprotoservice");
         MyMessageProto.MyMessage message =  MyMessageProto.MyMessage.newBuilder()
                 .setNum(100)
                 .setContent("Hello, Server!")
@@ -56,7 +55,7 @@ public class HelloProtoClient {
         shadowClient.init("127.0.0.1",2024);
 
         //调用远程RPC接口
-        IHelloProto helloService = RemoteServerProxy.create(shadowClient.getChannel(),IHelloProto.class,"helloprotoservice");
+        IHelloProto helloService = RemoteServerProxy.create(shadowClient,IHelloProto.class,"helloprotoservice");
 
 
         MyMessageProto.MyMessage requestMsg =  MyMessageProto.MyMessage.newBuilder()
