@@ -1,7 +1,9 @@
 package com.liubs.shadowrpc.service;
 
 import com.liubs.shadowrpc.handler.ShadowChannelInitializer;
+import com.liubs.shadowrpc.registry.access.ServiceRegistry;
 import com.liubs.shadowrpc.registry.constant.ServiceRegistryConstant;
+import com.liubs.shadowrpc.registry.entity.ServerNode;
 import com.liubs.shadowrpc.registry.util.IPUtil;
 import com.liubs.shadowrpc.registry.zk.ZooKeeperClient;
 import io.netty.bootstrap.ServerBootstrap;
@@ -27,9 +29,8 @@ public class Server {
     private String group;
     private int port;
 
-    private String zkUrl;
-    private String zkNodePath;
-    private ZooKeeperClient zooKeeperClient;
+
+    private ServiceRegistry serviceRegistry;
 
     public Server(String group, int port) {
         this.group = group;
@@ -51,13 +52,8 @@ public class Server {
             System.out.println("服务器启动成功...");
 
             //注册服务
-            if(null != zooKeeperClient) {
-                try {
-                    zkNodePath = zooKeeperClient.create(ServiceRegistryConstant.getServerNodeStr(port),(IPUtil.getLocalIp()+":"+port).getBytes());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
+            if(null != serviceRegistry) {
+                serviceRegistry.registerServer(new ServerNode(IPUtil.getLocalIp(),port));
             }
 
             Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
@@ -71,8 +67,7 @@ public class Server {
 
 
     public Server zkUrl(String zkUrl) {
-
-        zooKeeperClient = new ZooKeeperClient(zkUrl);
+        serviceRegistry = new ServiceRegistry(zkUrl);
         return this;
     }
 
@@ -87,18 +82,9 @@ public class Server {
 
     //优雅的退出
     public void stop(){
-        if(null != zooKeeperClient) {
-
-            //删除注册的服务
-            try {
-                if(null != zkNodePath) {
-                    zooKeeperClient.delete(zkNodePath);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            zooKeeperClient.close();
+        if(null != serviceRegistry) {
+            //清除注册服务
+            serviceRegistry.unRegisterSever();
         }
         workerGroup.shutdownGracefully();
         bossGroup.shutdownGracefully();

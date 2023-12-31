@@ -1,4 +1,4 @@
-package com.liubs.shadowrpc.protocol.util;
+package com.liubs.shadowrpc.base.util;
 
 import java.io.File;
 import java.io.IOException;

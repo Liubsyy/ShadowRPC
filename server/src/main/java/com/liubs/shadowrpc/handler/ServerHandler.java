@@ -27,7 +27,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
         // 打印验证影响速度，压测时去掉
-//        System.out.println("Server received: " + msg);
+       //System.out.println("Server received: " + msg);
 
         IModelParser modelParser = SerializerManager.getInstance().getSerializer().getModelParser();
 

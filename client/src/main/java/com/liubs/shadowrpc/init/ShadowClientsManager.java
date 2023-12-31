@@ -1,6 +1,10 @@
 package com.liubs.shadowrpc.init;
 
+import com.liubs.shadowrpc.registry.access.ServiceDiscovery;
+import com.liubs.shadowrpc.registry.constant.ServerChangeType;
 import com.liubs.shadowrpc.registry.constant.ServiceRegistryConstant;
+import com.liubs.shadowrpc.registry.entity.ServerNode;
+import com.liubs.shadowrpc.registry.listener.ServiceListener;
 import com.liubs.shadowrpc.registry.zk.ZooKeeperClient;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.PathChildrenCacheEvent;
@@ -17,7 +21,8 @@ import java.util.List;
 public class ShadowClientsManager {
     private static ShadowClientsManager instance = new ShadowClientsManager();
 
-    private ZooKeeperClient zooKeeperClient;
+    private ServiceDiscovery serviceDiscovery;
+    //private ZooKeeperClient zooKeeperClient;
 
 
     private List<ShadowClient> shadowClients = new ArrayList<>();
@@ -27,50 +32,39 @@ public class ShadowClientsManager {
     }
 
 
-    public ShadowClientsManager connectZk(String zkUrl){
-        zooKeeperClient = new ZooKeeperClient(zkUrl);
+    public ShadowClientsManager connectRegistry(String zkUrl){
+        //zooKeeperClient = new ZooKeeperClient(zkUrl);
+        serviceDiscovery = new ServiceDiscovery(zkUrl);
 
-
-        //初始化状态会同步CHILD_ADDED事件，所以不用获取全量
         //监听增量变化事件
-        zooKeeperClient.addChildrenListener(ServiceRegistryConstant.BASE_PATH, new PathChildrenCacheListener() {
+        //初始化状态会同步SERVER_ADDED事件，所以不用获取全量
+        serviceDiscovery.watchService(new ServiceListener() {
             @Override
-            public void childEvent(CuratorFramework curatorFramework, PathChildrenCacheEvent event) throws Exception {
+            public void onServerChange(ServerChangeType changeType, ServerNode serverNode) {
+                if(changeType == ServerChangeType.SERVER_ADDED) {
+                    System.out.println("Child added: " + serverNode);
 
-                String connectionUrl = new String(zooKeeperClient.read( event.getData().getPath()));
-                String[] split = connectionUrl.split(":");
+                    ShadowClient shadowClient = new ShadowClient();
+                    shadowClient.init(serverNode.getIp(),serverNode.getPort());
+                    shadowClients.add(shadowClient);
+                }else if(changeType == ServerChangeType.SERVER_REMOVED){
+                    System.out.println("Child removed: " + serverNode);
 
-
-                switch (event.getType()) {
-                    case CHILD_ADDED:
-                        System.out.println("Child added: " + event.getData().getPath());
-
-                        ShadowClient shadowClient = new ShadowClient();
-                        shadowClient.init(split[0],Integer.parseInt(split[1]));
-                        shadowClients.add(shadowClient);
-
-                        break;
-                    case CHILD_REMOVED:
-                        System.out.println("Child removed: " + event.getData().getPath());
-
-                        Iterator<ShadowClient> iterator = shadowClients.iterator();
-                        while(iterator.hasNext()) {
-                            ShadowClient shadowClient1 = iterator.next();
-                            if(shadowClient1.getConnectionUrl().equals(connectionUrl)) {
-                                shadowClient1.close();
-                                iterator.remove();
-                            }
+                    Iterator<ShadowClient> iterator = shadowClients.iterator();
+                    while(iterator.hasNext()) {
+                        ShadowClient shadowClient1 = iterator.next();
+                        if(serverNode.getIp().equals(shadowClient1.getRemoteIp()) && serverNode.getPort() == shadowClient1.getRemotePort()) {
+                            shadowClient1.close();
+                            iterator.remove();
                         }
-
-
-                        break;
-                    case CHILD_UPDATED:
-                        System.out.println("Child updated: " + event.getData().getPath());
-
-                        break;
+                    }
+                }else if(changeType == ServerChangeType.SERVER_UPDATED){
+                    //TODO 更新节点的时候
                 }
             }
         });
+
+        Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
         return this;
     }
 
@@ -86,5 +80,15 @@ public class ShadowClientsManager {
         return shadowClients;
     }
 
+    public void stop(){
+        try{
+            shadowClients.forEach(ShadowClient::close);
+
+            serviceDiscovery.close();
+
+        } finally {
+
+        }
+    }
 
 }

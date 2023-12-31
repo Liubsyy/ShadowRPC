@@ -5,15 +5,23 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.github.liubsyy</groupId>
-        <artifactId>com.liubs.shadowrpc</artifactId>
+        <artifactId>shadowrpc</artifactId>
         <version>1.0</version>
     </parent>
 
-    <artifactId>com.liubs.shadowrpc.protocol</artifactId>
+    <artifactId>shadowrpc-protocol</artifactId>
     <version>1.0.0</version>
 
 
     <dependencies>
+        <dependency>
+            <groupId>io.github.liubsyy</groupId>
+            <artifactId>shadowrpc-base</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+
         <dependency>
             <groupId>com.esotericsoftware</groupId>
             <artifactId>kryo</artifactId>

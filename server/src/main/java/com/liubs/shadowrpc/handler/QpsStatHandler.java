@@ -27,7 +27,9 @@ public class QpsStatHandler extends ChannelDuplexHandler {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(() -> {
             int qps = perSecondsRequests.getAndSet(0);
-            System.out.println("Current QPS: " + qps);
+            if(qps > 0) {
+                System.out.println("Current QPS: " + qps);
+            }
 
             // 可以进一步将QPS记录到日志或监控系统
         }, 1, 1, TimeUnit.SECONDS);

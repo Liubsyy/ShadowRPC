@@ -17,17 +17,18 @@ public class HelloClient {
 
     //接入注册中心，负载均衡调用rpc接口
     @Test
-    public void connectZkForServices()  {
-        ShadowClientsManager.getInstance().connectZk("localhost:2181");
+    public void connectRegistryForServices()  {
+        ShadowClientsManager.getInstance().connectRegistry("localhost:2181");
         List<ShadowClient> shadowClientList = ShadowClientsManager.getInstance().getShadowClients();
 
-        System.out.println("所有服务器: "+shadowClientList.stream().map(ShadowClient::getConnectionUrl).collect(Collectors.toList()));
+        System.out.println("所有服务器: "+shadowClientList.stream().map(c-> c.getRemoteIp()+":"+c.getRemotePort()).collect(Collectors.toList()));
 
         IHello helloService = RemoteServerProxy.create(IHello.class,"helloservice");
 
         int helloCount = shadowClientList.size() * 5;
         for(int i = 0 ;i<helloCount; i++) {
-            helloService.hello(i+"");
+            String hello = helloService.hello(i + "");
+            System.out.println(hello);
         }
     }
 }

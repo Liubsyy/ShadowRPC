@@ -7,29 +7,31 @@
         <groupId>io.github.liubsyy</groupId>
         <artifactId>shadowrpc</artifactId>
         <version>1.0</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>shadowrpc-registry</artifactId>
+    <artifactId>shadowrpc-base</artifactId>
     <version>1.0.0</version>
 
     <dependencies>
+
+        <!-- Jackson 依赖 -->
         <dependency>
-            <groupId>io.github.liubsyy</groupId>
-            <artifactId>shadowrpc-base</artifactId>
-            <version>1.0.0</version>
-            <scope>compile</scope>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.curator</groupId>
-            <artifactId>curator-framework</artifactId>
-            <version>${curator.framework.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.curator</groupId>
-            <artifactId>curator-recipes</artifactId>
-            <version>${curator.framework.version}</version>
-        </dependency>
     </dependencies>
 
 </project>

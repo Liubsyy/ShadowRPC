@@ -19,7 +19,8 @@ public class ShadowClient {
     private EventLoopGroup group;
     private Channel channel;
 
-    private String connectionUrl;
+    private String remoteIp;
+    private int remotePort;
 
     public ShadowClient() {
         group = new NioEventLoopGroup();
@@ -38,7 +39,8 @@ public class ShadowClient {
             channel = future.channel();
 
 
-            connectionUrl = host+":"+port;
+            this.remoteIp = host;
+            this.remotePort = port;
             System.out.printf("连接 %s:%d 成功\n",host,port);
 
             Runtime.getRuntime().addShutdownHook(new Thread(this::close));
@@ -49,8 +51,21 @@ public class ShadowClient {
         }
     }
 
-    public String getConnectionUrl() {
-        return connectionUrl;
+
+    public String getRemoteIp() {
+        return remoteIp;
+    }
+
+    public void setRemoteIp(String remoteIp) {
+        this.remoteIp = remoteIp;
+    }
+
+    public int getRemotePort() {
+        return remotePort;
+    }
+
+    public void setRemotePort(int remotePort) {
+        this.remotePort = remotePort;
     }
 
     public Channel getChannel() {
@@ -68,6 +83,7 @@ public class ShadowClient {
 
     public void close(){
         try{
+
             if(null != channel) {
                 channel.close();
             }

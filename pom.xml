@@ -5,11 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.liubsyy</groupId>
-    <artifactId>com.liubs.shadowrpc</artifactId>
+    <artifactId>shadowrpc</artifactId>
     <version>1.0</version>
     <packaging>pom</packaging>
 
     <modules>
+        <module>base</module>
         <module>protocol</module>
         <module>registry</module>
         <module>client</module>
@@ -24,29 +25,40 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+        <!-- jar version -->
         <netty.version>4.1.101.Final</netty.version>
         <curator.framework.version>5.5.0</curator.framework.version>
         <kryo.version>5.5.0</kryo.version>
         <protobuf.java.version>3.25.1</protobuf.java.version>
+        <junit.version>4.13.2</junit.version>
+        <jackson.version>2.16.1</jackson.version>
 
+
+        <!-- build version -->
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
     </properties>
 
 
 
     <dependencies>
+
+
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13.2</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>

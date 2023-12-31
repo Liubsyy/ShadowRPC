@@ -1,6 +1,10 @@
 package rpctest.registry;
 
+import com.liubs.shadowrpc.config.ShadowServerConfig;
+import com.liubs.shadowrpc.protocol.serializer.SerializerEnum;
+import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
 import com.liubs.shadowrpc.service.ServerManager;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -11,6 +15,12 @@ import org.junit.Test;
 public class SomeServers {
 
     public static final String ZK_URL = "localhost:2181";
+
+    @BeforeClass
+    public static void init(){
+        SerializerManager.getInstance().setSerializer(SerializerEnum.KRYO); //kryo序列化方式
+        ShadowServerConfig.getInstance().setQpsStat(true);  //统计qps
+    }
 
     @Test
     public void server1(){

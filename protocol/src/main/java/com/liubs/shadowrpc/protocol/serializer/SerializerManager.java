@@ -3,7 +3,7 @@ package com.liubs.shadowrpc.protocol.serializer;
 
 import com.google.protobuf.MessageLite;
 import com.liubs.shadowrpc.protocol.serializer.protobuf.ParserForType;
-import com.liubs.shadowrpc.protocol.util.ClassScanWalker;
+import com.liubs.shadowrpc.base.util.ClassScanWalker;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;

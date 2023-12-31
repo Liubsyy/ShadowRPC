@@ -5,28 +5,69 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.github.liubsyy</groupId>
-        <artifactId>com.liubs.shadowrpc</artifactId>
+        <artifactId>shadowrpc</artifactId>
         <version>1.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>com.liubs.shadowrpc.client</artifactId>
+    <artifactId>shadowrpc-client</artifactId>
 
 
     <dependencies>
 
         <dependency>
             <groupId>io.github.liubsyy</groupId>
-            <artifactId>com.liubs.shadowrpc.protocol</artifactId>
+            <artifactId>shadowrpc-base</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.liubsyy</groupId>
+            <artifactId>shadowrpc-protocol</artifactId>
             <version>1.0.0</version>
         </dependency>
 
         <dependency>
             <groupId>io.github.liubsyy</groupId>
-            <artifactId>com.liubs.shadowrpc.registry</artifactId>
+            <artifactId>shadowrpc-registry</artifactId>
             <version>1.0.0</version>
             <scope>compile</scope>
+
+            <exclusions>
+                <exclusion>
+                    <groupId>io.netty</groupId>
+                    <artifactId>netty-handler</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.netty</groupId>
+                    <artifactId>netty-transport-native-epoll</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+
+        <!-- 引入netty
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-buffer</artifactId>
+            <version>${netty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-transport</artifactId>
+            <version>${netty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-codec</artifactId>
+            <version>${netty.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-handler</artifactId>
+            <version>${netty.version}</version>
+        </dependency>
+        -->
 
         <dependency>
             <groupId>io.netty</groupId>
@@ -35,6 +76,31 @@
         </dependency>
 
 
-
     </dependencies>
+
+
+
+    <build>
+        <plugins>
+
+
+            <!-- 使用shade插件可以将所有的依赖jar打包到一个jar
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${maven-shade-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>-->
+
+
+        </plugins>
+    </build>
+
 </project>
