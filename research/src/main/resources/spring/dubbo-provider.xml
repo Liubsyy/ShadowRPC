@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://dubbo.apache.org/schema/dubbo
+       http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="greeting-service-provider"/>
+    <dubbo:registry address="zookeeper://localhost:2181"/>
+    <dubbo:protocol name="dubbo" port="20880"/>
+
+    <bean id="greetingService" class="com.liubs.shadowrpc.research.dubbo.GreetingServiceImpl"/>
+    <bean id="greetingService2" class="com.liubs.shadowrpc.research.dubbo.GreetingServiceImpl2"/>
+
+    <dubbo:service interface="com.liubs.shadowrpc.research.dubbo.GreetingService" ref="greetingService" group="group1"/>
+    <dubbo:service interface="com.liubs.shadowrpc.research.dubbo.GreetingService" ref="greetingService2" group="group2"/>
+
+</beans>

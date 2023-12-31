@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package com.liubs.shadowrpc.research.entity;
+
+message SimplePerson {
+    int32 age = 1;
+    double height = 2;
+    float weight = 3;
+    int64 money = 4;
+    string name = 5;
+}
+
+message SimplePersons {
+    repeated SimplePerson items = 1;
+}

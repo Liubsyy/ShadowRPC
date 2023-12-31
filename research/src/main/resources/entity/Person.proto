@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+// ./protoc --java_out=./entity ./entity/Person.proto
+message Person {
+    // 基本数据类型
+    uint32 sex = 1;      // Protobuf没有byte类型，可使用uint32
+    uint32 like = 2;     // short 映射为 uint32
+    uint32 hair = 3;     // char 映射为 uint32
+    bool isMan = 4;
+
+    int32 age = 5;
+    double height = 6;
+    float weight = 7;
+    int64 money = 8;
+
+    // 字符串
+    string name = 9;
+}

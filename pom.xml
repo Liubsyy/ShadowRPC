@@ -16,6 +16,8 @@
         <module>client</module>
         <module>server</module>
 
+        <!-- 调研资料，性能测试模块，不属于项目的部分 -->
+        <module>research</module>
 
     </modules>
 

@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+// ./protoc --java_out=./entity ./entity/Person.proto
+message SimplePerson {
+    int32 age = 1;
+    double height = 2;
+    float weight = 3;
+    int64 money = 4;
+    string name = 5;
+}

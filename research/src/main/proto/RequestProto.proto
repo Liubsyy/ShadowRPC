@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+import "google/protobuf/any.proto";
+
+package com.liubs.shadowrpc.research.entity;
+
+message Request {
+    string traceId = 1;
+    string className = 2;
+    string methodName = 3;
+    repeated google.protobuf.Any params = 4;         // 使用 Any 类型来表示泛型参数
+}
