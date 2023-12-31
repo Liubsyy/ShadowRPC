@@ -86,12 +86,12 @@ public class KryoSizeTest {
         config.setChunkedEncoding(true);
 
         kryo = new Kryo();
-        kryo.setDefaultSerializer(new TaggedFieldSerializerFactory.TaggedFieldSerializerFactory(config));
+        kryo.setDefaultSerializer(new SerializerFactory.TaggedFieldSerializerFactory.TaggedFieldSerializerFactory(config));
         kryo.setRegistrationRequired(false);
         System.out.println("TaggedFieldSerializer(trunked)序列化大小:" + serialize(kryo,person).length);
 
         kryo = new Kryo();
-        kryo.setDefaultSerializer(new TaggedFieldSerializerFactory.TaggedFieldSerializerFactory(config));
+        kryo.setDefaultSerializer(new SerializerFactory.TaggedFieldSerializerFactory.TaggedFieldSerializerFactory(config));
         kryo.register(Person.class);
         System.out.println("TaggedFieldSerializer(trunked注册)序列化大小:" + serialize(kryo,person).length);
 

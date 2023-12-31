@@ -11,8 +11,6 @@ import com.liubs.shadowrpc.research.entity.Request;
 import com.liubs.shadowrpc.research.entity.RequestSimple;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author Liubsyy
@@ -121,12 +119,12 @@ public class KryoRPCSizeTest {
         System.out.println("TaggedFieldSerializer(trunked)序列化大小:" + serialize(kryo,request).length);
 
         kryo = new Kryo();
-        kryo.setDefaultSerializer(new TaggedFieldSerializerFactory.TaggedFieldSerializerFactory(config));
+        kryo.setDefaultSerializer(new SerializerFactory.TaggedFieldSerializerFactory.TaggedFieldSerializerFactory(config));
         register(kryo,true);
         System.out.println("TaggedFieldSerializer(trunked注册)序列化大小:" + serialize(kryo,request).length);
 
         kryo = new Kryo();
-        kryo.setDefaultSerializer(new TaggedFieldSerializerFactory.TaggedFieldSerializerFactory(config));
+        kryo.setDefaultSerializer(new SerializerFactory.TaggedFieldSerializerFactory.TaggedFieldSerializerFactory(config));
         kryo.setRegistrationRequired(false); register(kryo,false);
         System.out.println("TaggedFieldSerializer(trunked)序列化requestSimple大小:" + serialize(kryo,requestSimple).length);
 

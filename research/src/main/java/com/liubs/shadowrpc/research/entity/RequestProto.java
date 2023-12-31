@@ -23,7 +23,7 @@ public final class RequestProto {
      * <code>string traceId = 1;</code>
      * @return The traceId.
      */
-    String getTraceId();
+    java.lang.String getTraceId();
     /**
      * <code>string traceId = 1;</code>
      * @return The bytes for traceId.
@@ -35,7 +35,7 @@ public final class RequestProto {
      * <code>string className = 2;</code>
      * @return The className.
      */
-    String getClassName();
+    java.lang.String getClassName();
     /**
      * <code>string className = 2;</code>
      * @return The bytes for className.
@@ -47,7 +47,7 @@ public final class RequestProto {
      * <code>string methodName = 3;</code>
      * @return The methodName.
      */
-    String getMethodName();
+    java.lang.String getMethodName();
     /**
      * <code>string methodName = 3;</code>
      * @return The bytes for methodName.
@@ -118,42 +118,42 @@ public final class RequestProto {
       params_ = java.util.Collections.emptyList();
     }
 
-    @Override
+    @java.lang.Override
     @SuppressWarnings({"unused"})
-    protected Object newInstance(
+    protected java.lang.Object newInstance(
         UnusedPrivateParameter unused) {
       return new Request();
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return RequestProto.internal_static_com_liubs_shadowrpc_research_entity_Request_descriptor;
+      return com.liubs.shadowrpc.research.entity.RequestProto.internal_static_com_liubs_shadowrpc_research_entity_Request_descriptor;
     }
 
-    @Override
-    protected FieldAccessorTable
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return RequestProto.internal_static_com_liubs_shadowrpc_research_entity_Request_fieldAccessorTable
+      return com.liubs.shadowrpc.research.entity.RequestProto.internal_static_com_liubs_shadowrpc_research_entity_Request_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              Request.class, Builder.class);
+              com.liubs.shadowrpc.research.entity.RequestProto.Request.class, com.liubs.shadowrpc.research.entity.RequestProto.Request.Builder.class);
     }
 
     public static final int TRACEID_FIELD_NUMBER = 1;
     @SuppressWarnings("serial")
-    private volatile Object traceId_ = "";
+    private volatile java.lang.Object traceId_ = "";
     /**
      * <code>string traceId = 1;</code>
      * @return The traceId.
      */
-    @Override
-    public String getTraceId() {
-      Object ref = traceId_;
-      if (ref instanceof String) {
-        return (String) ref;
+    @java.lang.Override
+    public java.lang.String getTraceId() {
+      java.lang.Object ref = traceId_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
+        java.lang.String s = bs.toStringUtf8();
         traceId_ = s;
         return s;
       }
@@ -162,14 +162,14 @@ public final class RequestProto {
      * <code>string traceId = 1;</code>
      * @return The bytes for traceId.
      */
-    @Override
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getTraceIdBytes() {
-      Object ref = traceId_;
-      if (ref instanceof String) {
+      java.lang.Object ref = traceId_;
+      if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (String) ref);
+                (java.lang.String) ref);
         traceId_ = b;
         return b;
       } else {
@@ -179,20 +179,20 @@ public final class RequestProto {
 
     public static final int CLASSNAME_FIELD_NUMBER = 2;
     @SuppressWarnings("serial")
-    private volatile Object className_ = "";
+    private volatile java.lang.Object className_ = "";
     /**
      * <code>string className = 2;</code>
      * @return The className.
      */
-    @Override
-    public String getClassName() {
-      Object ref = className_;
-      if (ref instanceof String) {
-        return (String) ref;
+    @java.lang.Override
+    public java.lang.String getClassName() {
+      java.lang.Object ref = className_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
+        java.lang.String s = bs.toStringUtf8();
         className_ = s;
         return s;
       }
@@ -201,14 +201,14 @@ public final class RequestProto {
      * <code>string className = 2;</code>
      * @return The bytes for className.
      */
-    @Override
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getClassNameBytes() {
-      Object ref = className_;
-      if (ref instanceof String) {
+      java.lang.Object ref = className_;
+      if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (String) ref);
+                (java.lang.String) ref);
         className_ = b;
         return b;
       } else {
@@ -218,20 +218,20 @@ public final class RequestProto {
 
     public static final int METHODNAME_FIELD_NUMBER = 3;
     @SuppressWarnings("serial")
-    private volatile Object methodName_ = "";
+    private volatile java.lang.Object methodName_ = "";
     /**
      * <code>string methodName = 3;</code>
      * @return The methodName.
      */
-    @Override
-    public String getMethodName() {
-      Object ref = methodName_;
-      if (ref instanceof String) {
-        return (String) ref;
+    @java.lang.Override
+    public java.lang.String getMethodName() {
+      java.lang.Object ref = methodName_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
       } else {
         com.google.protobuf.ByteString bs = 
             (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
+        java.lang.String s = bs.toStringUtf8();
         methodName_ = s;
         return s;
       }
@@ -240,14 +240,14 @@ public final class RequestProto {
      * <code>string methodName = 3;</code>
      * @return The bytes for methodName.
      */
-    @Override
+    @java.lang.Override
     public com.google.protobuf.ByteString
         getMethodNameBytes() {
-      Object ref = methodName_;
-      if (ref instanceof String) {
+      java.lang.Object ref = methodName_;
+      if (ref instanceof java.lang.String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
-                (String) ref);
+                (java.lang.String) ref);
         methodName_ = b;
         return b;
       } else {
@@ -265,7 +265,7 @@ public final class RequestProto {
      *
      * <code>repeated .google.protobuf.Any params = 4;</code>
      */
-    @Override
+    @java.lang.Override
     public java.util.List<com.google.protobuf.Any> getParamsList() {
       return params_;
     }
@@ -276,7 +276,7 @@ public final class RequestProto {
      *
      * <code>repeated .google.protobuf.Any params = 4;</code>
      */
-    @Override
+    @java.lang.Override
     public java.util.List<? extends com.google.protobuf.AnyOrBuilder> 
         getParamsOrBuilderList() {
       return params_;
@@ -288,7 +288,7 @@ public final class RequestProto {
      *
      * <code>repeated .google.protobuf.Any params = 4;</code>
      */
-    @Override
+    @java.lang.Override
     public int getParamsCount() {
       return params_.size();
     }
@@ -299,7 +299,7 @@ public final class RequestProto {
      *
      * <code>repeated .google.protobuf.Any params = 4;</code>
      */
-    @Override
+    @java.lang.Override
     public com.google.protobuf.Any getParams(int index) {
       return params_.get(index);
     }
@@ -310,14 +310,14 @@ public final class RequestProto {
      *
      * <code>repeated .google.protobuf.Any params = 4;</code>
      */
-    @Override
+    @java.lang.Override
     public com.google.protobuf.AnyOrBuilder getParamsOrBuilder(
         int index) {
       return params_.get(index);
     }
 
     private byte memoizedIsInitialized = -1;
-    @Override
+    @java.lang.Override
     public final boolean isInitialized() {
       byte isInitialized = memoizedIsInitialized;
       if (isInitialized == 1) return true;
@@ -327,7 +327,7 @@ public final class RequestProto {
       return true;
     }
 
-    @Override
+    @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(traceId_)) {
@@ -345,7 +345,7 @@ public final class RequestProto {
       getUnknownFields().writeTo(output);
     }
 
-    @Override
+    @java.lang.Override
     public int getSerializedSize() {
       int size = memoizedSize;
       if (size != -1) return size;
@@ -369,15 +369,15 @@ public final class RequestProto {
       return size;
     }
 
-    @Override
-    public boolean equals(final Object obj) {
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof Request)) {
+      if (!(obj instanceof com.liubs.shadowrpc.research.entity.RequestProto.Request)) {
         return super.equals(obj);
       }
-      Request other = (Request) obj;
+      com.liubs.shadowrpc.research.entity.RequestProto.Request other = (com.liubs.shadowrpc.research.entity.RequestProto.Request) obj;
 
       if (!getTraceId()
           .equals(other.getTraceId())) return false;
@@ -391,7 +391,7 @@ public final class RequestProto {
       return true;
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
       if (memoizedHashCode != 0) {
         return memoizedHashCode;
@@ -413,44 +413,44 @@ public final class RequestProto {
       return hash;
     }
 
-    public static Request parseFrom(
+    public static com.liubs.shadowrpc.research.entity.RequestProto.Request parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static Request parseFrom(
+    public static com.liubs.shadowrpc.research.entity.RequestProto.Request parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static Request parseFrom(
+    public static com.liubs.shadowrpc.research.entity.RequestProto.Request parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static Request parseFrom(
+    public static com.liubs.shadowrpc.research.entity.RequestProto.Request parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static Request parseFrom(byte[] data)
+    public static com.liubs.shadowrpc.research.entity.RequestProto.Request parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static Request parseFrom(
+    public static com.liubs.shadowrpc.research.entity.RequestProto.Request parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static Request parseFrom(java.io.InputStream input)
+    public static com.liubs.shadowrpc.research.entity.RequestProto.Request parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static Request parseFrom(
+    public static com.liubs.shadowrpc.research.entity.RequestProto.Request parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -458,26 +458,26 @@ public final class RequestProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static Request parseDelimitedFrom(java.io.InputStream input)
+    public static com.liubs.shadowrpc.research.entity.RequestProto.Request parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static Request parseDelimitedFrom(
+    public static com.liubs.shadowrpc.research.entity.RequestProto.Request parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static Request parseFrom(
+    public static com.liubs.shadowrpc.research.entity.RequestProto.Request parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static Request parseFrom(
+    public static com.liubs.shadowrpc.research.entity.RequestProto.Request parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -485,23 +485,23 @@ public final class RequestProto {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    @Override
+    @java.lang.Override
     public Builder newBuilderForType() { return newBuilder(); }
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(Request prototype) {
+    public static Builder newBuilder(com.liubs.shadowrpc.research.entity.RequestProto.Request prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
-    @Override
+    @java.lang.Override
     public Builder toBuilder() {
       return this == DEFAULT_INSTANCE
           ? new Builder() : new Builder().mergeFrom(this);
     }
 
-    @Override
+    @java.lang.Override
     protected Builder newBuilderForType(
-        BuilderParent parent) {
+        com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       Builder builder = new Builder(parent);
       return builder;
     }
@@ -511,18 +511,18 @@ public final class RequestProto {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:com.liubs.shadowrpc.research.entity.Request)
-        RequestOrBuilder {
+        com.liubs.shadowrpc.research.entity.RequestProto.RequestOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return RequestProto.internal_static_com_liubs_shadowrpc_research_entity_Request_descriptor;
+        return com.liubs.shadowrpc.research.entity.RequestProto.internal_static_com_liubs_shadowrpc_research_entity_Request_descriptor;
       }
 
-      @Override
-      protected FieldAccessorTable
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return RequestProto.internal_static_com_liubs_shadowrpc_research_entity_Request_fieldAccessorTable
+        return com.liubs.shadowrpc.research.entity.RequestProto.internal_static_com_liubs_shadowrpc_research_entity_Request_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                Request.class, Builder.class);
+                com.liubs.shadowrpc.research.entity.RequestProto.Request.class, com.liubs.shadowrpc.research.entity.RequestProto.Request.Builder.class);
       }
 
       // Construct using com.liubs.shadowrpc.research.entity.RequestProto.Request.newBuilder()
@@ -531,11 +531,11 @@ public final class RequestProto {
       }
 
       private Builder(
-          BuilderParent parent) {
+          com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
 
       }
-      @Override
+      @java.lang.Override
       public Builder clear() {
         super.clear();
         bitField0_ = 0;
@@ -552,36 +552,36 @@ public final class RequestProto {
         return this;
       }
 
-      @Override
+      @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return RequestProto.internal_static_com_liubs_shadowrpc_research_entity_Request_descriptor;
+        return com.liubs.shadowrpc.research.entity.RequestProto.internal_static_com_liubs_shadowrpc_research_entity_Request_descriptor;
       }
 
-      @Override
-      public Request getDefaultInstanceForType() {
-        return Request.getDefaultInstance();
+      @java.lang.Override
+      public com.liubs.shadowrpc.research.entity.RequestProto.Request getDefaultInstanceForType() {
+        return com.liubs.shadowrpc.research.entity.RequestProto.Request.getDefaultInstance();
       }
 
-      @Override
-      public Request build() {
-        Request result = buildPartial();
+      @java.lang.Override
+      public com.liubs.shadowrpc.research.entity.RequestProto.Request build() {
+        com.liubs.shadowrpc.research.entity.RequestProto.Request result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
         return result;
       }
 
-      @Override
-      public Request buildPartial() {
-        Request result = new Request(this);
+      @java.lang.Override
+      public com.liubs.shadowrpc.research.entity.RequestProto.Request buildPartial() {
+        com.liubs.shadowrpc.research.entity.RequestProto.Request result = new com.liubs.shadowrpc.research.entity.RequestProto.Request(this);
         buildPartialRepeatedFields(result);
         if (bitField0_ != 0) { buildPartial0(result); }
         onBuilt();
         return result;
       }
 
-      private void buildPartialRepeatedFields(Request result) {
+      private void buildPartialRepeatedFields(com.liubs.shadowrpc.research.entity.RequestProto.Request result) {
         if (paramsBuilder_ == null) {
           if (((bitField0_ & 0x00000008) != 0)) {
             params_ = java.util.Collections.unmodifiableList(params_);
@@ -593,7 +593,7 @@ public final class RequestProto {
         }
       }
 
-      private void buildPartial0(Request result) {
+      private void buildPartial0(com.liubs.shadowrpc.research.entity.RequestProto.Request result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.traceId_ = traceId_;
@@ -606,50 +606,50 @@ public final class RequestProto {
         }
       }
 
-      @Override
+      @java.lang.Override
       public Builder clone() {
         return super.clone();
       }
-      @Override
+      @java.lang.Override
       public Builder setField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return super.setField(field, value);
       }
-      @Override
+      @java.lang.Override
       public Builder clearField(
           com.google.protobuf.Descriptors.FieldDescriptor field) {
         return super.clearField(field);
       }
-      @Override
+      @java.lang.Override
       public Builder clearOneof(
           com.google.protobuf.Descriptors.OneofDescriptor oneof) {
         return super.clearOneof(oneof);
       }
-      @Override
+      @java.lang.Override
       public Builder setRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
+          int index, java.lang.Object value) {
         return super.setRepeatedField(field, index, value);
       }
-      @Override
+      @java.lang.Override
       public Builder addRepeatedField(
           com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
+          java.lang.Object value) {
         return super.addRepeatedField(field, value);
       }
-      @Override
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof Request) {
-          return mergeFrom((Request)other);
+        if (other instanceof com.liubs.shadowrpc.research.entity.RequestProto.Request) {
+          return mergeFrom((com.liubs.shadowrpc.research.entity.RequestProto.Request)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(Request other) {
-        if (other == Request.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.liubs.shadowrpc.research.entity.RequestProto.Request other) {
+        if (other == com.liubs.shadowrpc.research.entity.RequestProto.Request.getDefaultInstance()) return this;
         if (!other.getTraceId().isEmpty()) {
           traceId_ = other.traceId_;
           bitField0_ |= 0x00000001;
@@ -696,18 +696,18 @@ public final class RequestProto {
         return this;
       }
 
-      @Override
+      @java.lang.Override
       public final boolean isInitialized() {
         return true;
       }
 
-      @Override
+      @java.lang.Override
       public Builder mergeFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
         if (extensionRegistry == null) {
-          throw new NullPointerException();
+          throw new java.lang.NullPointerException();
         }
         try {
           boolean done = false;
@@ -762,21 +762,21 @@ public final class RequestProto {
       }
       private int bitField0_;
 
-      private Object traceId_ = "";
+      private java.lang.Object traceId_ = "";
       /**
        * <code>string traceId = 1;</code>
        * @return The traceId.
        */
-      public String getTraceId() {
-        Object ref = traceId_;
-        if (!(ref instanceof String)) {
+      public java.lang.String getTraceId() {
+        java.lang.Object ref = traceId_;
+        if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
+          java.lang.String s = bs.toStringUtf8();
           traceId_ = s;
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
       /**
@@ -785,11 +785,11 @@ public final class RequestProto {
        */
       public com.google.protobuf.ByteString
           getTraceIdBytes() {
-        Object ref = traceId_;
+        java.lang.Object ref = traceId_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
-                  (String) ref);
+                  (java.lang.String) ref);
           traceId_ = b;
           return b;
         } else {
@@ -802,7 +802,7 @@ public final class RequestProto {
        * @return This builder for chaining.
        */
       public Builder setTraceId(
-          String value) {
+          java.lang.String value) {
         if (value == null) { throw new NullPointerException(); }
         traceId_ = value;
         bitField0_ |= 0x00000001;
@@ -834,21 +834,21 @@ public final class RequestProto {
         return this;
       }
 
-      private Object className_ = "";
+      private java.lang.Object className_ = "";
       /**
        * <code>string className = 2;</code>
        * @return The className.
        */
-      public String getClassName() {
-        Object ref = className_;
-        if (!(ref instanceof String)) {
+      public java.lang.String getClassName() {
+        java.lang.Object ref = className_;
+        if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
+          java.lang.String s = bs.toStringUtf8();
           className_ = s;
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
       /**
@@ -857,11 +857,11 @@ public final class RequestProto {
        */
       public com.google.protobuf.ByteString
           getClassNameBytes() {
-        Object ref = className_;
+        java.lang.Object ref = className_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
-                  (String) ref);
+                  (java.lang.String) ref);
           className_ = b;
           return b;
         } else {
@@ -874,7 +874,7 @@ public final class RequestProto {
        * @return This builder for chaining.
        */
       public Builder setClassName(
-          String value) {
+          java.lang.String value) {
         if (value == null) { throw new NullPointerException(); }
         className_ = value;
         bitField0_ |= 0x00000002;
@@ -906,21 +906,21 @@ public final class RequestProto {
         return this;
       }
 
-      private Object methodName_ = "";
+      private java.lang.Object methodName_ = "";
       /**
        * <code>string methodName = 3;</code>
        * @return The methodName.
        */
-      public String getMethodName() {
-        Object ref = methodName_;
-        if (!(ref instanceof String)) {
+      public java.lang.String getMethodName() {
+        java.lang.Object ref = methodName_;
+        if (!(ref instanceof java.lang.String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
+          java.lang.String s = bs.toStringUtf8();
           methodName_ = s;
           return s;
         } else {
-          return (String) ref;
+          return (java.lang.String) ref;
         }
       }
       /**
@@ -929,11 +929,11 @@ public final class RequestProto {
        */
       public com.google.protobuf.ByteString
           getMethodNameBytes() {
-        Object ref = methodName_;
+        java.lang.Object ref = methodName_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b = 
               com.google.protobuf.ByteString.copyFromUtf8(
-                  (String) ref);
+                  (java.lang.String) ref);
           methodName_ = b;
           return b;
         } else {
@@ -946,7 +946,7 @@ public final class RequestProto {
        * @return This builder for chaining.
        */
       public Builder setMethodName(
-          String value) {
+          java.lang.String value) {
         if (value == null) { throw new NullPointerException(); }
         methodName_ = value;
         bitField0_ |= 0x00000004;
@@ -1156,7 +1156,7 @@ public final class RequestProto {
        * <code>repeated .google.protobuf.Any params = 4;</code>
        */
       public Builder addAllParams(
-          Iterable<? extends com.google.protobuf.Any> values) {
+          java.lang.Iterable<? extends com.google.protobuf.Any> values) {
         if (paramsBuilder_ == null) {
           ensureParamsIsMutable();
           com.google.protobuf.AbstractMessageLite.Builder.addAll(
@@ -1289,13 +1289,13 @@ public final class RequestProto {
         }
         return paramsBuilder_;
       }
-      @Override
+      @java.lang.Override
       public final Builder setUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.setUnknownFields(unknownFields);
       }
 
-      @Override
+      @java.lang.Override
       public final Builder mergeUnknownFields(
           final com.google.protobuf.UnknownFieldSet unknownFields) {
         return super.mergeUnknownFields(unknownFields);
@@ -1306,18 +1306,18 @@ public final class RequestProto {
     }
 
     // @@protoc_insertion_point(class_scope:com.liubs.shadowrpc.research.entity.Request)
-    private static final Request DEFAULT_INSTANCE;
+    private static final com.liubs.shadowrpc.research.entity.RequestProto.Request DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new Request();
+      DEFAULT_INSTANCE = new com.liubs.shadowrpc.research.entity.RequestProto.Request();
     }
 
-    public static Request getDefaultInstance() {
+    public static com.liubs.shadowrpc.research.entity.RequestProto.Request getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
     private static final com.google.protobuf.Parser<Request>
         PARSER = new com.google.protobuf.AbstractParser<Request>() {
-      @Override
+      @java.lang.Override
       public Request parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1341,13 +1341,13 @@ public final class RequestProto {
       return PARSER;
     }
 
-    @Override
+    @java.lang.Override
     public com.google.protobuf.Parser<Request> getParserForType() {
       return PARSER;
     }
 
-    @Override
-    public Request getDefaultInstanceForType() {
+    @java.lang.Override
+    public com.liubs.shadowrpc.research.entity.RequestProto.Request getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1366,7 +1366,7 @@ public final class RequestProto {
   private static  com.google.protobuf.Descriptors.FileDescriptor
       descriptor;
   static {
-    String[] descriptorData = {
+    java.lang.String[] descriptorData = {
       "\n\022RequestProto.proto\022#com.liubs.shadowrp" +
       "c.research.entity\032\031google/protobuf/any.p" +
       "roto\"g\n\007Request\022\017\n\007traceId\030\001 \001(\t\022\021\n\tclas" +
@@ -1383,7 +1383,7 @@ public final class RequestProto {
     internal_static_com_liubs_shadowrpc_research_entity_Request_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_liubs_shadowrpc_research_entity_Request_descriptor,
-        new String[] { "TraceId", "ClassName", "MethodName", "Params", });
+        new java.lang.String[] { "TraceId", "ClassName", "MethodName", "Params", });
     com.google.protobuf.AnyProto.getDescriptor();
   }
 

@@ -15,32 +15,32 @@ public final class GreeterGrpc {
 
   private GreeterGrpc() {}
 
-  public static final String SERVICE_NAME = "Greeter";
+  public static final java.lang.String SERVICE_NAME = "Greeter";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<HelloRequest,
-      HelloReply> getSayHelloMethod;
+  private static volatile io.grpc.MethodDescriptor<com.liubs.shadowrpc.research.grpc.gen.HelloRequest,
+      com.liubs.shadowrpc.research.grpc.gen.HelloReply> getSayHelloMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "SayHello",
-      requestType = HelloRequest.class,
-      responseType = HelloReply.class,
+      requestType = com.liubs.shadowrpc.research.grpc.gen.HelloRequest.class,
+      responseType = com.liubs.shadowrpc.research.grpc.gen.HelloReply.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<HelloRequest,
-      HelloReply> getSayHelloMethod() {
-    io.grpc.MethodDescriptor<HelloRequest, HelloReply> getSayHelloMethod;
+  public static io.grpc.MethodDescriptor<com.liubs.shadowrpc.research.grpc.gen.HelloRequest,
+      com.liubs.shadowrpc.research.grpc.gen.HelloReply> getSayHelloMethod() {
+    io.grpc.MethodDescriptor<com.liubs.shadowrpc.research.grpc.gen.HelloRequest, com.liubs.shadowrpc.research.grpc.gen.HelloReply> getSayHelloMethod;
     if ((getSayHelloMethod = GreeterGrpc.getSayHelloMethod) == null) {
       synchronized (GreeterGrpc.class) {
         if ((getSayHelloMethod = GreeterGrpc.getSayHelloMethod) == null) {
           GreeterGrpc.getSayHelloMethod = getSayHelloMethod =
-              io.grpc.MethodDescriptor.<HelloRequest, HelloReply>newBuilder()
+              io.grpc.MethodDescriptor.<com.liubs.shadowrpc.research.grpc.gen.HelloRequest, com.liubs.shadowrpc.research.grpc.gen.HelloReply>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "SayHello"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  HelloRequest.getDefaultInstance()))
+                  com.liubs.shadowrpc.research.grpc.gen.HelloRequest.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  HelloReply.getDefaultInstance()))
+                  com.liubs.shadowrpc.research.grpc.gen.HelloReply.getDefaultInstance()))
               .setSchemaDescriptor(new GreeterMethodDescriptorSupplier("SayHello"))
               .build();
         }
@@ -55,7 +55,7 @@ public final class GreeterGrpc {
   public static GreeterStub newStub(io.grpc.Channel channel) {
     io.grpc.stub.AbstractStub.StubFactory<GreeterStub> factory =
       new io.grpc.stub.AbstractStub.StubFactory<GreeterStub>() {
-        @Override
+        @java.lang.Override
         public GreeterStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
           return new GreeterStub(channel, callOptions);
         }
@@ -70,7 +70,7 @@ public final class GreeterGrpc {
       io.grpc.Channel channel) {
     io.grpc.stub.AbstractStub.StubFactory<GreeterBlockingStub> factory =
       new io.grpc.stub.AbstractStub.StubFactory<GreeterBlockingStub>() {
-        @Override
+        @java.lang.Override
         public GreeterBlockingStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
           return new GreeterBlockingStub(channel, callOptions);
         }
@@ -85,7 +85,7 @@ public final class GreeterGrpc {
       io.grpc.Channel channel) {
     io.grpc.stub.AbstractStub.StubFactory<GreeterFutureStub> factory =
       new io.grpc.stub.AbstractStub.StubFactory<GreeterFutureStub>() {
-        @Override
+        @java.lang.Override
         public GreeterFutureStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
           return new GreeterFutureStub(channel, callOptions);
         }
@@ -105,8 +105,8 @@ public final class GreeterGrpc {
      * Sends a greeting
      * </pre>
      */
-    default void sayHello(HelloRequest request,
-                          io.grpc.stub.StreamObserver<HelloReply> responseObserver) {
+    default void sayHello(com.liubs.shadowrpc.research.grpc.gen.HelloRequest request,
+        io.grpc.stub.StreamObserver<com.liubs.shadowrpc.research.grpc.gen.HelloReply> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSayHelloMethod(), responseObserver);
     }
   }
@@ -120,7 +120,7 @@ public final class GreeterGrpc {
   public static abstract class GreeterImplBase
       implements io.grpc.BindableService, AsyncService {
 
-    @Override public final io.grpc.ServerServiceDefinition bindService() {
+    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return GreeterGrpc.bindService(this);
     }
   }
@@ -138,7 +138,7 @@ public final class GreeterGrpc {
       super(channel, callOptions);
     }
 
-    @Override
+    @java.lang.Override
     protected GreeterStub build(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       return new GreeterStub(channel, callOptions);
@@ -149,8 +149,8 @@ public final class GreeterGrpc {
      * Sends a greeting
      * </pre>
      */
-    public void sayHello(HelloRequest request,
-                         io.grpc.stub.StreamObserver<HelloReply> responseObserver) {
+    public void sayHello(com.liubs.shadowrpc.research.grpc.gen.HelloRequest request,
+        io.grpc.stub.StreamObserver<com.liubs.shadowrpc.research.grpc.gen.HelloReply> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getSayHelloMethod(), getCallOptions()), request, responseObserver);
     }
@@ -169,7 +169,7 @@ public final class GreeterGrpc {
       super(channel, callOptions);
     }
 
-    @Override
+    @java.lang.Override
     protected GreeterBlockingStub build(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       return new GreeterBlockingStub(channel, callOptions);
@@ -180,7 +180,7 @@ public final class GreeterGrpc {
      * Sends a greeting
      * </pre>
      */
-    public HelloReply sayHello(HelloRequest request) {
+    public com.liubs.shadowrpc.research.grpc.gen.HelloReply sayHello(com.liubs.shadowrpc.research.grpc.gen.HelloRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getSayHelloMethod(), getCallOptions(), request);
     }
@@ -199,7 +199,7 @@ public final class GreeterGrpc {
       super(channel, callOptions);
     }
 
-    @Override
+    @java.lang.Override
     protected GreeterFutureStub build(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       return new GreeterFutureStub(channel, callOptions);
@@ -210,8 +210,8 @@ public final class GreeterGrpc {
      * Sends a greeting
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<HelloReply> sayHello(
-        HelloRequest request) {
+    public com.google.common.util.concurrent.ListenableFuture<com.liubs.shadowrpc.research.grpc.gen.HelloReply> sayHello(
+        com.liubs.shadowrpc.research.grpc.gen.HelloRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getSayHelloMethod(), getCallOptions()), request);
     }
@@ -232,21 +232,21 @@ public final class GreeterGrpc {
       this.methodId = methodId;
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
+    @java.lang.Override
+    @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_SAY_HELLO:
-          serviceImpl.sayHello((HelloRequest) request,
-              (io.grpc.stub.StreamObserver<HelloReply>) responseObserver);
+          serviceImpl.sayHello((com.liubs.shadowrpc.research.grpc.gen.HelloRequest) request,
+              (io.grpc.stub.StreamObserver<com.liubs.shadowrpc.research.grpc.gen.HelloReply>) responseObserver);
           break;
         default:
           throw new AssertionError();
       }
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
+    @java.lang.Override
+    @java.lang.SuppressWarnings("unchecked")
     public io.grpc.stub.StreamObserver<Req> invoke(
         io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
@@ -262,8 +262,8 @@ public final class GreeterGrpc {
           getSayHelloMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
-              HelloRequest,
-              HelloReply>(
+              com.liubs.shadowrpc.research.grpc.gen.HelloRequest,
+              com.liubs.shadowrpc.research.grpc.gen.HelloReply>(
                 service, METHODID_SAY_HELLO)))
         .build();
   }
@@ -272,12 +272,12 @@ public final class GreeterGrpc {
       implements io.grpc.protobuf.ProtoFileDescriptorSupplier, io.grpc.protobuf.ProtoServiceDescriptorSupplier {
     GreeterBaseDescriptorSupplier() {}
 
-    @Override
+    @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return HelloWorldProto.getDescriptor();
+      return com.liubs.shadowrpc.research.grpc.gen.HelloWorldProto.getDescriptor();
     }
 
-    @Override
+    @java.lang.Override
     public com.google.protobuf.Descriptors.ServiceDescriptor getServiceDescriptor() {
       return getFileDescriptor().findServiceByName("Greeter");
     }
@@ -291,13 +291,13 @@ public final class GreeterGrpc {
   private static final class GreeterMethodDescriptorSupplier
       extends GreeterBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
-    private final String methodName;
+    private final java.lang.String methodName;
 
-    GreeterMethodDescriptorSupplier(String methodName) {
+    GreeterMethodDescriptorSupplier(java.lang.String methodName) {
       this.methodName = methodName;
     }
 
-    @Override
+    @java.lang.Override
     public com.google.protobuf.Descriptors.MethodDescriptor getMethodDescriptor() {
       return getServiceDescriptor().findMethodByName(methodName);
     }

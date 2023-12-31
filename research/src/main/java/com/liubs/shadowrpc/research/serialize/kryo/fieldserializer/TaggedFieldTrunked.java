@@ -17,7 +17,7 @@ public class TaggedFieldTrunked extends BaseSerializer {
         kryo = new Kryo();
         TaggedFieldSerializer.TaggedFieldSerializerConfig config = new TaggedFieldSerializer.TaggedFieldSerializerConfig();
         config.setChunkedEncoding(true);
-        kryo.setDefaultSerializer(new TaggedFieldSerializerFactory.TaggedFieldSerializerFactory(config));
+        kryo.setDefaultSerializer(new SerializerFactory.TaggedFieldSerializerFactory.TaggedFieldSerializerFactory(config));
 
         kryo.register(Person.class);
         kryo.register(VersionPerson.class);
