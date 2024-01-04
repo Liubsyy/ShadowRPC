@@ -4,6 +4,8 @@ package com.liubs.shadowrpc.protocol.serializer;
 import com.google.protobuf.MessageLite;
 import com.liubs.shadowrpc.protocol.serializer.protobuf.ParserForType;
 import com.liubs.shadowrpc.base.util.ClassScanWalker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -13,6 +15,8 @@ import java.lang.reflect.InvocationTargetException;
  * @date 2023/12/23 5:01 PM
  **/
 public class SerializerManager {
+    private static final Logger logger = LoggerFactory.getLogger(SerializerManager.class);
+
     private static SerializerManager instance = new SerializerManager();
 
     private SerializerEnum serializer = SerializerEnum.KRYO;
@@ -37,7 +41,7 @@ public class SerializerManager {
                     }
                 });
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error("序列化包初始化失败",e);
             }
         }
     }

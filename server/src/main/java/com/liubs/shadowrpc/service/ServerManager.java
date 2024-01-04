@@ -4,6 +4,8 @@ import com.liubs.shadowrpc.protocol.annotation.ShadowServiceHolder;
 import com.liubs.shadowrpc.protocol.annotation.ShadowService;
 import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
 import com.liubs.shadowrpc.protocol.util.AnnotationScanner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -18,6 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @date 2023/12/18 10:49 PM
  */
 public class ServerManager {
+    private static final Logger logger = LoggerFactory.getLogger(ServerManager.class);
 
     private static ServerManager instance = new ServerManager();
 
@@ -58,7 +61,7 @@ public class ServerManager {
             try {
                 shadowServices.addAll(AnnotationScanner.scanAnnotations(packageName, ShadowService.class));
             } catch (IOException e) {
-                e.printStackTrace();
+               logger.error("scanService err",e);
             }
         }
 

@@ -1,12 +1,12 @@
 package com.liubs.shadowrpc.handler;
 
-import com.liubs.shadowrpc.protocol.entity.ShadowRPCResponse;
 import com.liubs.shadowrpc.protocol.model.IModelParser;
 import com.liubs.shadowrpc.protocol.model.ResponseModel;
 import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.channel.SimpleChannelInboundHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Liubsyy
@@ -15,6 +15,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 
 
 public class ClientHandler extends ChannelInboundHandlerAdapter{
+    private static final Logger logger = LoggerFactory.getLogger(ClientHandler.class);
 
         @Override
     public void channelActive(ChannelHandlerContext ctx) {
@@ -34,7 +35,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter{
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
         // 在发生异常时执行
-        cause.printStackTrace();
+       logger.error("exceptionCaught err",cause);
         ctx.close();
     }
 

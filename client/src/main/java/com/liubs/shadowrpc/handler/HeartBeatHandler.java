@@ -4,6 +4,8 @@ import com.liubs.shadowrpc.protocol.entity.HeartBeatMessage;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.handler.timeout.IdleStateHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -12,6 +14,7 @@ import io.netty.handler.timeout.IdleStateHandler;
  **/
 
 public class HeartBeatHandler extends IdleStateHandler {
+    private static final Logger logger = LoggerFactory.getLogger(HeartBeatMessage.class);
 
     public HeartBeatHandler(int heartBeatWaitSeconds) {
         super(0, 0, 3);
@@ -20,7 +23,7 @@ public class HeartBeatHandler extends IdleStateHandler {
 
     @Override
     protected void channelIdle(ChannelHandlerContext ctx, IdleStateEvent evt) {
-        System.out.println("发送心跳消息...");
+        logger.debug("发送心跳消息...");
         ctx.writeAndFlush(HeartBeatMessage.SINGLETON);
     }
 }

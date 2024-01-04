@@ -5,6 +5,8 @@ import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageCodec;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -14,6 +16,7 @@ import java.util.List;
  * @date 2023/12/15 10:01 PM
  **/
 public class MessageHandler extends ByteToMessageCodec<Object> {
+    private static final Logger logger = LoggerFactory.getLogger(MessageHandler.class);
 
     @Override
     protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
@@ -41,7 +44,7 @@ public class MessageHandler extends ByteToMessageCodec<Object> {
         in.readBytes(data);
 
         if(HeartBeatMessage.isHeartBeatMsg(data)) {
-            System.out.println("收到心跳消息...");
+            logger.info("收到心跳消息...");
         }else {
             Object obj = SerializerManager.getInstance().deserializeRequest(data);
             out.add(obj);

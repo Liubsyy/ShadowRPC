@@ -3,6 +3,8 @@ package com.liubs.shadowrpc.handler;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -16,6 +18,8 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class QpsStatHandler extends ChannelDuplexHandler {
 
+    private static final Logger logger = LoggerFactory.getLogger(QpsStatHandler.class);
+
     //请求数量
     private static AtomicLong activeRequests = new AtomicLong(0);
 
@@ -28,7 +32,7 @@ public class QpsStatHandler extends ChannelDuplexHandler {
         scheduler.scheduleAtFixedRate(() -> {
             int qps = perSecondsRequests.getAndSet(0);
             if(qps > 0) {
-                System.out.println("Current QPS: " + qps);
+                logger.info("Current QPS: " + qps);
             }
 
             // 可以进一步将QPS记录到日志或监控系统

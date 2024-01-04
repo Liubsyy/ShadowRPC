@@ -31,4 +31,12 @@ public class ShadowServiceHolder <T extends Annotation> {
     public void setClassz(Class<?> classz) {
         this.classz = classz;
     }
+
+    @Override
+    public String toString() {
+        return "ShadowServiceHolder{" +
+                "annotation=" + annotation +
+                ", classz=" + classz +
+                '}';
+    }
 }
