@@ -43,6 +43,8 @@ public class HelloProtoClient {
         System.out.printf("发送请求 : %s\n",message);
         MyMessageProto.MyMessage response = helloService.say(message);
         System.out.printf("接收服务端消息 : %s\n",response);
+        shadowClient.close();
+
     }
 
     /**

@@ -8,6 +8,8 @@ import com.liubs.shadowrpc.protocol.model.RequestModel;
 import com.liubs.shadowrpc.protocol.model.ResponseModel;
 import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
 import io.netty.channel.Channel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -20,6 +22,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2023/12/31
  **/
 public class RemoteHandler implements InvocationHandler {
+    private static final Logger logger = LoggerFactory.getLogger(RemoteHandler.class);
 
     /**
      * 是否使用注册中心
@@ -56,32 +59,51 @@ public class RemoteHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        RequestModel requestModel = new RequestModel();
-        String traceId = UUID.randomUUID().toString();
-        requestModel.setTraceId(traceId);
-        requestModel.setServiceName(serviceName);
-        requestModel.setMethodName(method.getName());
-        requestModel.setParamTypes(method.getParameterTypes());
-        requestModel.setParams(args);
 
-        IModelParser modelParser = SerializerManager.getInstance().getSerializer().getModelParser();
-        Future<?> future = ReceiveHolder.getInstance().initFuture(traceId);
+        try{
+            RequestModel requestModel = new RequestModel();
+            String traceId = UUID.randomUUID().toString();
+            requestModel.setTraceId(traceId);
+            requestModel.setServiceName(serviceName);
+            requestModel.setMethodName(method.getName());
+            requestModel.setParamTypes(method.getParameterTypes());
+            requestModel.setParams(args);
 
-        Channel channel = null;
-        if(useRegistry) {
-            channel = ShadowClientsManager.getInstance().getBalanceShadowClient().getChannel();
-        }else {
-            channel = client.getChannel();
+            IModelParser modelParser = SerializerManager.getInstance().getSerializer().getModelParser();
+            Future<?> future = ReceiveHolder.getInstance().initFuture(traceId);
+
+            Channel channel = null;
+            if(useRegistry) {
+                channel = ShadowClientsManager.getInstance().getBalanceShadowClient().getChannel();
+            }else {
+                channel = client.getChannel();
+            }
+
+            if(!channel.isOpen()) {
+                logger.error("服务器已关闭,发送消息抛弃...");
+                return null;
+            }
+
+            try{
+                channel.writeAndFlush(modelParser.toRequest(requestModel)).sync();
+            }catch (Exception e) {
+                logger.error("发送请求{}失败",traceId);
+                return null;
+            }
+
+            ResponseModel responseModel = (ResponseModel)future.get(3, TimeUnit.SECONDS);
+            if(responseModel != null) {
+                return responseModel.getResult();
+            }else {
+                ReceiveHolder.getInstance().deleteWait(traceId);
+                logger.error("超时请求,抛弃消息{}",traceId);
+                return null;
+            }
+
+        }catch (Throwable e) {
+            logger.error("invoke err",e);
         }
 
-        channel.writeAndFlush(modelParser.toRequest(requestModel));
-
-        ResponseModel responseModel = (ResponseModel)future.get(3, TimeUnit.SECONDS);
-        if(responseModel != null) {
-            return responseModel.getResult();
-        }else {
-            System.out.println("超时请求");
-            return null;
-        }
+        return null;
     }
 }

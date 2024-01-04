@@ -17,11 +17,16 @@ import org.slf4j.LoggerFactory;
 public class ClientHandler extends ChannelInboundHandlerAdapter{
     private static final Logger logger = LoggerFactory.getLogger(ClientHandler.class);
 
-        @Override
-    public void channelActive(ChannelHandlerContext ctx) {
-        // 当连接激活时，可以发送一条消息
-//        System.out.println("Client connected.");
-//        ctx.writeAndFlush("Hello, Server!");
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        logger.info("已连接远程{}",ctx.channel().remoteAddress());
+        super.channelActive(ctx);
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        logger.info("远程{} 已断开",ctx.channel().remoteAddress());
+        super.channelInactive(ctx);
     }
 
     @Override

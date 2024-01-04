@@ -28,6 +28,18 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     private static ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        logger.info("客户端{} 已连接",ctx.channel().remoteAddress());
+        super.channelActive(ctx);
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        logger.info("客户端{} 断开连接",ctx.channel().remoteAddress());
+        super.channelInactive(ctx);
+    }
+
+    @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
         // 打印验证影响速度，压测时去掉

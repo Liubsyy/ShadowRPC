@@ -25,6 +25,10 @@ public class ReceiveHolder {
         return completableFuture;
     }
 
+    public void deleteWait(String uuid) {
+        futureMap.remove(uuid);
+    }
+
 
     public void receiveData(ResponseModel responseModel){
         CompletableFuture<Object> future = futureMap.remove(responseModel.getTraceId());
