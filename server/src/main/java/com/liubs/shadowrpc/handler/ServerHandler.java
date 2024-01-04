@@ -25,7 +25,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
     private static final Logger logger = LoggerFactory.getLogger(ServerHandler.class);
 
 
-    private ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+    private static ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
