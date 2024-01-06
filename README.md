@@ -2,7 +2,7 @@
 一个基于netty的rpc开源框架，简单易用，零配置，可同步和异步调用<br><br>
 
 主要模块
-- protocol : 协议层，包含应用层通信协议，以及序列化和反序列化，支持kryo和protobuf序列化/反序列化, 其中protobuf可实现跨语言
+- protocol : 协议层，包含应用层通信协议，以及序列化/反序列化，支持kryo和protobuf
 - registry : 注册模块，基于zookeeper作为注册中心，包含注册服务和服务发现
 - server : 服务端
 - client : 客户端
