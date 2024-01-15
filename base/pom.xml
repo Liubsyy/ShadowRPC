@@ -57,6 +57,13 @@
         </dependency>
 
 
+        <!-- 扫描工具 -->
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>${reflections.version}</version>
+        </dependency>
+
 
     </dependencies>
 

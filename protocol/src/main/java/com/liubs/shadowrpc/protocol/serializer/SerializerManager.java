@@ -2,6 +2,7 @@ package com.liubs.shadowrpc.protocol.serializer;
 
 
 import com.google.protobuf.MessageLite;
+import com.liubs.shadowrpc.base.config.BaseConfig;
 import com.liubs.shadowrpc.protocol.serializer.protobuf.ParserForType;
 import com.liubs.shadowrpc.base.util.ClassScanWalker;
 import org.slf4j.Logger;
@@ -19,7 +20,8 @@ public class SerializerManager {
 
     private static SerializerManager instance = new SerializerManager();
 
-    private SerializerEnum serializer = SerializerEnum.KRYO;
+    private BaseConfig config;
+    private SerializerStrategy serializer = SerializerStrategy.KRYO;
 
     public static SerializerManager getInstance() {
         return instance;
@@ -47,12 +49,12 @@ public class SerializerManager {
     }
 
 
-    public void setSerializer(SerializerEnum serializer) {
+    public void setSerializer(SerializerStrategy serializer) {
         this.serializer = serializer;
     }
 
 
-    public SerializerEnum getSerializer() {
+    public SerializerStrategy getSerializer() {
         return serializer;
     }
 

@@ -1,4 +1,4 @@
-package com.liubs.shadowrpc.protocol.annotation;
+package com.liubs.shadowrpc.base.annotation;
 
 import java.lang.annotation.Annotation;
 

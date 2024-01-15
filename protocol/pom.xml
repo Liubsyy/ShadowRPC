@@ -43,7 +43,7 @@
             <plugin>
                 <groupId>kr.motd.maven</groupId>
                 <artifactId>os-maven-plugin</artifactId>
-                <version>1.7.1</version>
+                <version>${os-maven.version}</version>
                 <executions>
                     <execution>
                         <phase>initialize</phase>
@@ -57,7 +57,7 @@
             <plugin>
                 <groupId>org.xolstice.maven.plugins</groupId>
                 <artifactId>protobuf-maven-plugin</artifactId>
-                <version>0.6.1</version>
+                <version>${protobuf-plugin.version}</version>
                 <extensions>true</extensions>
                 <configuration>
                     <!--是否每次执行都清除输出目录-->

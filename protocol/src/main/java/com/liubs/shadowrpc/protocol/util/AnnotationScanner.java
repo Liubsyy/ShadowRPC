@@ -2,7 +2,7 @@ package com.liubs.shadowrpc.protocol.util;
 
 
 import com.liubs.shadowrpc.base.util.ClassScanWalker;
-import com.liubs.shadowrpc.protocol.annotation.ShadowServiceHolder;
+import com.liubs.shadowrpc.base.annotation.ShadowServiceHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

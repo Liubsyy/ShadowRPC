@@ -1,7 +1,7 @@
 package com.liubs.shadowrpc.proxy;
 
 import com.liubs.shadowrpc.init.ShadowClient;
-import com.liubs.shadowrpc.protocol.annotation.ShadowInterface;
+import com.liubs.shadowrpc.base.annotation.ShadowInterface;
 
 import java.lang.reflect.Proxy;
 

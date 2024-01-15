@@ -1,7 +1,7 @@
 package com.liubs.shadowrpc.service;
 
-import com.liubs.shadowrpc.protocol.annotation.ShadowServiceHolder;
-import com.liubs.shadowrpc.protocol.annotation.ShadowService;
+import com.liubs.shadowrpc.base.annotation.ShadowServiceHolder;
+import com.liubs.shadowrpc.base.annotation.ShadowService;
 import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
 import com.liubs.shadowrpc.protocol.util.AnnotationScanner;
 import org.slf4j.Logger;

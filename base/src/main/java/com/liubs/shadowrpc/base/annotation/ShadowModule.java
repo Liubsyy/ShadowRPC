@@ -1,4 +1,4 @@
-package com.liubs.shadowrpc.protocol.annotation;
+package com.liubs.shadowrpc.base.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,9 +7,9 @@ import java.lang.annotation.Target;
 
 /**
  * @author Liubsyy
- * @date 2023/12/8 22:18 PM
+ * @date 2024/1/15
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ShadowInterface {
+public @interface ShadowModule {
 }

@@ -22,7 +22,6 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <!-- jar version -->
@@ -34,11 +33,14 @@
         <jackson.version>2.16.1</jackson.version>
         <log4j.version>2.22.1</log4j.version>
         <slf4j.version>1.7.36</slf4j.version>
+        <reflections.version>0.10.2</reflections.version>
 
 
         <!-- build version -->
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-shade-plugin.version>3.2.4</maven-shade-plugin.version>
+        <os-maven.version>1.7.1</os-maven.version>
+        <protobuf-plugin.version>0.6.1</protobuf-plugin.version>
     </properties>
 
 

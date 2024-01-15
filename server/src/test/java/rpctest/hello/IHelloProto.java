@@ -1,7 +1,6 @@
 package rpctest.hello;
 
-import com.liubs.shadowrpc.protocol.annotation.ShadowInterface;
-import com.liubs.shadowrpc.protocol.annotation.ShadowService;
+import com.liubs.shadowrpc.base.annotation.ShadowInterface;
 import rpctest.entity.MyMessageProto;
 
 /**

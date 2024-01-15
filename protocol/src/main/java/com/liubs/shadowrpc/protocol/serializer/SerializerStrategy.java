@@ -1,5 +1,6 @@
 package com.liubs.shadowrpc.protocol.serializer;
 
+import com.liubs.shadowrpc.base.constant.SerializerEnum;
 import com.liubs.shadowrpc.protocol.entity.ShadowRPCRequest;
 import com.liubs.shadowrpc.protocol.entity.ShadowRPCRequestProto;
 import com.liubs.shadowrpc.protocol.entity.ShadowRPCResponse;
@@ -14,16 +15,16 @@ import com.liubs.shadowrpc.protocol.serializer.protobuf.ShadowProtobufSerializer
  * @author Liubsyy
  * @date 2023/12/23 6:36 PM
  **/
-public enum SerializerEnum {
+public enum SerializerStrategy {
 
-    KRYO(1, "kryo序列化",
+    KRYO(SerializerEnum.KRYO,
             new KryoSerializer(),
             ShadowRPCRequest.class,
             ShadowRPCResponse.class,
             new KryoModelParser()
             ),
 
-    PROTOBUF(2,"protobuf序列化",
+    PROTOBUF(SerializerEnum.PROTOBUF,
             new ShadowProtobufSerializer(),
             ShadowRPCRequestProto.ShadowRPCRequest.class,
             ShadowRPCResponseProto.ShadowRPCResponse.class,
@@ -32,8 +33,7 @@ public enum SerializerEnum {
 
     ;
 
-    private int serializeType;
-    private String text;
+    private SerializerEnum serializerEnum;
     private ISerializer serializer;
     private Class<?> requestClass;
     private Class<?> responseClass;
@@ -41,9 +41,8 @@ public enum SerializerEnum {
     private IModelParser modelParser;
 
 
-    SerializerEnum(int serializeType, String text, ISerializer serializer, Class<?> requestClass, Class<?> responseClass,IModelParser modelParser) {
-        this.serializeType = serializeType;
-        this.text = text;
+    SerializerStrategy(SerializerEnum serializerEnum,ISerializer serializer, Class<?> requestClass, Class<?> responseClass, IModelParser modelParser) {
+        this.serializerEnum = serializerEnum;
         this.serializer = serializer;
         this.requestClass = requestClass;
         this.responseClass = responseClass;

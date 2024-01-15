@@ -1,7 +1,7 @@
 package rpctest.hello;
 
 import com.liubs.shadowrpc.init.ShadowClient;
-import com.liubs.shadowrpc.protocol.serializer.SerializerEnum;
+import com.liubs.shadowrpc.protocol.serializer.SerializerStrategy;
 import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
 import com.liubs.shadowrpc.proxy.RemoteServerProxy;
 import org.junit.Before;
@@ -24,7 +24,7 @@ public class HelloProtoClient {
 
     @Before
     public void init(){
-        SerializerManager.getInstance().setSerializer(SerializerEnum.PROTOBUF);
+        SerializerManager.getInstance().setSerializer(SerializerStrategy.PROTOBUF);
         SerializerManager.getInstance().init("rpctest.entity");
     }
 
