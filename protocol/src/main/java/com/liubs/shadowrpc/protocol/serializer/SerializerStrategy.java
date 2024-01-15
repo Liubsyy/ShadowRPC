@@ -65,4 +65,16 @@ public enum SerializerStrategy {
     public IModelParser getModelParser() {
         return modelParser;
     }
+
+
+
+    public static SerializerStrategy findBySerializer(SerializerEnum serializerEnum) {
+        for(SerializerStrategy e : values()) {
+            if(e.serializerEnum == serializerEnum) {
+                return e;
+            }
+        }
+        return null;
+    }
+
 }
