@@ -3,10 +3,8 @@ package rpctest.hello;
 import com.liubs.shadowrpc.base.config.ClientConfig;
 import com.liubs.shadowrpc.base.module.ModulePool;
 import com.liubs.shadowrpc.client.ClientModule;
-import com.liubs.shadowrpc.client.config.ShadowClientConfig;
 import com.liubs.shadowrpc.client.init.ShadowClient;
 import com.liubs.shadowrpc.client.proxy.RemoteServerProxy;
-import com.liubs.shadowrpc.registry.zk.ZooKeeperClient;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -40,7 +38,7 @@ public class HelloClient {
      */
     @Test
     public void helloClient() {
-        ShadowClient shadowClient = new ShadowClient();
+        ShadowClient shadowClient = new ShadowClient(new ClientConfig());
         shadowClient.init("127.0.0.1",2023);
 
 
@@ -64,7 +62,7 @@ public class HelloClient {
      */
     @Test
     public void helloConcurrent() throws InterruptedException {
-        ShadowClient shadowClient = new ShadowClient();
+        ShadowClient shadowClient = new ShadowClient(new ClientConfig());
         shadowClient.init("127.0.0.1",2023);
 
         //调用远程RPC接口
@@ -111,9 +109,10 @@ public class HelloClient {
     //测试心跳
     @Test
     public void testHeartBeat() throws InterruptedException {
-        ShadowClientConfig.getInstance().setHeartBeat(true);
-        ShadowClientConfig.getInstance().setHeartBeatWaitSeconds(3);
-        ShadowClient shadowClient = new ShadowClient();
+        ClientConfig config = new ClientConfig();
+        config.setHeartBeat(true);
+        config.setHeartBeatWaitSeconds(3);
+        ShadowClient shadowClient = new ShadowClient(config);
         shadowClient.init("127.0.0.1",2023);
         while(true){
             Thread.sleep(1000);

@@ -1,6 +1,6 @@
 package com.liubs.shadowrpc.client.handler;
 
-import com.liubs.shadowrpc.client.config.ShadowClientConfig;
+import com.liubs.shadowrpc.base.config.ClientConfig;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -12,22 +12,27 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
  **/
 public class ShadowChannelInitializer  extends ChannelInitializer<SocketChannel> {
 
+    private ClientConfig config;
+
+    public ShadowChannelInitializer(ClientConfig config) {
+        this.config = config;
+    }
+
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
 
-        ShadowClientConfig globalConfig = ShadowClientConfig.getInstance();
         ChannelPipeline pipeline = ch.pipeline();
 
         //处理帧边界，解决拆包和粘包问题
-        pipeline.addLast(new LengthFieldBasedFrameDecoder(globalConfig.getMaxFrameLength(),
+        pipeline.addLast(new LengthFieldBasedFrameDecoder(config.getMaxFrameLength(),
                 0, 4, 0, 4));
 
         //消息序列化和反序列化
         pipeline.addLast(new MessageHandler());
 
         //心跳机制
-        if(globalConfig.isHeartBeat()) {
-            pipeline.addLast(new HeartBeatHandler(globalConfig.getHeartBeatWaitSeconds()));
+        if(config.isHeartBeat()) {
+            pipeline.addLast(new HeartBeatHandler(config.getHeartBeatWaitSeconds()));
         }
 
 

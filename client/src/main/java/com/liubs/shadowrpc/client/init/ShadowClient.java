@@ -1,5 +1,6 @@
 package com.liubs.shadowrpc.client.init;
 
+import com.liubs.shadowrpc.base.config.ClientConfig;
 import com.liubs.shadowrpc.client.handler.ShadowChannelInitializer;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -22,10 +23,14 @@ public class ShadowClient {
     private String remoteIp;
     private int remotePort;
 
-    public ShadowClient() {
+    private ClientConfig config;
+
+    public ShadowClient(ClientConfig config) {
+        this.config = config;
         group = new NioEventLoopGroup();
     }
-    public ShadowClient(EventLoopGroup group) {
+    public ShadowClient(ClientConfig config,EventLoopGroup group) {
+        this.config = config;
         this.group = group;
     }
 
@@ -35,7 +40,7 @@ public class ShadowClient {
             Bootstrap bootstrap = new Bootstrap();
             bootstrap.group(group)
                     .channel(NioSocketChannel.class)
-                    .handler(new ShadowChannelInitializer());
+                    .handler(new ShadowChannelInitializer(config));
 
             // 连接到服务器
             ChannelFuture future = bootstrap.connect(host, port).sync();

@@ -28,10 +28,10 @@ import java.util.concurrent.Executors;
  **/
 public class HelloProtoClient {
 
+    private static ClientConfig clientConfig = new ClientConfig();
 
     @Before
     public void init(){
-        ClientConfig clientConfig = new ClientConfig();
         clientConfig.setSerializer(SerializerStrategy.PROTOBUF.name());
         ModulePool.getModule(ClientModule.class).init(clientConfig,Collections.singletonList("rpctest.entity"));
     }
@@ -39,7 +39,7 @@ public class HelloProtoClient {
     @Test
     public void helloClient() {
 
-        ShadowClient shadowClient = new ShadowClient();
+        ShadowClient shadowClient = new ShadowClient(clientConfig);
         shadowClient.init("127.0.0.1",2024);
 
         IHelloProto helloService = RemoteServerProxy.create(shadowClient,IHelloProto.class,"helloprotoservice");
@@ -61,7 +61,7 @@ public class HelloProtoClient {
     @Test
     public void helloConcurrent() throws InterruptedException {
 
-        ShadowClient shadowClient = new ShadowClient();
+        ShadowClient shadowClient = new ShadowClient(clientConfig);
         shadowClient.init("127.0.0.1",2024);
 
         //调用远程RPC接口
