@@ -32,7 +32,7 @@ public class ShadowClientsManager {
     }
 
 
-    public ShadowClientsManager connectRegistry(ClientConfig config, String zkUrl){
+    public ShadowClientsManager connectRegistry(String zkUrl){
         //zooKeeperClient = new ZooKeeperClient(zkUrl);
         serviceDiscovery = new ServiceDiscovery(zkUrl);
 
@@ -44,7 +44,7 @@ public class ShadowClientsManager {
                 if(changeType == ServerChangeType.SERVER_ADDED) {
                     System.out.println("Child added: " + serverNode);
 
-                    ShadowClient shadowClient = new ShadowClient(config,eventLoopGroup);
+                    ShadowClient shadowClient = new ShadowClient(eventLoopGroup);
                     shadowClient.init(serverNode.getIp(),serverNode.getPort());
                     shadowClients.add(shadowClient);
                 }else if(changeType == ServerChangeType.SERVER_REMOVED){

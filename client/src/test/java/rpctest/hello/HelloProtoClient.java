@@ -39,7 +39,7 @@ public class HelloProtoClient {
     @Test
     public void helloClient() {
 
-        ShadowClient shadowClient = new ShadowClient(clientConfig);
+        ShadowClient shadowClient = new ShadowClient();
         shadowClient.init("127.0.0.1",2024);
 
         IHelloProto helloService = RemoteServerProxy.create(shadowClient,IHelloProto.class,"helloprotoservice");
@@ -61,7 +61,7 @@ public class HelloProtoClient {
     @Test
     public void helloConcurrent() throws InterruptedException {
 
-        ShadowClient shadowClient = new ShadowClient(clientConfig);
+        ShadowClient shadowClient = new ShadowClient();
         shadowClient.init("127.0.0.1",2024);
 
         //调用远程RPC接口

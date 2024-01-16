@@ -37,7 +37,7 @@ public class UploadClient {
     @Test
     public void uploadFileTest() throws IOException {
 
-        ShadowClient shadowClient = new ShadowClient(new ClientConfig());
+        ShadowClient shadowClient = new ShadowClient();
         shadowClient.init("127.0.0.1",2023);
 
         IUploadService uploadService = RemoteServerProxy.create(shadowClient,IUploadService.class,"uploadService");
@@ -51,7 +51,7 @@ public class UploadClient {
 
     @Test
     public void uploadManyFilesTest() throws IOException {
-        ShadowClient shadowClient = new ShadowClient(new ClientConfig());
+        ShadowClient shadowClient = new ShadowClient();
         shadowClient.init("127.0.0.1",2023);
         IUploadService uploadService = RemoteServerProxy.create(shadowClient,IUploadService.class,"uploadService");
 

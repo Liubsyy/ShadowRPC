@@ -29,4 +29,8 @@ public class ClientModule implements IModule {
         this.config = config;
         serializeModule.init(config,packages);
     }
+
+    public ClientConfig getConfig() {
+        return config;
+    }
 }

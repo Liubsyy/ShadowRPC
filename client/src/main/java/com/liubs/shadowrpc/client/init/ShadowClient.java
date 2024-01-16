@@ -1,6 +1,8 @@
 package com.liubs.shadowrpc.client.init;
 
 import com.liubs.shadowrpc.base.config.ClientConfig;
+import com.liubs.shadowrpc.base.module.ModulePool;
+import com.liubs.shadowrpc.client.ClientModule;
 import com.liubs.shadowrpc.client.handler.ShadowChannelInitializer;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
@@ -23,14 +25,12 @@ public class ShadowClient {
     private String remoteIp;
     private int remotePort;
 
-    private ClientConfig config;
+    private ClientConfig config = ModulePool.getModule(ClientModule.class).getConfig();
 
-    public ShadowClient(ClientConfig config) {
-        this.config = config;
+    public ShadowClient() {
         group = new NioEventLoopGroup();
     }
-    public ShadowClient(ClientConfig config,EventLoopGroup group) {
-        this.config = config;
+    public ShadowClient(EventLoopGroup group) {
         this.group = group;
     }
 

@@ -38,7 +38,7 @@ public class HelloClient {
      */
     @Test
     public void helloClient() {
-        ShadowClient shadowClient = new ShadowClient(new ClientConfig());
+        ShadowClient shadowClient = new ShadowClient();
         shadowClient.init("127.0.0.1",2023);
 
 
@@ -62,7 +62,7 @@ public class HelloClient {
      */
     @Test
     public void helloConcurrent() throws InterruptedException {
-        ShadowClient shadowClient = new ShadowClient(new ClientConfig());
+        ShadowClient shadowClient = new ShadowClient();
         shadowClient.init("127.0.0.1",2023);
 
         //调用远程RPC接口
@@ -109,10 +109,11 @@ public class HelloClient {
     //测试心跳
     @Test
     public void testHeartBeat() throws InterruptedException {
-        ClientConfig config = new ClientConfig();
+        ClientConfig config = ModulePool.getModule(ClientModule.class).getConfig();
         config.setHeartBeat(true);
         config.setHeartBeatWaitSeconds(3);
-        ShadowClient shadowClient = new ShadowClient(config);
+
+        ShadowClient shadowClient = new ShadowClient();
         shadowClient.init("127.0.0.1",2023);
         while(true){
             Thread.sleep(1000);
