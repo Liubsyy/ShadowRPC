@@ -54,22 +54,6 @@ public class SerializerManager {
     }
 
 
-    public SerializerStrategy getSerializer() {
-        return serializer;
-    }
-
-    public byte[] serialize(Object obj) {
-        return serializer.getSerializer().serialize(obj);
-    }
-
-    public <T> T deserializeRequest(byte[] bytes) {
-        return (T)serializer.getSerializer().deserialize(bytes, serializer.getRequestClass());
-    }
-
-    public <T> Object deserializeResponse(byte[] bytes) {
-        return (T)serializer.getSerializer().deserialize(bytes,serializer.getResponseClass());
-    }
-
 
 
 }

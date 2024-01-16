@@ -1,7 +1,8 @@
 package rpctest.upload;
 
 import com.liubs.shadowrpc.base.annotation.ShadowService;
-import com.liubs.shadowrpc.service.ServerManager;
+import com.liubs.shadowrpc.base.config.ServerConfig;
+import com.liubs.shadowrpc.server.init.ServerBuilder;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,9 +44,12 @@ public class UploadServiceImpl implements IUploadService{
 
     @Test
     public void startServer(){
-        ServerManager.getInstance()
-                .scanService("rpctest.upload")
-                .startServer(2023)
+        ServerBuilder.newBuilder()
+                .serverConfig(new ServerConfig())
+                .addPackage("rpctest.upload")
+                .build()
+                .start()
                 .keep();
+
     }
 }

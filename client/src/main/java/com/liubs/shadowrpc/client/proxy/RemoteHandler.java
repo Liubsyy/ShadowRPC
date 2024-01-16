@@ -1,8 +1,10 @@
-package com.liubs.shadowrpc.proxy;
+package com.liubs.shadowrpc.client.proxy;
 
-import com.liubs.shadowrpc.handler.ReceiveHolder;
-import com.liubs.shadowrpc.init.ShadowClient;
-import com.liubs.shadowrpc.init.ShadowClientsManager;
+import com.liubs.shadowrpc.base.module.ModulePool;
+import com.liubs.shadowrpc.client.handler.ReceiveHolder;
+import com.liubs.shadowrpc.client.init.ShadowClient;
+import com.liubs.shadowrpc.client.init.ShadowClientsManager;
+import com.liubs.shadowrpc.protocol.SerializeModule;
 import com.liubs.shadowrpc.protocol.model.IModelParser;
 import com.liubs.shadowrpc.protocol.model.RequestModel;
 import com.liubs.shadowrpc.protocol.model.ResponseModel;
@@ -44,6 +46,9 @@ public class RemoteHandler implements InvocationHandler {
      */
     private String serviceName;
 
+
+    private SerializeModule serializeModule = ModulePool.getModule(SerializeModule.class);
+
     public RemoteHandler(ShadowClient client, Class<?> serviceStub, String serviceName) {
         this.useRegistry = false;
         this.client = client;
@@ -69,7 +74,7 @@ public class RemoteHandler implements InvocationHandler {
             requestModel.setParamTypes(method.getParameterTypes());
             requestModel.setParams(args);
 
-            IModelParser modelParser = SerializerManager.getInstance().getSerializer().getModelParser();
+            IModelParser modelParser = serializeModule.getSerializer().getModelParser();
             Future<?> future = ReceiveHolder.getInstance().initFuture(traceId);
 
             Channel channel = null;

@@ -1,5 +1,7 @@
-package com.liubs.shadowrpc.handler;
+package com.liubs.shadowrpc.client.handler;
 
+import com.liubs.shadowrpc.base.module.ModulePool;
+import com.liubs.shadowrpc.protocol.SerializeModule;
 import com.liubs.shadowrpc.protocol.entity.HeartBeatMessage;
 import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
 import io.netty.buffer.ByteBuf;
@@ -16,7 +18,10 @@ import java.util.List;
  * @date 2023/12/15 10:01 PM
  **/
 public class MessageHandler extends ByteToMessageCodec<Object> {
+
     private static final Logger logger = LoggerFactory.getLogger(MessageHandler.class);
+
+    private SerializeModule serializeModule = ModulePool.getModule(SerializeModule.class);
 
     @Override
     protected void encode(ChannelHandlerContext ctx, Object msg, ByteBuf out) throws Exception {
@@ -25,7 +30,7 @@ public class MessageHandler extends ByteToMessageCodec<Object> {
             //心跳消息
             data = HeartBeatMessage.getHearBeatMsg();
         }else {
-            data = SerializerManager.getInstance().serialize(msg);
+            data = serializeModule.serialize(msg);
         }
 
         int dataLength = data.length;
@@ -46,7 +51,7 @@ public class MessageHandler extends ByteToMessageCodec<Object> {
         if(HeartBeatMessage.isHeartBeatMsg(data)) {
             logger.info("收到心跳消息...");
         }else {
-            Object obj = SerializerManager.getInstance().deserializeRequest(data);
+            Object obj = serializeModule.deserializeResponse(data);
             out.add(obj);
         }
     }

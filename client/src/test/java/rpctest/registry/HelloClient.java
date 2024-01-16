@@ -1,11 +1,17 @@
 package rpctest.registry;
 
-import com.liubs.shadowrpc.init.ShadowClient;
-import com.liubs.shadowrpc.init.ShadowClientsManager;
-import com.liubs.shadowrpc.proxy.RemoteServerProxy;
+import com.liubs.shadowrpc.base.config.ClientConfig;
+import com.liubs.shadowrpc.base.module.ModulePool;
+import com.liubs.shadowrpc.client.ClientModule;
+import com.liubs.shadowrpc.client.init.ShadowClient;
+import com.liubs.shadowrpc.client.init.ShadowClientsManager;
+import com.liubs.shadowrpc.client.proxy.RemoteServerProxy;
+import com.liubs.shadowrpc.protocol.serializer.SerializerStrategy;
+import org.junit.Before;
 import org.junit.Test;
 import rpctest.hello.IHello;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,6 +20,13 @@ import java.util.stream.Collectors;
  * @date 2023/12/18 11:50 PM
  **/
 public class HelloClient {
+
+    @Before
+    public void init(){
+        ClientConfig clientConfig = new ClientConfig();
+        clientConfig.setSerializer(SerializerStrategy.KRYO.name());
+        ModulePool.getModule(ClientModule.class).init(clientConfig);
+    }
 
     //接入注册中心，负载均衡调用rpc接口
     @Test

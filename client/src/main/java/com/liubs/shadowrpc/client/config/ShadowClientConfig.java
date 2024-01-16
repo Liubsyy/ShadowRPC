@@ -1,4 +1,4 @@
-package com.liubs.shadowrpc.config;
+package com.liubs.shadowrpc.client.config;
 
 /**
  * 默认配置

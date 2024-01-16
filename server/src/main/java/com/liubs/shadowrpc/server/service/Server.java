@@ -1,11 +1,10 @@
-package com.liubs.shadowrpc.service;
+package com.liubs.shadowrpc.server.service;
 
-import com.liubs.shadowrpc.handler.ShadowChannelInitializer;
+import com.liubs.shadowrpc.base.config.ServerConfig;
+import com.liubs.shadowrpc.server.handler.ShadowChannelInitializer;
 import com.liubs.shadowrpc.registry.access.ServiceRegistry;
-import com.liubs.shadowrpc.registry.constant.ServiceRegistryConstant;
 import com.liubs.shadowrpc.registry.entity.ServerNode;
 import com.liubs.shadowrpc.registry.util.IPUtil;
-import com.liubs.shadowrpc.registry.zk.ZooKeeperClient;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
@@ -29,10 +28,12 @@ public class Server {
     private String group;
     private int port;
 
+    private ServerConfig serverConfig;
 
     private ServiceRegistry serviceRegistry;
 
-    public Server(String group, int port) {
+    public Server(ServerConfig serverConfig,String group, int port) {
+        this.serverConfig = serverConfig;
         this.group = group;
         this.port = port;
         bossGroup = new NioEventLoopGroup();
@@ -44,7 +45,7 @@ public class Server {
             ServerBootstrap bootstrap = new ServerBootstrap();
             bootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
-                    .childHandler(new ShadowChannelInitializer())
+                    .childHandler(new ShadowChannelInitializer(serverConfig))
                     .option(ChannelOption.SO_BACKLOG, 128)
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
 
@@ -66,7 +67,7 @@ public class Server {
 
 
 
-    public Server zkUrl(String zkUrl) {
+    public Server registerServer(String zkUrl) {
         serviceRegistry = new ServiceRegistry(zkUrl);
         return this;
     }

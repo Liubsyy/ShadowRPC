@@ -24,7 +24,7 @@ public class ModulePool {
         iniModules();
     }
 
-    public static synchronized void iniModules(){
+    public static void iniModules(){
         Set<Class<?>> classes = PackageScanUtil.scanClasses("com.liubs.shadowrpc", ShadowModule.class);
         classes.forEach(c->{
             try {
@@ -46,6 +46,7 @@ public class ModulePool {
                 }
                 boolean accessible = field.isAccessible();
                 try{
+                    field.setAccessible(true);
                     field.set(value,moduleMap.get(field.getType()));
                 } catch (IllegalAccessException e) {
                     logger.error(String.format("module value {} set failed %s fail",field.getType()),e);
@@ -57,8 +58,8 @@ public class ModulePool {
 
     }
 
-    public IModule getModule(Class<?> moduleClass) {
-        return moduleMap.get(moduleClass);
+    public static <T extends IModule> T getModule(Class<T> moduleClass) {
+        return (T)moduleMap.get(moduleClass);
     }
 
 }

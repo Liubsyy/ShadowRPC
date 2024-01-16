@@ -1,14 +1,21 @@
 package rpctest.hello;
 
-import com.liubs.shadowrpc.init.ShadowClient;
+import com.liubs.shadowrpc.base.config.ClientConfig;
+import com.liubs.shadowrpc.base.module.ModulePool;
+import com.liubs.shadowrpc.client.ClientModule;
+import com.liubs.shadowrpc.client.init.ShadowClient;
+import com.liubs.shadowrpc.protocol.SerializeModule;
 import com.liubs.shadowrpc.protocol.serializer.SerializerStrategy;
 import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
-import com.liubs.shadowrpc.proxy.RemoteServerProxy;
+import com.liubs.shadowrpc.client.proxy.RemoteServerProxy;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import rpctest.entity.MyMessageProto;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -24,8 +31,9 @@ public class HelloProtoClient {
 
     @Before
     public void init(){
-        SerializerManager.getInstance().setSerializer(SerializerStrategy.PROTOBUF);
-        SerializerManager.getInstance().init("rpctest.entity");
+        ClientConfig clientConfig = new ClientConfig();
+        clientConfig.setSerializer(SerializerStrategy.PROTOBUF.name());
+        ModulePool.getModule(ClientModule.class).init(clientConfig,Collections.singletonList("rpctest.entity"));
     }
 
     @Test

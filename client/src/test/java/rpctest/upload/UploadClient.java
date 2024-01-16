@@ -1,8 +1,13 @@
 package rpctest.upload;
 
-import com.liubs.shadowrpc.init.ShadowClient;
-import com.liubs.shadowrpc.proxy.RemoteServerProxy;
+import com.liubs.shadowrpc.base.config.ClientConfig;
+import com.liubs.shadowrpc.base.module.ModulePool;
+import com.liubs.shadowrpc.client.ClientModule;
+import com.liubs.shadowrpc.client.init.ShadowClient;
+import com.liubs.shadowrpc.client.proxy.RemoteServerProxy;
+import com.liubs.shadowrpc.protocol.serializer.SerializerStrategy;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.Collections;
 import java.util.UUID;
 
 /**
@@ -20,6 +26,13 @@ import java.util.UUID;
  **/
 public class UploadClient {
     private static final Logger logger = LoggerFactory.getLogger(UploadClient.class);
+
+    @Before
+    public void init(){
+        ClientConfig clientConfig = new ClientConfig();
+        clientConfig.setSerializer(SerializerStrategy.KRYO.name());
+        ModulePool.getModule(ClientModule.class).init(clientConfig);
+    }
 
     @Test
     public void uploadFileTest() throws IOException {

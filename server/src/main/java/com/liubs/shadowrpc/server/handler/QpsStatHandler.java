@@ -1,4 +1,4 @@
-package com.liubs.shadowrpc.handler;
+package com.liubs.shadowrpc.server.handler;
 
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;

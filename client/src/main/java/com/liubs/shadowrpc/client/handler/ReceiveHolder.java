@@ -1,4 +1,4 @@
-package com.liubs.shadowrpc.handler;
+package com.liubs.shadowrpc.client.handler;
 
 
 import com.liubs.shadowrpc.protocol.model.ResponseModel;

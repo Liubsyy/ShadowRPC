@@ -1,9 +1,15 @@
-package com.liubs.shadowrpc.service;
+package com.liubs.shadowrpc.server;
 
-import com.liubs.shadowrpc.base.annotation.ShadowServiceHolder;
+import com.liubs.shadowrpc.base.annotation.ModuleInject;
+import com.liubs.shadowrpc.base.annotation.ShadowModule;
 import com.liubs.shadowrpc.base.annotation.ShadowService;
-import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
+import com.liubs.shadowrpc.base.annotation.ShadowServiceHolder;
+import com.liubs.shadowrpc.base.config.ServerConfig;
+import com.liubs.shadowrpc.base.module.IModule;
+import com.liubs.shadowrpc.protocol.SerializeModule;
 import com.liubs.shadowrpc.protocol.util.AnnotationScanner;
+import com.liubs.shadowrpc.server.service.ServiceLookUp;
+import com.liubs.shadowrpc.server.service.ServiceTarget;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,51 +23,30 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Liubsyy
- * @date 2023/12/18 10:49 PM
+ * @date 2024/1/16
  */
-public class ServerManager {
-    private static final Logger logger = LoggerFactory.getLogger(ServerManager.class);
+@ShadowModule
+public class ServerModule implements IModule {
+    private static final Logger logger = LoggerFactory.getLogger(ServerModule.class);
 
-    private static ServerManager instance = new ServerManager();
+    @ModuleInject
+    private SerializeModule serializeModule;
 
-
-    private Server server;
+    private ServerConfig serverConfig;
 
     //所有服务
     private Map<ServiceLookUp,ServiceTarget> allRPC = new ConcurrentHashMap<>();
 
-
-    public void addRPCInterface(ServiceLookUp lookUp,ServiceTarget obj) {
-        allRPC.put(lookUp,obj);
-    }
-
-    public ServiceTarget getRPC(ServiceLookUp lookUp) {
-        return allRPC.get(lookUp);
-    }
-    
-
-
-    public static ServerManager getInstance() {
-        return instance;
-    }
-
-    private ServerManager() {
-
-    }
-
-    public ServerManager scanService(String ... packageNames){
-
-        //序列化模块初始化
-        SerializerManager.getInstance().init(packageNames);
-
+    public void init(ServerConfig serverConfig,List<String> packages) {
+        this.serverConfig = serverConfig;
         //初始化服务
         List<ShadowServiceHolder<ShadowService>> shadowServices = new ArrayList<>();
 
-        for(String packageName : packageNames) {
+        for(String packageName : packages) {
             try {
                 shadowServices.addAll(AnnotationScanner.scanAnnotations(packageName, ShadowService.class));
             } catch (IOException e) {
-               logger.error("scanService err",e);
+                logger.error("scanService err",e);
             }
         }
 
@@ -93,31 +78,15 @@ public class ServerManager {
                 throw new RuntimeException(e);
             }
         }
-
-        return this;
     }
 
-
-
-
-    /**
-     * @param port
-     * @return
-     */
-    public Server startServer(int port) {
-        server = new Server("",port);
-        server.start();
-        return server;
+    public void addRPCInterface(ServiceLookUp lookUp,ServiceTarget obj) {
+        allRPC.put(lookUp,obj);
     }
 
-    public Server startServer(String zkUrl,int port) {
-        server = new Server("",port);
-        server.zkUrl(zkUrl);
-        server.start();
-        return server;
+    public ServiceTarget getRPC(ServiceLookUp lookUp) {
+        return allRPC.get(lookUp);
     }
-
-
 
 
 

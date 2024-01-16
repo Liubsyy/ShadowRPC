@@ -1,14 +1,16 @@
-package com.liubs.shadowrpc.handler;
+package com.liubs.shadowrpc.server.handler;
 
 
+import com.liubs.shadowrpc.base.module.ModulePool;
+import com.liubs.shadowrpc.protocol.SerializeModule;
 import com.liubs.shadowrpc.protocol.constant.ResponseCode;
 import com.liubs.shadowrpc.protocol.model.IModelParser;
 import com.liubs.shadowrpc.protocol.model.RequestModel;
 import com.liubs.shadowrpc.protocol.model.ResponseModel;
-import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
-import com.liubs.shadowrpc.service.ServerManager;
-import com.liubs.shadowrpc.service.ServiceLookUp;
-import com.liubs.shadowrpc.service.ServiceTarget;
+import com.liubs.shadowrpc.server.ServerModule;
+import com.liubs.shadowrpc.server.service.ServerManager;
+import com.liubs.shadowrpc.server.service.ServiceLookUp;
+import com.liubs.shadowrpc.server.service.ServiceTarget;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import org.slf4j.Logger;
@@ -24,8 +26,10 @@ import java.util.concurrent.Executors;
 public class ServerHandler extends ChannelInboundHandlerAdapter {
     private static final Logger logger = LoggerFactory.getLogger(ServerHandler.class);
 
-
     private static ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
+    private SerializeModule serializeModule = ModulePool.getModule(SerializeModule.class);
+    private ServerModule serverModule = ModulePool.getModule(ServerModule.class);
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -45,7 +49,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
         // 打印验证影响速度，压测时去掉
         //logger.info("Server received: " + msg);
 
-        IModelParser modelParser = SerializerManager.getInstance().getSerializer().getModelParser();
+        IModelParser modelParser = serializeModule.getSerializer().getModelParser();
 
         RequestModel requestModel = modelParser.fromRequest(msg);
 
@@ -56,7 +60,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
                 serviceLookUp.setServiceName(requestModel.getServiceName());
                 serviceLookUp.setMethodName(requestModel.getMethodName());
                 serviceLookUp.setParamTypes(requestModel.getParamTypes());
-                ServiceTarget targetRPC = ServerManager.getInstance().getRPC(serviceLookUp);
+                ServiceTarget targetRPC = serverModule.getRPC(serviceLookUp);
 
                 Object result = targetRPC.invoke(requestModel.getParams());
 

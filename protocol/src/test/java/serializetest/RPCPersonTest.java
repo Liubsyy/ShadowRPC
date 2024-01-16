@@ -4,6 +4,10 @@ import com.google.protobuf.Any;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf.MessageLite;
+import com.liubs.shadowrpc.base.config.BaseConfig;
+import com.liubs.shadowrpc.base.config.ServerConfig;
+import com.liubs.shadowrpc.base.module.ModulePool;
+import com.liubs.shadowrpc.protocol.SerializeModule;
 import com.liubs.shadowrpc.protocol.entity.ShadowRPCRequest;
 import com.liubs.shadowrpc.protocol.entity.ShadowRPCRequestAnyProto;
 import com.liubs.shadowrpc.protocol.entity.ShadowRPCRequestProto;
@@ -16,10 +20,7 @@ import serializetest.entity.Person;
 import serializetest.entity.PersonProto;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * 一次RPC请求的序列化和反序列化用时
@@ -32,6 +33,8 @@ public class RPCPersonTest {
     private static KryoSerializer kryoSerializer = new KryoSerializer();
     private static List<Person> persons = new ArrayList<>();
     private static List<PersonProto.Person> personsProto = new ArrayList<>();
+    private static SerializeModule serializeModule = ModulePool.getModule(SerializeModule.class);
+
 
     final static int count = 10000;
 
@@ -59,7 +62,7 @@ public class RPCPersonTest {
             personsProto.add(personProto);
         }
 
-        SerializerManager.getInstance().init("serializetest.entity");
+        serializeModule.init(new BaseConfig(), Collections.singletonList("serializetest.entity"));
     }
 
     @Test

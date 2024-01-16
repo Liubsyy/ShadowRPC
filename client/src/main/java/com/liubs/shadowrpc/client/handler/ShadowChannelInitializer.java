@@ -1,6 +1,6 @@
-package com.liubs.shadowrpc.handler;
+package com.liubs.shadowrpc.client.handler;
 
-import com.liubs.shadowrpc.config.ShadowClientConfig;
+import com.liubs.shadowrpc.client.config.ShadowClientConfig;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;

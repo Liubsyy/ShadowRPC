@@ -6,31 +6,17 @@ package com.liubs.shadowrpc.base.config;
  */
 public class ServerConfig extends BaseConfig {
 
-    //心跳开关
-    private boolean heartBeat = true;
 
-    //心跳时间间隔(默认10s)
-    private int heartBeatWaitSeconds = 10;
+    //开放端口
+    private int port = 2023;
+
+    //注册中心，如果为空则为单点模式
+    private String registryUrl;
 
     //qps统计开关
     private boolean qpsStat;
 
 
-    public boolean isHeartBeat() {
-        return heartBeat;
-    }
-
-    public void setHeartBeat(boolean heartBeat) {
-        this.heartBeat = heartBeat;
-    }
-
-    public int getHeartBeatWaitSeconds() {
-        return heartBeatWaitSeconds;
-    }
-
-    public void setHeartBeatWaitSeconds(int heartBeatWaitSeconds) {
-        this.heartBeatWaitSeconds = heartBeatWaitSeconds;
-    }
 
     public boolean isQpsStat() {
         return qpsStat;
@@ -38,5 +24,22 @@ public class ServerConfig extends BaseConfig {
 
     public void setQpsStat(boolean qpsStat) {
         this.qpsStat = qpsStat;
+    }
+
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public String getRegistryUrl() {
+        return registryUrl;
+    }
+
+    public void setRegistryUrl(String registryUrl) {
+        this.registryUrl = registryUrl;
     }
 }

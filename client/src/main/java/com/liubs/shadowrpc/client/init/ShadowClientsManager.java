@@ -1,4 +1,4 @@
-package com.liubs.shadowrpc.init;
+package com.liubs.shadowrpc.client.init;
 
 import com.liubs.shadowrpc.registry.access.ServiceDiscovery;
 import com.liubs.shadowrpc.registry.constant.ServerChangeType;

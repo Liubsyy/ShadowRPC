@@ -1,9 +1,11 @@
 package rpctest.registry;
 
-import com.liubs.shadowrpc.config.ShadowServerConfig;
+import com.liubs.shadowrpc.base.config.ServerConfig;
+import com.liubs.shadowrpc.base.constant.SerializerEnum;
 import com.liubs.shadowrpc.protocol.serializer.SerializerStrategy;
 import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
-import com.liubs.shadowrpc.service.ServerManager;
+import com.liubs.shadowrpc.server.init.ServerBuilder;
+import com.liubs.shadowrpc.server.service.ServerManager;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -16,33 +18,47 @@ public class SomeServers {
 
     public static final String ZK_URL = "localhost:2181";
 
+    private static ServerConfig serverConfig = new ServerConfig();
+
     @BeforeClass
     public static void init(){
-        SerializerManager.getInstance().setSerializer(SerializerStrategy.KRYO); //kryo序列化方式
-        ShadowServerConfig.getInstance().setQpsStat(true);  //统计qps
+
+        serverConfig.setRegistryUrl(ZK_URL);
+        serverConfig.setQpsStat(true); //统计qps
+        serverConfig.setSerializer(SerializerEnum.KRYO.name());
+
     }
 
     @Test
     public void server1(){
-        ServerManager.getInstance()
-                .scanService("rpctest.hello")
-                .startServer(ZK_URL,2023)
+        serverConfig.setPort(2023);
+        ServerBuilder.newBuilder()
+                .serverConfig(serverConfig)
+                .addPackage("rpctest.hello")
+                .build()
+                .start()
                 .keep();
     }
 
     @Test
     public void server2(){
-        ServerManager.getInstance()
-                .scanService("rpctest.hello")
-                .startServer(ZK_URL,2024)
+        serverConfig.setPort(2024);
+        ServerBuilder.newBuilder()
+                .serverConfig(serverConfig)
+                .addPackage("rpctest.hello")
+                .build()
+                .start()
                 .keep();
     }
 
     @Test
     public void server3(){
-        ServerManager.getInstance()
-                .scanService("rpctest.hello")
-                .startServer(ZK_URL,2025)
+        serverConfig.setPort(2025);
+        ServerBuilder.newBuilder()
+                .serverConfig(serverConfig)
+                .addPackage("rpctest.hello")
+                .build()
+                .start()
                 .keep();
     }
 }

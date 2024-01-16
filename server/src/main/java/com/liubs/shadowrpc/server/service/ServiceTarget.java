@@ -1,4 +1,4 @@
-package com.liubs.shadowrpc.service;
+package com.liubs.shadowrpc.server.service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

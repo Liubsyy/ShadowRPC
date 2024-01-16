@@ -1,10 +1,9 @@
 package rpctest.hello;
 
-import com.liubs.shadowrpc.config.ShadowServerConfig;
+import com.liubs.shadowrpc.base.config.ServerConfig;
+import com.liubs.shadowrpc.base.constant.SerializerEnum;
 import com.liubs.shadowrpc.base.annotation.ShadowService;
-import com.liubs.shadowrpc.protocol.serializer.SerializerStrategy;
-import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
-import com.liubs.shadowrpc.service.ServerManager;
+import com.liubs.shadowrpc.server.init.ServerBuilder;
 import org.junit.Test;
 import rpctest.entity.MyMessageProto;
 
@@ -30,11 +29,17 @@ public class HelloProtoService implements IHelloProto{
     //启动服务端
     @Test
     public void helloServiceStart() {
-        ShadowServerConfig.getInstance().setQpsStat(true);  //统计qps
-        SerializerManager.getInstance().setSerializer(SerializerStrategy.PROTOBUF); //protobuf序列化方式
-        ServerManager.getInstance()
-                .scanService("rpctest.entity","rpctest.hello")
-                .startServer(2024)
-                .keep();
+
+        ServerConfig serverConfig = new ServerConfig();
+        serverConfig.setQpsStat(true); //统计qps
+        serverConfig.setSerializer(SerializerEnum.PROTOBUF.name());
+        serverConfig.setPort(2024);
+
+        ServerBuilder.newBuilder()
+                .serverConfig(serverConfig)
+                .addPackage("rpctest.entity")
+                .addPackage("rpctest.hello")
+                .build()
+                .start().keep();
     }
 }

@@ -1,8 +1,13 @@
 package rpctest.hello;
 
-import com.liubs.shadowrpc.config.ShadowClientConfig;
-import com.liubs.shadowrpc.init.ShadowClient;
-import com.liubs.shadowrpc.proxy.RemoteServerProxy;
+import com.liubs.shadowrpc.base.config.ClientConfig;
+import com.liubs.shadowrpc.base.module.ModulePool;
+import com.liubs.shadowrpc.client.ClientModule;
+import com.liubs.shadowrpc.client.config.ShadowClientConfig;
+import com.liubs.shadowrpc.client.init.ShadowClient;
+import com.liubs.shadowrpc.client.proxy.RemoteServerProxy;
+import com.liubs.shadowrpc.registry.zk.ZooKeeperClient;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +28,12 @@ import java.util.concurrent.Executors;
 public class HelloClient {
 
     private static final Logger logger = LoggerFactory.getLogger(HelloClient.class);
+
+    @BeforeClass
+    public static void setUp() throws Exception {
+        ModulePool.getModule(ClientModule.class).init(new ClientConfig());
+    }
+
 
     /**
      * 调用hello方法

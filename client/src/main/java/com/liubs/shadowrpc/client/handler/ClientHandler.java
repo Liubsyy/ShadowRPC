@@ -1,5 +1,7 @@
-package com.liubs.shadowrpc.handler;
+package com.liubs.shadowrpc.client.handler;
 
+import com.liubs.shadowrpc.base.module.ModulePool;
+import com.liubs.shadowrpc.protocol.SerializeModule;
 import com.liubs.shadowrpc.protocol.model.IModelParser;
 import com.liubs.shadowrpc.protocol.model.ResponseModel;
 import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
@@ -17,6 +19,8 @@ import org.slf4j.LoggerFactory;
 public class ClientHandler extends ChannelInboundHandlerAdapter{
     private static final Logger logger = LoggerFactory.getLogger(ClientHandler.class);
 
+    private SerializeModule serializeModule = ModulePool.getModule(SerializeModule.class);
+
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         logger.info("已连接远程{}",ctx.channel().remoteAddress());
@@ -31,7 +35,7 @@ public class ClientHandler extends ChannelInboundHandlerAdapter{
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        IModelParser modelParser = SerializerManager.getInstance().getSerializer().getModelParser();
+        IModelParser modelParser = serializeModule.getSerializer().getModelParser();
         ResponseModel responseModel = modelParser.fromResponse(msg);
         ReceiveHolder.getInstance().receiveData(responseModel);
     }
