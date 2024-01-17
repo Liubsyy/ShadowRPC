@@ -1,10 +1,10 @@
-package com.liubs.shadowrpc.client.init;
+package com.liubs.shadowrpc.client.connection;
 
-import com.liubs.shadowrpc.base.config.ClientConfig;
 import com.liubs.shadowrpc.registry.access.ServiceDiscovery;
 import com.liubs.shadowrpc.registry.constant.ServerChangeType;
 import com.liubs.shadowrpc.registry.entity.ServerNode;
 import com.liubs.shadowrpc.registry.listener.ServiceListener;
+import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 
@@ -13,28 +13,41 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
+ * 一个ShadowClientGroup表示连接一个集群
  * @author Liubsyy
  * @date 2023/12/18 11:41 PM
  **/
-public class ShadowClientsManager {
-    private static ShadowClientsManager instance = new ShadowClientsManager();
+public class ShadowClientGroup implements IConnection {
 
     private EventLoopGroup eventLoopGroup = new NioEventLoopGroup();;
 
+    private String registryUrl;
     private ServiceDiscovery serviceDiscovery;
-    //private ZooKeeperClient zooKeeperClient;
 
-
+    //所有远程连接
     private List<ShadowClient> shadowClients = new ArrayList<>();
 
-    public static ShadowClientsManager getInstance() {
-        return instance;
+
+    public ShadowClientGroup(String registryUrl) {
+        this.registryUrl = registryUrl;
     }
 
 
-    public ShadowClientsManager connectRegistry(String zkUrl){
-        //zooKeeperClient = new ZooKeeperClient(zkUrl);
-        serviceDiscovery = new ServiceDiscovery(zkUrl);
+
+    private static int count = 0;
+    public ShadowClient getBalanceShadowClient(){
+        ShadowClient shadowClient = shadowClients.get(count % shadowClients.size());
+        count++;
+        return shadowClient;
+    }
+
+    public List<ShadowClient> getShadowClients(){
+        return shadowClients;
+    }
+
+    @Override
+    public void init() {
+        serviceDiscovery = new ServiceDiscovery(registryUrl);
 
         //监听增量变化事件
         //初始化状态会同步SERVER_ADDED事件，所以不用获取全量
@@ -44,8 +57,8 @@ public class ShadowClientsManager {
                 if(changeType == ServerChangeType.SERVER_ADDED) {
                     System.out.println("Child added: " + serverNode);
 
-                    ShadowClient shadowClient = new ShadowClient(eventLoopGroup);
-                    shadowClient.init(serverNode.getIp(),serverNode.getPort());
+                    ShadowClient shadowClient = new ShadowClient(serverNode.getIp(),serverNode.getPort(),eventLoopGroup);
+                    shadowClient.init();
                     shadowClients.add(shadowClient);
                 }else if(changeType == ServerChangeType.SERVER_REMOVED){
                     System.out.println("Child removed: " + serverNode);
@@ -64,31 +77,21 @@ public class ShadowClientsManager {
             }
         });
 
-        Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
-        return this;
+        Runtime.getRuntime().addShutdownHook(new Thread(this::close));
     }
 
-
-    private static int count = 0;
-    public ShadowClient getBalanceShadowClient(){
-        ShadowClient shadowClient = shadowClients.get(count % shadowClients.size());
-        count++;
-        return shadowClient;
+    @Override
+    public Channel getChannel() {
+        return getBalanceShadowClient().getChannel();
     }
 
-    public List<ShadowClient> getShadowClients(){
-        return shadowClients;
-    }
-
-    public void stop(){
+    @Override
+    public void close() {
         try{
             shadowClients.forEach(ShadowClient::close);
-
             serviceDiscovery.close();
-
         } finally {
 
         }
     }
-
 }

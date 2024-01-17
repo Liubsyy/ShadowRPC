@@ -3,7 +3,7 @@ package rpctest.upload;
 import com.liubs.shadowrpc.base.config.ClientConfig;
 import com.liubs.shadowrpc.base.module.ModulePool;
 import com.liubs.shadowrpc.client.ClientModule;
-import com.liubs.shadowrpc.client.init.ShadowClient;
+import com.liubs.shadowrpc.client.connection.ShadowClient;
 import com.liubs.shadowrpc.client.proxy.RemoteServerProxy;
 import com.liubs.shadowrpc.protocol.serializer.SerializerStrategy;
 import org.junit.Assert;
@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.Collections;
 import java.util.UUID;
 
 /**
@@ -37,8 +36,8 @@ public class UploadClient {
     @Test
     public void uploadFileTest() throws IOException {
 
-        ShadowClient shadowClient = new ShadowClient();
-        shadowClient.init("127.0.0.1",2023);
+        ShadowClient shadowClient = new ShadowClient("127.0.0.1",2023);
+        shadowClient.init();
 
         IUploadService uploadService = RemoteServerProxy.create(shadowClient,IUploadService.class,"uploadService");
 
@@ -51,8 +50,8 @@ public class UploadClient {
 
     @Test
     public void uploadManyFilesTest() throws IOException {
-        ShadowClient shadowClient = new ShadowClient();
-        shadowClient.init("127.0.0.1",2023);
+        ShadowClient shadowClient = new ShadowClient("127.0.0.1",2023);
+        shadowClient.init();
         IUploadService uploadService = RemoteServerProxy.create(shadowClient,IUploadService.class,"uploadService");
 
         File uploadDir = new File("target/tmp/");

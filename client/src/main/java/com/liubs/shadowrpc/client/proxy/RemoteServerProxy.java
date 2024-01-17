@@ -1,7 +1,7 @@
 package com.liubs.shadowrpc.client.proxy;
 
-import com.liubs.shadowrpc.client.init.ShadowClient;
 import com.liubs.shadowrpc.base.annotation.ShadowInterface;
+import com.liubs.shadowrpc.client.connection.IConnection;
 
 import java.lang.reflect.Proxy;
 
@@ -11,7 +11,7 @@ import java.lang.reflect.Proxy;
  **/
 public class RemoteServerProxy {
 
-    public static <T> T create(ShadowClient shadowClient, Class<T> serviceStub, String serviceName) {
+    public static <T> T create(IConnection connection, Class<T> serviceStub, String serviceName) {
 
         ShadowInterface shadowInterface = serviceStub.getAnnotation(ShadowInterface.class);
         if(null == shadowInterface) {
@@ -21,23 +21,7 @@ public class RemoteServerProxy {
         Object proxyInstance = Proxy.newProxyInstance(
                 serviceStub.getClassLoader(),
                 new Class<?>[]{serviceStub},
-                new RemoteHandler(shadowClient,serviceStub,serviceName)
-        );
-
-        return (T)proxyInstance;
-    }
-
-    public static <T> T create(Class<T> serviceStub,String serviceName) {
-
-        ShadowInterface shadowInterface = serviceStub.getAnnotation(ShadowInterface.class);
-        if(null == shadowInterface) {
-            throw new RuntimeException("服务未找到 @shadowInterface注解");
-        }
-
-        Object proxyInstance = Proxy.newProxyInstance(
-                serviceStub.getClassLoader(),
-                new Class<?>[]{serviceStub},
-                new RemoteHandler(serviceStub,serviceName)
+                new RemoteHandler(connection,serviceStub,serviceName)
         );
 
         return (T)proxyInstance;

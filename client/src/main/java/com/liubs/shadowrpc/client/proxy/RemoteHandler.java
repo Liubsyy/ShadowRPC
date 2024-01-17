@@ -1,14 +1,12 @@
 package com.liubs.shadowrpc.client.proxy;
 
 import com.liubs.shadowrpc.base.module.ModulePool;
+import com.liubs.shadowrpc.client.connection.IConnection;
 import com.liubs.shadowrpc.client.handler.ReceiveHolder;
-import com.liubs.shadowrpc.client.init.ShadowClient;
-import com.liubs.shadowrpc.client.init.ShadowClientsManager;
 import com.liubs.shadowrpc.protocol.SerializeModule;
 import com.liubs.shadowrpc.protocol.model.IModelParser;
 import com.liubs.shadowrpc.protocol.model.RequestModel;
 import com.liubs.shadowrpc.protocol.model.ResponseModel;
-import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
 import io.netty.channel.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +32,7 @@ public class RemoteHandler implements InvocationHandler {
     /**
      * 如果不使用注册中心，则必须有ShadowClient
      */
-    private ShadowClient client;
+    private IConnection clientConnection;
 
     /**
      * 远程接口stub
@@ -49,18 +47,12 @@ public class RemoteHandler implements InvocationHandler {
 
     private SerializeModule serializeModule = ModulePool.getModule(SerializeModule.class);
 
-    public RemoteHandler(ShadowClient client, Class<?> serviceStub, String serviceName) {
+    public RemoteHandler(IConnection client, Class<?> serviceStub, String serviceName) {
         this.useRegistry = false;
-        this.client = client;
+        this.clientConnection = client;
         this.serviceStub = serviceStub;
         this.serviceName = serviceName;
     }
-    public RemoteHandler(Class<?> serviceStub, String serviceName) {
-        this.useRegistry = true;
-        this.serviceStub = serviceStub;
-        this.serviceName = serviceName;
-    }
-
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -77,12 +69,7 @@ public class RemoteHandler implements InvocationHandler {
             IModelParser modelParser = serializeModule.getSerializer().getModelParser();
             Future<?> future = ReceiveHolder.getInstance().initFuture(traceId);
 
-            Channel channel = null;
-            if(useRegistry) {
-                channel = ShadowClientsManager.getInstance().getBalanceShadowClient().getChannel();
-            }else {
-                channel = client.getChannel();
-            }
+            Channel channel = clientConnection.getChannel();
 
             if(!channel.isOpen()) {
                 logger.error("服务器已关闭,发送消息抛弃...");

@@ -1,4 +1,4 @@
-package com.liubs.shadowrpc.client.init;
+package com.liubs.shadowrpc.client.connection;
 
 import com.liubs.shadowrpc.base.config.ClientConfig;
 import com.liubs.shadowrpc.base.module.ModulePool;
@@ -17,7 +17,7 @@ import io.netty.channel.socket.nio.NioSocketChannel;
  * @date 2023/12/18 10:56 PM
  **/
 
-public class ShadowClient {
+public class ShadowClient implements IConnection{
 
     private EventLoopGroup group;
     private Channel channel;
@@ -27,14 +27,17 @@ public class ShadowClient {
 
     private ClientConfig config = ModulePool.getModule(ClientModule.class).getConfig();
 
-    public ShadowClient() {
-        group = new NioEventLoopGroup();
+    public ShadowClient(String host, int port) {
+        this(host,port,new NioEventLoopGroup());
     }
-    public ShadowClient(EventLoopGroup group) {
+    public ShadowClient(String host, int port,EventLoopGroup group) {
+        this.remoteIp = host;
+        this.remotePort = port;
         this.group = group;
     }
 
-    public void init(String host, int port){
+    @Override
+    public void init(){
 
         try {
             Bootstrap bootstrap = new Bootstrap();
@@ -43,16 +46,12 @@ public class ShadowClient {
                     .handler(new ShadowChannelInitializer(config));
 
             // 连接到服务器
-            ChannelFuture future = bootstrap.connect(host, port).sync();
+            ChannelFuture future = bootstrap.connect(remoteIp, remotePort).sync();
             channel = future.channel();
 
-
-            this.remoteIp = host;
-            this.remotePort = port;
-            System.out.printf("连接 %s:%d 成功\n",host,port);
+            System.out.printf("连接 %s:%d 成功\n",remoteIp,remotePort);
 
             Runtime.getRuntime().addShutdownHook(new Thread(this::close));
-
         } catch (InterruptedException e) {
             e.printStackTrace();
             close();
@@ -76,6 +75,7 @@ public class ShadowClient {
         this.remotePort = remotePort;
     }
 
+    @Override
     public Channel getChannel() {
         return channel;
     }
@@ -89,6 +89,7 @@ public class ShadowClient {
         }
     }
 
+    @Override
     public void close(){
         try{
 

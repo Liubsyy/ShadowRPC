@@ -3,18 +3,14 @@ package rpctest.hello;
 import com.liubs.shadowrpc.base.config.ClientConfig;
 import com.liubs.shadowrpc.base.module.ModulePool;
 import com.liubs.shadowrpc.client.ClientModule;
-import com.liubs.shadowrpc.client.init.ShadowClient;
-import com.liubs.shadowrpc.protocol.SerializeModule;
+import com.liubs.shadowrpc.client.connection.ShadowClient;
 import com.liubs.shadowrpc.protocol.serializer.SerializerStrategy;
-import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
 import com.liubs.shadowrpc.client.proxy.RemoteServerProxy;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import rpctest.entity.MyMessageProto;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -39,8 +35,8 @@ public class HelloProtoClient {
     @Test
     public void helloClient() {
 
-        ShadowClient shadowClient = new ShadowClient();
-        shadowClient.init("127.0.0.1",2024);
+        ShadowClient shadowClient = new ShadowClient("127.0.0.1",2024);
+        shadowClient.init();
 
         IHelloProto helloService = RemoteServerProxy.create(shadowClient,IHelloProto.class,"helloprotoservice");
         MyMessageProto.MyMessage message =  MyMessageProto.MyMessage.newBuilder()
@@ -61,8 +57,8 @@ public class HelloProtoClient {
     @Test
     public void helloConcurrent() throws InterruptedException {
 
-        ShadowClient shadowClient = new ShadowClient();
-        shadowClient.init("127.0.0.1",2024);
+        ShadowClient shadowClient = new ShadowClient("127.0.0.1",2024);
+        shadowClient.init();
 
         //调用远程RPC接口
         IHelloProto helloService = RemoteServerProxy.create(shadowClient,IHelloProto.class,"helloprotoservice");

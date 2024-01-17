@@ -3,7 +3,7 @@ package rpctest.hello;
 import com.liubs.shadowrpc.base.config.ClientConfig;
 import com.liubs.shadowrpc.base.module.ModulePool;
 import com.liubs.shadowrpc.client.ClientModule;
-import com.liubs.shadowrpc.client.init.ShadowClient;
+import com.liubs.shadowrpc.client.connection.ShadowClient;
 import com.liubs.shadowrpc.client.proxy.RemoteServerProxy;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -38,8 +38,8 @@ public class HelloClient {
      */
     @Test
     public void helloClient() {
-        ShadowClient shadowClient = new ShadowClient();
-        shadowClient.init("127.0.0.1",2023);
+        ShadowClient shadowClient = new ShadowClient("127.0.0.1",2023);
+        shadowClient.init();
 
 
         IHello helloService = RemoteServerProxy.create(shadowClient,IHello.class,"helloservice");
@@ -62,8 +62,8 @@ public class HelloClient {
      */
     @Test
     public void helloConcurrent() throws InterruptedException {
-        ShadowClient shadowClient = new ShadowClient();
-        shadowClient.init("127.0.0.1",2023);
+        ShadowClient shadowClient = new ShadowClient("127.0.0.1",2023);
+        shadowClient.init();
 
         //调用远程RPC接口
         IHello helloService = RemoteServerProxy.create(shadowClient,IHello.class,"helloservice");
@@ -113,8 +113,8 @@ public class HelloClient {
         config.setHeartBeat(true);
         config.setHeartBeatWaitSeconds(3);
 
-        ShadowClient shadowClient = new ShadowClient();
-        shadowClient.init("127.0.0.1",2023);
+        ShadowClient shadowClient = new ShadowClient("127.0.0.1",2023);
+        shadowClient.init();
         while(true){
             Thread.sleep(1000);
         }
