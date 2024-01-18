@@ -25,11 +25,6 @@ public class RemoteHandler implements InvocationHandler {
     private static final Logger logger = LoggerFactory.getLogger(RemoteHandler.class);
 
     /**
-     * 是否使用注册中心
-     */
-    private boolean useRegistry;
-
-    /**
      * 如果不使用注册中心，则必须有ShadowClient
      */
     private IConnection clientConnection;
@@ -48,7 +43,6 @@ public class RemoteHandler implements InvocationHandler {
     private SerializeModule serializeModule = ModulePool.getModule(SerializeModule.class);
 
     public RemoteHandler(IConnection client, Class<?> serviceStub, String serviceName) {
-        this.useRegistry = false;
         this.clientConnection = client;
         this.serviceStub = serviceStub;
         this.serviceName = serviceName;
