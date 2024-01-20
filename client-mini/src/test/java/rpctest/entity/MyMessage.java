@@ -1,7 +1,5 @@
 package rpctest.entity;
 
-import com.liubs.shadowrpc.protocol.annotation.ShadowEntity;
-import com.liubs.shadowrpc.protocol.annotation.ShadowField;
 
 import java.io.Serializable;
 
@@ -9,22 +7,12 @@ import java.io.Serializable;
  * @author Liubsyy
  * @date 2023/12/18 10:58 PM
  **/
-@ShadowEntity
 public class MyMessage implements Serializable {
 
-    @ShadowField(1)
     private String content;
 
-    @ShadowField(2)
     private int num;
 
-    /**
-     * 客户端新增字段
-     * request: 客户端新增字段，服务端没有这个字段，服务端会跳过这个字段进行反序列化
-     * response: 服务端没有这个字段，客户端能缺省默认值反序列化
-
-    @ShadowField(3)
-    private String addField = "addField1"; */
 
     public MyMessage() {
     }

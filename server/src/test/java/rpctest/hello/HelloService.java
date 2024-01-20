@@ -1,11 +1,9 @@
 package rpctest.hello;
 
-import com.liubs.shadowrpc.base.config.ServerConfig;
 import com.liubs.shadowrpc.base.annotation.ShadowService;
-import com.liubs.shadowrpc.protocol.serializer.SerializerStrategy;
-import com.liubs.shadowrpc.protocol.serializer.SerializerManager;
+import com.liubs.shadowrpc.base.config.ServerConfig;
+import com.liubs.shadowrpc.base.constant.SerializerEnum;
 import com.liubs.shadowrpc.server.init.ServerBuilder;
-import com.liubs.shadowrpc.server.service.ServerManager;
 import org.junit.Test;
 import rpctest.entity.MyMessage;
 
@@ -31,6 +29,24 @@ public class HelloService implements IHello {
         return message1;
     }
 
+
+    //java原生序列化服务器启动服务端
+    @Test
+    public void helloServiceStartForJavaSerialize() {
+
+        ServerConfig serverConfig = new ServerConfig();
+        serverConfig.setQpsStat(true); //统计qps
+        serverConfig.setSerializer(SerializerEnum.JAVA_SERIALISE.getSerializeType());
+        serverConfig.setPort(2023);
+
+        ServerBuilder.newBuilder()
+                .serverConfig(serverConfig)
+                .addPackage("rpctest.hello")
+                .build()
+                .start()
+                .keep();
+
+    }
 
     //启动服务端
     @Test

@@ -7,6 +7,7 @@ package com.liubs.shadowrpc.base.constant;
 public enum SerializerEnum {
     KRYO("KRYO","kryo序列化"),
     PROTOBUF("PROTOBUF","protobuf序列化"),
+    JAVA_SERIALISE("JAVA_SERIALIZE","java原生序列化"),
 
     ;
 
@@ -27,4 +28,7 @@ public enum SerializerEnum {
         return null;
     }
 
+    public String getSerializeType() {
+        return serializeType;
+    }
 }

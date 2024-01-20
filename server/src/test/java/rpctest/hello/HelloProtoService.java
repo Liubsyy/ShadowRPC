@@ -32,7 +32,7 @@ public class HelloProtoService implements IHelloProto{
 
         ServerConfig serverConfig = new ServerConfig();
         serverConfig.setQpsStat(true); //统计qps
-        serverConfig.setSerializer(SerializerEnum.PROTOBUF.name());
+        serverConfig.setSerializer(SerializerEnum.PROTOBUF.getSerializeType());
         serverConfig.setPort(2024);
 
         ServerBuilder.newBuilder()

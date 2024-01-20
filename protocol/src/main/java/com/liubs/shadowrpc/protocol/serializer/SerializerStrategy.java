@@ -1,11 +1,10 @@
 package com.liubs.shadowrpc.protocol.serializer;
 
 import com.liubs.shadowrpc.base.constant.SerializerEnum;
-import com.liubs.shadowrpc.protocol.entity.ShadowRPCRequest;
-import com.liubs.shadowrpc.protocol.entity.ShadowRPCRequestProto;
-import com.liubs.shadowrpc.protocol.entity.ShadowRPCResponse;
-import com.liubs.shadowrpc.protocol.entity.ShadowRPCResponseProto;
+import com.liubs.shadowrpc.protocol.entity.*;
 import com.liubs.shadowrpc.protocol.model.IModelParser;
+import com.liubs.shadowrpc.protocol.serializer.javaserializer.JavaModelParser;
+import com.liubs.shadowrpc.protocol.serializer.javaserializer.JavaSerializer;
 import com.liubs.shadowrpc.protocol.serializer.kryo.KryoModelParser;
 import com.liubs.shadowrpc.protocol.serializer.kryo.KryoSerializer;
 import com.liubs.shadowrpc.protocol.serializer.protobuf.ProtobufModelParser;
@@ -30,6 +29,13 @@ public enum SerializerStrategy {
             ShadowRPCResponseProto.ShadowRPCResponse.class,
             new ProtobufModelParser()
             ),
+
+    JAVA_SERIALISE(SerializerEnum.JAVA_SERIALISE,
+            new JavaSerializer(),
+            JavaSerializeRPCRequest.class,
+            JavaSerializeRPCResponse.class,
+            new JavaModelParser()
+    ),
 
     ;
 
