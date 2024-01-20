@@ -1,5 +1,6 @@
 package com.liubs.shadowrpc.client.connection;
 
+import com.liubs.shadowrpc.client.loadbalance.LoadBalanceContext;
 import com.liubs.shadowrpc.registry.access.ServiceDiscovery;
 import com.liubs.shadowrpc.registry.constant.ServerChangeType;
 import com.liubs.shadowrpc.registry.entity.ServerNode;
@@ -7,6 +8,8 @@ import com.liubs.shadowrpc.registry.listener.ServiceListener;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,28 +21,30 @@ import java.util.List;
  * @date 2023/12/18 11:41 PM
  **/
 public class ShadowClientGroup implements IConnection {
+    private static final Logger logger = LoggerFactory.getLogger(ShadowClientGroup.class);
 
-    private EventLoopGroup eventLoopGroup = new NioEventLoopGroup();;
+
+    private EventLoopGroup eventLoopGroup;
 
     private String registryUrl;
+
+    //注册发现
     private ServiceDiscovery serviceDiscovery;
 
     //所有远程连接
-    private List<ShadowClient> shadowClients = new ArrayList<>();
+    private List<ShadowClient> shadowClients;
+
+    //负载均衡
+    private LoadBalanceContext loadBalance;
 
 
     public ShadowClientGroup(String registryUrl) {
+        this.eventLoopGroup = new NioEventLoopGroup();;
         this.registryUrl = registryUrl;
+        this.shadowClients = new ArrayList<>();
+        loadBalance = new LoadBalanceContext(this);
     }
 
-
-
-    private static int count = 0;
-    public ShadowClient getBalanceShadowClient(){
-        ShadowClient shadowClient = shadowClients.get(count % shadowClients.size());
-        count++;
-        return shadowClient;
-    }
 
     public List<ShadowClient> getShadowClients(){
         return shadowClients;
@@ -82,7 +87,7 @@ public class ShadowClientGroup implements IConnection {
 
     @Override
     public Channel getChannel() {
-        return getBalanceShadowClient().getChannel();
+        return loadBalance.getBalanceShadowClient().getChannel();
     }
 
     @Override
@@ -91,7 +96,7 @@ public class ShadowClientGroup implements IConnection {
             shadowClients.forEach(ShadowClient::close);
             serviceDiscovery.close();
         } finally {
-
+            logger.info("ShadowClientGroup closed...");
         }
     }
 }

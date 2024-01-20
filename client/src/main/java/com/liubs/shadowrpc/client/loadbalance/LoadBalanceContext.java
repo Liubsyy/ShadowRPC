@@ -1,5 +1,6 @@
 package com.liubs.shadowrpc.client.loadbalance;
 
+import com.liubs.shadowrpc.client.connection.ShadowClient;
 import com.liubs.shadowrpc.client.connection.ShadowClientGroup;
 
 /**
@@ -19,5 +20,10 @@ public class LoadBalanceContext {
 
     public int numOfConnections() {
         return shadowClientGroup.getShadowClients().size();
+    }
+
+    public ShadowClient getBalanceShadowClient(){
+        int nextBalance = pollingBalance.getNextBalance();
+        return shadowClientGroup.getShadowClients().get(nextBalance);
     }
 }
