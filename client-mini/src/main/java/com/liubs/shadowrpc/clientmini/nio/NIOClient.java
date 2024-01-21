@@ -45,6 +45,10 @@ public class NIOClient {
         return isRunning;
     }
 
+    public void setRunning(boolean running) {
+        isRunning = running;
+    }
+
     public void connect() throws IOException {
         socketChannel = SocketChannel.open();
         socketChannel.configureBlocking(false);
@@ -58,7 +62,12 @@ public class NIOClient {
         new NIOReactor(this).start();
 
         //等待连接完成
-        while(!socketChannel.finishConnect());
+        try{
+            while(!socketChannel.finishConnect());
+        }catch (IOException e) {
+            isRunning = false;
+            throw e;
+        }
     }
 
 
@@ -78,6 +87,9 @@ public class NIOClient {
 
         // Change interest to OP_WRITE
         SelectionKey key = socketChannel.keyFor(selector);
+        if(!key.isValid()) {
+            return;
+        }
         key.interestOps(SelectionKey.OP_WRITE);
         selector.wakeup();
 

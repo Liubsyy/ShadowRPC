@@ -43,7 +43,7 @@ public class NIOReactor extends Thread {
 
     @Override
     public void run() {
-        while (nioClient.isRunning()) {
+        while (nioClient.isRunning() && socketChannel.isOpen()) {
             try {
                 if (selector.select() > 0) {
                     processSelectedKeys();
@@ -52,6 +52,7 @@ public class NIOReactor extends Thread {
                 logger.error("selector err",e);
             }
         }
+        nioClient.setRunning(false);
     }
 
     private void processSelectedKeys() throws IOException {

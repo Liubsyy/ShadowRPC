@@ -55,6 +55,10 @@ public class ShadowClient {
         nioClient.sendMessage(bytes);
     }
 
+    public boolean isRunning(){
+        return nioClient.isRunning();
+    }
+
     public void close(){
         nioClient.close();
     }
