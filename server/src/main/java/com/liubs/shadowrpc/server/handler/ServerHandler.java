@@ -52,6 +52,7 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
         RequestModel requestModel = modelParser.fromRequest(msg);
 
+        //System.out.println("Server received: " + requestModel.getParams()[0]);
         executorService.execute(()->{
             try {
 

@@ -62,9 +62,8 @@ public class HelloClient {
         long time1 = System.currentTimeMillis();
         List<Callable<String>> futureTaskList = new ArrayList<>();
 
-        //100w个请求，14s
-        // 如果加上打印消息至少23s
-        final int n = 100;
+        //100w个请求，35s
+        final int n = 1000000;
         for(int i = 1;i<=n;i++) {
             final int j = i;
             futureTaskList.add(() -> {
@@ -75,7 +74,7 @@ public class HelloClient {
                 //打印消息影响速度，去掉打印至少快一倍
                 //System.out.printf("发送请求%d \n",j);
                 MyMessage response = helloService.say(message);
-                System.out.printf("接收服务端消息%s \n",response);
+                //System.out.printf("接收服务端消息%s \n",response);
 
                 return "success";
             });

@@ -14,6 +14,7 @@ import java.io.IOException;
  **/
 public class ShadowClient {
 
+    //序列化 & 反序列化方式
     private ISerializer serializer = new JavaSerializer();
 
     private String host;
@@ -33,7 +34,7 @@ public class ShadowClient {
         this.nioClient = new NIOClient(host,port,responseHandler);
     }
 
-    public void connect() throws IOException, InterruptedException {
+    public void connect() throws IOException {
         nioClient.connect();
     }
 
