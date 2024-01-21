@@ -52,6 +52,7 @@ public class NIOReactor extends Thread {
                 logger.error("selector err",e);
             }
         }
+        logger.info("服务器已经关闭");
         nioClient.setRunning(false);
     }
 
@@ -99,6 +100,7 @@ public class NIOReactor extends Thread {
             try {
                 socketChannel.write(buffer);
             } catch (IOException e) {
+                //有可能服务器已经关闭了
                 logger.error("write msg err",e);
             }
             if (buffer.hasRemaining()) {
