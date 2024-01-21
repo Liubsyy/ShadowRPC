@@ -85,6 +85,7 @@ public class NIOReactor extends Thread {
     private void handleConnect(SelectionKey key) throws IOException {
         if (socketChannel.finishConnect()) {
             key.interestOps(SelectionKey.OP_READ);
+            nioClient.finishConnection();
         }
     }
 

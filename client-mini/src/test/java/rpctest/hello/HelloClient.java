@@ -68,7 +68,7 @@ public class HelloClient {
         final int n = 1000000;
         for(int i = 1;i<=n;i++) {
             final int j = i;
-            futureTaskList.add(() -> {
+//            futureTaskList.add(() -> {
 
                 try{
                     MyMessage message = new MyMessage();
@@ -76,7 +76,7 @@ public class HelloClient {
                     message.setContent("Hello, Server!");
 
 
-//                    Thread.sleep(3000);
+                    Thread.sleep(500);
 
                     //打印消息影响速度，去掉打印至少快一倍
                     //System.out.printf("发送请求%d \n",j);
@@ -85,8 +85,8 @@ public class HelloClient {
                 }catch (Throwable e) {
                     e.printStackTrace();
                 }
-                return "success";
-            });
+//                return "success";
+//            });
 
         }
 

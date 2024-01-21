@@ -1,7 +1,7 @@
 package com.liubs.shadowrpc.clientmini.nio;
 
+import com.liubs.shadowrpc.clientmini.exception.ConnectTimeOutException;
 import com.liubs.shadowrpc.clientmini.logger.Logger;
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -9,7 +9,7 @@ import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.*;
 
 
 /**
@@ -31,6 +31,7 @@ public class NIOClient {
 
     private final Queue<MessageSendFuture> writeQueue;
 
+    private CompletableFuture<Void> waitConnection;
 
 
     public NIOClient(String host, int port,IMessageListener receiveMessageCallBack)  {
@@ -39,6 +40,7 @@ public class NIOClient {
         this.receiveMessageCallBack = receiveMessageCallBack;
 
         this.writeQueue = new ConcurrentLinkedQueue<>();
+        waitConnection = new CompletableFuture<>();
     }
 
     public boolean isRunning() {
@@ -59,17 +61,21 @@ public class NIOClient {
         isRunning = true;
 
         //reactor模式
-        new NIOReactor(this).start();
+        NIOReactor nioReactor = new NIOReactor(this);
+        nioReactor.start();
 
         //等待连接完成
         try{
-            while(!socketChannel.finishConnect());
-        }catch (IOException e) {
+            waitConnection.get(3, TimeUnit.SECONDS);
+        } catch (InterruptedException | ExecutionException | TimeoutException e) {
             isRunning = false;
-            throw e;
+            throw new ConnectTimeOutException(String.format("连接服务器%s:%d超时",host,port));
         }
     }
 
+    public void finishConnection(){
+        waitConnection.complete(null);
+    }
 
 
     public MessageSendFuture sendMessage(byte[] bytes) {
