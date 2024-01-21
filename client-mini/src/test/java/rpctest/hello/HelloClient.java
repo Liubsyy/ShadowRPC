@@ -1,6 +1,7 @@
 package rpctest.hello;
 
 import com.liubs.shadowrpc.clientmini.connection.ShadowClient;
+import com.liubs.shadowrpc.clientmini.exception.RemoteClosedException;
 import org.junit.Test;
 import rpctest.entity.MyMessage;
 
@@ -62,27 +63,33 @@ public class HelloClient {
         long time1 = System.currentTimeMillis();
         List<Callable<String>> futureTaskList = new ArrayList<>();
 
+        ExecutorService executorService = Executors.newFixedThreadPool(50);
+
         //100w个请求，32s
         final int n = 1000000;
         for(int i = 1;i<=n;i++) {
             final int j = i;
-//            futureTaskList.add(() -> {
-                MyMessage message = new MyMessage();
-                message.setNum(j);
-                message.setContent("Hello, Server!");
+            futureTaskList.add(() -> {
 
-                //打印消息影响速度，去掉打印至少快一倍
-                //System.out.printf("发送请求%d \n",j);
-            MyMessage response = helloService.say(message);
-            System.out.printf("接收服务端消息%s \n",response);
+                try{
+                    MyMessage message = new MyMessage();
+                    message.setNum(j);
+                    message.setContent("Hello, Server!");
 
-
-//                return "success";
-//            });
+                    //打印消息影响速度，去掉打印至少快一倍
+                    //System.out.printf("发送请求%d \n",j);
+                    MyMessage response = helloService.say(message);
+                    // System.out.printf("接收服务端消息%s \n",response);
+                }catch (RemoteClosedException remoteClosedException) {
+                    remoteClosedException.printStackTrace();
+                    System.exit(1);
+                }
+                return "success";
+            });
 
         }
 
-        ExecutorService executorService = Executors.newFixedThreadPool(50);
+
         executorService.invokeAll(futureTaskList);
         long time2 = System.currentTimeMillis();
 

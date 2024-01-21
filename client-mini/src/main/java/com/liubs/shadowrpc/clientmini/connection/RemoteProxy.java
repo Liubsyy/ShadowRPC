@@ -61,19 +61,29 @@ public class RemoteProxy implements InvocationHandler {
         try{
             clientConnection.sendMessage(clientConnection.getRequestHandler().handleMessage(requestModel));
         }catch (Exception e) {
+            if(!clientConnection.isRunning()) {
+                throw new RemoteClosedException("服务器已经关闭，中断发送消息");
+            }
+
             logger.error("发送请求{}失败",e,traceId);
-            return null;
+            throw e;
         }
 
-        JavaSerializeRPCResponse responseModel = (JavaSerializeRPCResponse)future.get(3, TimeUnit.SECONDS);
-        if(responseModel != null) {
-            return responseModel.getResult();
-        }else {
-            ReceiveHolder.getInstance().deleteWait(traceId);
-            logger.error("超时请求,抛弃消息{}",traceId);
-            return null;
+        try{
+            JavaSerializeRPCResponse responseModel = (JavaSerializeRPCResponse)future.get(3, TimeUnit.SECONDS);
+            if(responseModel != null) {
+                return responseModel.getResult();
+            }else {
+                ReceiveHolder.getInstance().deleteWait(traceId);
+                logger.error("超时请求,抛弃消息{}",traceId);
+                return null;
+            }
+        }catch (Exception e) {
+            if(clientConnection.isRunning()) {
+                throw e;
+            }
+            throw new RemoteClosedException("服务器已经关闭，写入消息失败");
         }
-
     }
 
     public static <T> T create(ShadowClient connection, Class<T> serviceStub, String serviceName) {
