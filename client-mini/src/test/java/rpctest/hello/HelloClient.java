@@ -66,18 +66,19 @@ public class HelloClient {
         final int n = 1000000;
         for(int i = 1;i<=n;i++) {
             final int j = i;
-            futureTaskList.add(() -> {
+//            futureTaskList.add(() -> {
                 MyMessage message = new MyMessage();
                 message.setNum(j);
                 message.setContent("Hello, Server!");
 
                 //打印消息影响速度，去掉打印至少快一倍
                 //System.out.printf("发送请求%d \n",j);
-                MyMessage response = helloService.say(message);
-                //System.out.printf("接收服务端消息%s \n",response);
+            MyMessage response = helloService.say(message);
+            System.out.printf("接收服务端消息%s \n",response);
 
-                return "success";
-            });
+
+//                return "success";
+//            });
 
         }
 
