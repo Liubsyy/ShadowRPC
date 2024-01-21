@@ -2,6 +2,7 @@ package com.liubs.shadowrpc.clientmini.connection;
 
 import com.liubs.shadowrpc.base.annotation.ShadowInterface;
 import com.liubs.shadowrpc.clientmini.exception.RemoteClosedException;
+import com.liubs.shadowrpc.clientmini.exception.WriteTimeoutException;
 import com.liubs.shadowrpc.clientmini.handler.ReceiveHolder;
 import com.liubs.shadowrpc.clientmini.logger.Logger;
 import com.liubs.shadowrpc.clientmini.nio.MessageSendFuture;
@@ -35,10 +36,13 @@ public class RemoteProxy implements InvocationHandler {
      */
     private String serviceName;
 
+    private long writeChannelTimeout;
+
     public RemoteProxy(ShadowClient client, Class<?> serviceStub, String serviceName) {
         this.clientConnection = client;
         this.serviceStub = serviceStub;
         this.serviceName = serviceName;
+        this.writeChannelTimeout = client.getNIOConfig().getWriteChannelTimeout();
     }
 
     @Override
@@ -59,18 +63,20 @@ public class RemoteProxy implements InvocationHandler {
             throw new RemoteClosedException("服务器已经关闭，中断写入消息");
         }
 
+        MessageSendFuture messageSendFuture = null;
         try{
-            MessageSendFuture messageSendFuture = clientConnection.sendMessage(clientConnection.getRequestHandler().handleMessage(requestModel));
+            messageSendFuture = clientConnection.sendMessage(clientConnection.getRequestHandler().handleMessage(requestModel));
             if(null != messageSendFuture) {
-                messageSendFuture.get(1,TimeUnit.SECONDS);
+                messageSendFuture.get(writeChannelTimeout,TimeUnit.MILLISECONDS);
             }
         }catch (Throwable e) {
+            if(null != messageSendFuture) {
+                messageSendFuture.cancel(true);
+            }
             if(!clientConnection.isRunning()) {
                 throw new RemoteClosedException("服务器已经关闭，中断发送消息");
             }
-
-            logger.error("发送请求{}失败",e,traceId);
-            throw e;
+            throw new WriteTimeoutException(String.format("发送请求%s失败",traceId),e);
         }
 
         try{

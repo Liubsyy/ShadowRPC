@@ -5,8 +5,8 @@ package com.liubs.shadowrpc.clientmini.exception;
  * @author Liubsyy
  * @date 2024/1/21
  **/
-public class ConnectTimeOutException extends RuntimeException{
-    public ConnectTimeOutException(String s) {
+public class ConnectTimeoutException extends Exception{
+    public ConnectTimeoutException(String s) {
         super(s);
     }
 }

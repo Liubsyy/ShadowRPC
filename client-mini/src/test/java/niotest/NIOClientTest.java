@@ -2,6 +2,7 @@ package niotest;
 
 import com.liubs.shadowrpc.clientmini.nio.IMessageListener;
 import com.liubs.shadowrpc.clientmini.nio.NIOClient;
+import com.liubs.shadowrpc.clientmini.nio.NIOConfig;
 import org.junit.Test;
 
 /**
@@ -26,7 +27,7 @@ public class NIOClientTest implements IMessageListener {
      */
     @Test
     public void testClient() throws Exception {
-        NIOClient client = new NIOClient("localhost", 8080,this);
+        NIOClient client = new NIOClient("localhost", 8080,new NIOConfig(),this);
         client.connect();
 
         client.sendMessage("Hello, Server!".getBytes());

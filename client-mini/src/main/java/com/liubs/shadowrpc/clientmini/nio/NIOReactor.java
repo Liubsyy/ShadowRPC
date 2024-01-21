@@ -103,7 +103,10 @@ public class NIOReactor extends Thread {
 //                    handleClose(key);
 //                    break;
 //                }
-                sendFuture.completeExceptionally(e);
+                if(!sendFuture.isCancelled()) {
+                    sendFuture.completeExceptionally(e);
+                }
+
                 key.interestOps(SelectionKey.OP_READ);
                 break;
             }

@@ -5,7 +5,7 @@ package com.liubs.shadowrpc.clientmini.exception;
  * @author Liubsyy
  * @date 2024/1/21
  **/
-public class RemoteClosedException extends RuntimeException{
+public class RemoteClosedException extends Exception{
 
     public RemoteClosedException(String message) {
         super(message);

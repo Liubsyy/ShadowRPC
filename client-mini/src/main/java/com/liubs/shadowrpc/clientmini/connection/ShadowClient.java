@@ -1,9 +1,11 @@
 package com.liubs.shadowrpc.clientmini.connection;
 
+import com.liubs.shadowrpc.clientmini.exception.ConnectTimeoutException;
 import com.liubs.shadowrpc.clientmini.handler.RequestHandler;
 import com.liubs.shadowrpc.clientmini.handler.ResponseHandler;
 import com.liubs.shadowrpc.clientmini.nio.MessageSendFuture;
 import com.liubs.shadowrpc.clientmini.nio.NIOClient;
+import com.liubs.shadowrpc.clientmini.nio.NIOConfig;
 import com.liubs.shadowrpc.clientmini.seriallize.ISerializer;
 import com.liubs.shadowrpc.clientmini.seriallize.JavaSerializer;
 
@@ -15,9 +17,6 @@ import java.io.IOException;
  **/
 public class ShadowClient {
 
-    //序列化 & 反序列化方式
-    private ISerializer serializer = new JavaSerializer();
-
     private String host;
     private int port;
 
@@ -25,20 +24,32 @@ public class ShadowClient {
     private RequestHandler requestHandler;
     private ResponseHandler responseHandler;
 
-
+    private SimpleHeartBeat simpleHeartBeat;
 
     public ShadowClient(String host, int port) {
+       this(host,port,new NIOConfig());
+    }
+
+    public ShadowClient(String host, int port, NIOConfig nioConfig) {
         this.host = host;
         this.port = port;
-        this.requestHandler = new RequestHandler(serializer);
-        this.responseHandler = new ResponseHandler(serializer);
-        this.nioClient = new NIOClient(host,port,responseHandler);
+        this.requestHandler = new RequestHandler(nioConfig.getSerializer());
+        this.responseHandler = new ResponseHandler(nioConfig.getSerializer());
+        this.nioClient = new NIOClient(host,port,nioConfig,responseHandler);
     }
 
-    public void connect() throws IOException {
+    public void connect() throws IOException, ConnectTimeoutException {
         nioClient.connect();
+
+        if(nioClient.getNioConfig().isHearBeat()) {
+            this.simpleHeartBeat = new SimpleHeartBeat(this,nioClient.getNioConfig().getHeartBeatWaitSeconds());
+            this.simpleHeartBeat.start();
+        }
     }
 
+    public NIOConfig getNIOConfig(){
+        return nioClient.getNioConfig();
+    }
 
     public <T> T createRemoteProxy(Class<T> serviceStub, String serviceName) {
         return RemoteProxy.create(this,serviceStub,serviceName);
@@ -62,6 +73,9 @@ public class ShadowClient {
 
     public void close(){
         nioClient.close();
+        if(null !=simpleHeartBeat && simpleHeartBeat.isAlive()) {
+            simpleHeartBeat.interrupt();
+        }
     }
 
 

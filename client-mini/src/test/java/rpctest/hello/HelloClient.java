@@ -1,6 +1,9 @@
 package rpctest.hello;
 
 import com.liubs.shadowrpc.clientmini.connection.ShadowClient;
+import com.liubs.shadowrpc.clientmini.exception.ConnectTimeoutException;
+import com.liubs.shadowrpc.clientmini.exception.RemoteClosedException;
+import com.liubs.shadowrpc.clientmini.nio.NIOConfig;
 import org.junit.Test;
 import rpctest.entity.MyMessage;
 
@@ -21,7 +24,7 @@ public class HelloClient {
      * 调用hello方法
      */
     @Test
-    public void helloClient() throws IOException, InterruptedException {
+    public void helloClient() throws IOException, ConnectTimeoutException {
         ShadowClient shadowClient = new ShadowClient("127.0.0.1",2023);
         shadowClient.connect();
 
@@ -48,7 +51,7 @@ public class HelloClient {
      * 并发调用，测试拆包和粘包的可靠性
      */
     @Test
-    public void helloConcurrent() throws InterruptedException, IOException {
+    public void helloConcurrent() throws InterruptedException, IOException, ConnectTimeoutException {
         ShadowClient shadowClient = new ShadowClient("127.0.0.1",2023);
         shadowClient.connect();
 
@@ -68,15 +71,12 @@ public class HelloClient {
         final int n = 1000000;
         for(int i = 1;i<=n;i++) {
             final int j = i;
-//            futureTaskList.add(() -> {
+            futureTaskList.add(() -> {
 
                 try{
                     MyMessage message = new MyMessage();
                     message.setNum(j);
                     message.setContent("Hello, Server!");
-
-
-                    Thread.sleep(500);
 
                     //打印消息影响速度，去掉打印至少快一倍
                     //System.out.printf("发送请求%d \n",j);
@@ -84,9 +84,12 @@ public class HelloClient {
                      System.out.printf("接收服务端消息%s \n",response);
                 }catch (Throwable e) {
                     e.printStackTrace();
+                    if(e.getCause() instanceof RemoteClosedException) {
+                        System.exit(1);
+                    }
                 }
-//                return "success";
-//            });
+                return "success";
+            });
 
         }
 
@@ -99,5 +102,22 @@ public class HelloClient {
 
         executorService.shutdownNow();
         shadowClient.close();
+    }
+
+
+
+    //测试心跳
+    @Test
+    public void testHeartBeat() throws InterruptedException, IOException, ConnectTimeoutException {
+        NIOConfig config = new NIOConfig();
+        config.setHearBeat(true);
+        config.setHeartBeatWaitSeconds(1000);
+
+        ShadowClient shadowClient = new ShadowClient("127.0.0.1",2023,config);
+        shadowClient.connect();
+
+        while(shadowClient.isRunning()){
+            Thread.sleep(1000);
+        }
     }
 }

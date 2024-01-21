@@ -1,6 +1,6 @@
 package com.liubs.shadowrpc.clientmini.nio;
 
-import com.liubs.shadowrpc.clientmini.exception.ConnectTimeOutException;
+import com.liubs.shadowrpc.clientmini.exception.ConnectTimeoutException;
 import com.liubs.shadowrpc.clientmini.logger.Logger;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -19,9 +19,10 @@ import java.util.concurrent.*;
 public class NIOClient {
     private static Logger logger = Logger.getLogger(NIOClient.class);
 
-
     private String host;
     private int port;
+
+    private NIOConfig nioConfig;
 
     private SocketChannel socketChannel;
     private Selector selector;
@@ -33,14 +34,17 @@ public class NIOClient {
 
     private CompletableFuture<Void> waitConnection;
 
+    private NIOReactor nioReactor;
 
-    public NIOClient(String host, int port,IMessageListener receiveMessageCallBack)  {
+
+    public NIOClient(String host, int port,NIOConfig nioConfig,IMessageListener receiveMessageCallBack)  {
         this.host = host;
         this.port = port;
+        this.nioConfig = nioConfig;
         this.receiveMessageCallBack = receiveMessageCallBack;
 
         this.writeQueue = new ConcurrentLinkedQueue<>();
-        waitConnection = new CompletableFuture<>();
+        this.waitConnection = new CompletableFuture<>();
     }
 
     public boolean isRunning() {
@@ -51,7 +55,7 @@ public class NIOClient {
         isRunning = running;
     }
 
-    public void connect() throws IOException {
+    public void connect() throws IOException, ConnectTimeoutException {
         socketChannel = SocketChannel.open();
         socketChannel.configureBlocking(false);
         selector = Selector.open();
@@ -61,15 +65,15 @@ public class NIOClient {
         isRunning = true;
 
         //reactor模式
-        NIOReactor nioReactor = new NIOReactor(this);
+        this.nioReactor = new NIOReactor(this);
         nioReactor.start();
 
         //等待连接完成
         try{
-            waitConnection.get(3, TimeUnit.SECONDS);
+            waitConnection.get(nioConfig.getConnectTimeout(), TimeUnit.MILLISECONDS);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             isRunning = false;
-            throw new ConnectTimeOutException(String.format("连接服务器%s:%d超时",host,port));
+            throw new ConnectTimeoutException(String.format("连接服务器%s:%d超时",host,port));
         }
     }
 
@@ -119,6 +123,9 @@ public class NIOClient {
         } catch (IOException e) {
             logger.error("close connection err",e);
         }
+        if(null !=nioReactor && nioReactor.isAlive()){
+            nioReactor.interrupt();
+        }
     }
 
     public IMessageListener getReceiveMessageCallBack() {
@@ -127,5 +134,9 @@ public class NIOClient {
 
     public Queue<MessageSendFuture> getWriteQueue() {
         return writeQueue;
+    }
+
+    public NIOConfig getNioConfig() {
+        return nioConfig;
     }
 }
