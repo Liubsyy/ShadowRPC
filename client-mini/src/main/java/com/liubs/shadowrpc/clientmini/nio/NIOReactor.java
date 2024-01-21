@@ -102,6 +102,7 @@ public class NIOReactor extends Thread {
             }
             if (buffer.hasRemaining()) {
                 //没有写完，下一次再写，position还会保留
+                key.interestOps(SelectionKey.OP_WRITE);
                 break;
             }
             writeQueue.remove(); // Remove the buffer after it's fully written

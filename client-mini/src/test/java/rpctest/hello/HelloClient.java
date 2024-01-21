@@ -62,7 +62,7 @@ public class HelloClient {
         long time1 = System.currentTimeMillis();
         List<Callable<String>> futureTaskList = new ArrayList<>();
 
-        //100w个请求，35s
+        //100w个请求，32s
         final int n = 1000000;
         for(int i = 1;i<=n;i++) {
             final int j = i;

@@ -78,7 +78,7 @@ public class HelloProtoClient {
         List<Callable<String>> futureTaskList = new ArrayList<>();
 
 
-        //100w个请求，13s
+        //100w个请求，25s
         final int n = 1000000;
         for(int i = 1;i<=n;i++) {
             final int j = i;

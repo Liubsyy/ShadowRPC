@@ -75,8 +75,7 @@ public class HelloClient {
         long time1 = System.currentTimeMillis();
         List<Callable<String>> futureTaskList = new ArrayList<>();
 
-        //100w个请求，14s
-        // 如果加上打印消息至少23s
+        //100w个请求，27s
         final int n = 1000000;
         for(int i = 1;i<=n;i++) {
             final int j = i;
