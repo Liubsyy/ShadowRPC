@@ -41,6 +41,9 @@ public class NIOReactor extends Thread {
     //读通道
     private final ByteBuffer readByteBuffer;
 
+    //上次活跃时间
+    private long lastActiveTime;
+
     public NIOReactor(NIOClient nioClient) {
         this.nioClient = nioClient;
         this.selector = nioClient.getSelector();
@@ -84,6 +87,7 @@ public class NIOReactor extends Thread {
 
     private void handleConnect(SelectionKey key) throws IOException {
         if (socketChannel.finishConnect()) {
+            lastActiveTime = System.currentTimeMillis();
             key.interestOps(SelectionKey.OP_READ);
             nioClient.finishConnection();
         }
@@ -118,6 +122,8 @@ public class NIOReactor extends Thread {
             writeQueue.remove(); // Remove the buffer after it's fully written
             sendFuture.complete(writeResult);
         }
+
+        lastActiveTime = System.currentTimeMillis();
 
         if (writeQueue.isEmpty()) {
             // If no more data to write, change interest back to OP_READ
@@ -162,6 +168,9 @@ public class NIOReactor extends Thread {
             } else {
                 buffer.clear(); // 如果没有剩余数据，清空缓冲区
             }
+
+            lastActiveTime = System.currentTimeMillis();
+
         } else if (numRead < 0) {
             //接收到-1表示服务器关闭
             handleClose(key);
@@ -181,4 +190,7 @@ public class NIOReactor extends Thread {
     }
 
 
+    public long getLastActiveTime() {
+        return lastActiveTime;
+    }
 }
