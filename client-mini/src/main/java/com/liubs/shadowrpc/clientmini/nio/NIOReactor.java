@@ -27,15 +27,16 @@ public class NIOReactor extends Thread {
     //写最多重试次数
     private static final int MAX_WRITE_FAIL_COUNT = 10;
 
+    //写失败次数
+    private AtomicInteger writeFailCount = new AtomicInteger(0);
+
     private final NIOClient nioClient;
     private final Selector selector;
     private final SocketChannel socketChannel;
 
     //写通道
-    private final Queue<ByteBuffer> writeQueue;
+    private final Queue<MessageSendFuture> writeQueue;
 
-    //写失败次数
-    private AtomicInteger writeFailCount = new AtomicInteger(0);
 
     //读通道
     private final ByteBuffer readByteBuffer;
@@ -89,16 +90,21 @@ public class NIOReactor extends Thread {
 
     private void handleWrite(SelectionKey key)  {
         while (!writeQueue.isEmpty()) {
-            ByteBuffer buffer = writeQueue.peek();
+            MessageSendFuture sendFuture = writeQueue.peek();
+            ByteBuffer buffer = sendFuture.getBuffer();
+            int writeResult = -1;
             try {
-                socketChannel.write(buffer);
+                writeResult = socketChannel.write(buffer);
             } catch (IOException e) {
-                logger.error("socket write err",e);
-                if(writeFailCount.addAndGet(1) >= MAX_WRITE_FAIL_COUNT){   //n次失败估计服务器失去联系了
-                    logger.error("socket write fail for {} times,close chanel",MAX_WRITE_FAIL_COUNT);
-                    handleClose(key);
-                    break;
-                }
+                //logger.error("socket write err",e);
+//                if(writeFailCount.addAndGet(1) >= MAX_WRITE_FAIL_COUNT){   //n次失败估计服务器失去联系了
+//                    logger.error("socket write fail for {} times,close chanel",MAX_WRITE_FAIL_COUNT);
+//                    handleClose(key);
+//                    break;
+//                }
+                sendFuture.completeExceptionally(e);
+                key.interestOps(SelectionKey.OP_READ);
+                break;
             }
             if (buffer.hasRemaining()) {
                 //没有写完，下一次再写，position还会保留
@@ -106,6 +112,7 @@ public class NIOReactor extends Thread {
                 break;
             }
             writeQueue.remove(); // Remove the buffer after it's fully written
+            sendFuture.complete(writeResult);
         }
 
         if (writeQueue.isEmpty()) {
@@ -127,17 +134,8 @@ public class NIOReactor extends Thread {
             return;
         }
 
-        // 遍历缓冲区并打印每个字节的16进制表示
-//        System.out.print("buffer: ");
-//        for (int i = 0; i < buffer.limit(); i++) {
-//            byte b = buffer.get(i); // 读取位置i的字节
-//            System.out.printf("0x%02X ", b);
-//        }
-//        System.out.println();
-
         if (numRead > 0) {
             buffer.flip(); // 切换到读模式
-
             // 处理缓冲区中的所有数据
             while (buffer.remaining() > 4) { // 确保有足够的数据读取长度字段
                 buffer.mark();
@@ -149,14 +147,6 @@ public class NIOReactor extends Thread {
                     buffer.get(data);
                     nioClient.getReceiveMessageCallBack().handleMessage(data);
                 } else {
-
-//                    System.out.print("reset: ");
-//                    for (int i = buffer.position(); i < buffer.limit(); i++) {
-//                        byte b = buffer.get(i); // 读取位置i的字节
-//                        System.out.printf("0x%02X ", b);
-//                    }
-//                    System.out.println();
-
                     // 数据长度不足以构成一个完整的消息，重置并退出循环
                     buffer.reset();
                     break;

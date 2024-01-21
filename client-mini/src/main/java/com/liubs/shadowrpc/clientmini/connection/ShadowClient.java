@@ -2,6 +2,7 @@ package com.liubs.shadowrpc.clientmini.connection;
 
 import com.liubs.shadowrpc.clientmini.handler.RequestHandler;
 import com.liubs.shadowrpc.clientmini.handler.ResponseHandler;
+import com.liubs.shadowrpc.clientmini.nio.MessageSendFuture;
 import com.liubs.shadowrpc.clientmini.nio.NIOClient;
 import com.liubs.shadowrpc.clientmini.seriallize.ISerializer;
 import com.liubs.shadowrpc.clientmini.seriallize.JavaSerializer;
@@ -51,8 +52,8 @@ public class ShadowClient {
         return responseHandler;
     }
 
-    public void sendMessage(byte[] bytes) {
-        nioClient.sendMessage(bytes);
+    public MessageSendFuture sendMessage(byte[] bytes) {
+        return nioClient.sendMessage(bytes);
     }
 
     public boolean isRunning(){

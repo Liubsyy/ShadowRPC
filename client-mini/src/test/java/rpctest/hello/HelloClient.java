@@ -1,7 +1,6 @@
 package rpctest.hello;
 
 import com.liubs.shadowrpc.clientmini.connection.ShadowClient;
-import com.liubs.shadowrpc.clientmini.exception.RemoteClosedException;
 import org.junit.Test;
 import rpctest.entity.MyMessage;
 
@@ -76,13 +75,15 @@ public class HelloClient {
                     message.setNum(j);
                     message.setContent("Hello, Server!");
 
+
+//                    Thread.sleep(3000);
+
                     //打印消息影响速度，去掉打印至少快一倍
                     //System.out.printf("发送请求%d \n",j);
                     MyMessage response = helloService.say(message);
-                    // System.out.printf("接收服务端消息%s \n",response);
-                }catch (RemoteClosedException remoteClosedException) {
-                    remoteClosedException.printStackTrace();
-                    System.exit(1);
+                     System.out.printf("接收服务端消息%s \n",response);
+                }catch (Throwable e) {
+                    e.printStackTrace();
                 }
                 return "success";
             });

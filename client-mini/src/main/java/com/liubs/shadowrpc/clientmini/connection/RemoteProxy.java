@@ -4,6 +4,7 @@ import com.liubs.shadowrpc.base.annotation.ShadowInterface;
 import com.liubs.shadowrpc.clientmini.exception.RemoteClosedException;
 import com.liubs.shadowrpc.clientmini.handler.ReceiveHolder;
 import com.liubs.shadowrpc.clientmini.logger.Logger;
+import com.liubs.shadowrpc.clientmini.nio.MessageSendFuture;
 import com.liubs.shadowrpc.protocol.entity.JavaSerializeRPCRequest;
 import com.liubs.shadowrpc.protocol.entity.JavaSerializeRPCResponse;
 
@@ -59,8 +60,11 @@ public class RemoteProxy implements InvocationHandler {
         }
 
         try{
-            clientConnection.sendMessage(clientConnection.getRequestHandler().handleMessage(requestModel));
-        }catch (Exception e) {
+            MessageSendFuture messageSendFuture = clientConnection.sendMessage(clientConnection.getRequestHandler().handleMessage(requestModel));
+            if(null != messageSendFuture) {
+                messageSendFuture.get(1,TimeUnit.SECONDS);
+            }
+        }catch (Throwable e) {
             if(!clientConnection.isRunning()) {
                 throw new RemoteClosedException("服务器已经关闭，中断发送消息");
             }

@@ -29,7 +29,7 @@ public class NIOClient {
 
     private IMessageListener receiveMessageCallBack;
 
-    private final Queue<ByteBuffer> writeQueue;
+    private final Queue<MessageSendFuture> writeQueue;
 
 
 
@@ -72,9 +72,9 @@ public class NIOClient {
 
 
 
-    public void sendMessage(byte[] bytes) {
+    public MessageSendFuture sendMessage(byte[] bytes) {
         if(null == bytes || bytes.length == 0) {
-            return;
+            return null;
         }
 
         ByteBuffer writeBuffer = ByteBuffer.allocate(4 + bytes.length); // 4 bytes for length field
@@ -83,28 +83,18 @@ public class NIOClient {
         writeBuffer.flip();
 
         // Add to write queue
-        writeQueue.add(writeBuffer);
+        MessageSendFuture future = new MessageSendFuture(writeBuffer);
+        writeQueue.add(future);
 
         // Change interest to OP_WRITE
         SelectionKey key = socketChannel.keyFor(selector);
         if(!key.isValid()) {
-            return;
+            return null;
         }
         key.interestOps(SelectionKey.OP_WRITE);
         selector.wakeup();
 
-//        try {
-//            synchronized (this) {
-//                while (writeBuffer.hasRemaining()) {
-//                    socketChannel.write(writeBuffer);
-//                }
-//                // Optionally, register for OP_READ to receive server response
-//                socketChannel.register(selector, SelectionKey.OP_READ);
-//            }
-//
-//        } catch (IOException e) {
-//            logger.error("sendMessage err",e);
-//        }
+        return future;
     }
 
     public Selector getSelector() {
@@ -129,7 +119,7 @@ public class NIOClient {
         return receiveMessageCallBack;
     }
 
-    public Queue<ByteBuffer> getWriteQueue() {
+    public Queue<MessageSendFuture> getWriteQueue() {
         return writeQueue;
     }
 }
