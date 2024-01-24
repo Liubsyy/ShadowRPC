@@ -123,7 +123,7 @@ System.out.printf("接收服务端消息 : %s\n",response);
 ClientConfig config = new ClientConfig();
 config.setSerializer(SerializerStrategy.KRYO.name());
 ModulePool.getModule(ClientModule.class).init(config);
-String ZK_URL=""localhost:2181"";
+String ZK_URL="localhost:2181";
 ShadowClientGroup shadowClientGroup = new ShadowClientGroup(ZK_URL);
 shadowClientGroup.init();
 
