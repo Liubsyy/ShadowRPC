@@ -34,6 +34,12 @@ public class RemoteHandler implements InvocationHandler {
      */
     private  Class<?> serviceStub;
 
+
+    /**
+     * 集群
+     */
+    private String group;
+
     /**
      * 服务名
      */
@@ -42,9 +48,10 @@ public class RemoteHandler implements InvocationHandler {
 
     private SerializeModule serializeModule = ModulePool.getModule(SerializeModule.class);
 
-    public RemoteHandler(IConnection client, Class<?> serviceStub, String serviceName) {
+    public RemoteHandler(IConnection client, Class<?> serviceStub, String group,String serviceName) {
         this.clientConnection = client;
         this.serviceStub = serviceStub;
+        this.group = group;
         this.serviceName = serviceName;
     }
 
@@ -63,7 +70,7 @@ public class RemoteHandler implements InvocationHandler {
             IModelParser modelParser = serializeModule.getSerializer().getModelParser();
             Future<?> future = ReceiveHolder.getInstance().initFuture(traceId);
 
-            Channel channel = clientConnection.getChannel();
+            Channel channel = clientConnection.getChannel(group);
 
             if(!channel.isOpen()) {
                 logger.error("服务器已关闭,发送消息抛弃...");

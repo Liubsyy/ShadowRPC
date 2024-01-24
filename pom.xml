@@ -35,6 +35,7 @@
         <log4j.version>2.22.1</log4j.version>
         <slf4j.version>1.7.36</slf4j.version>
         <reflections.version>0.10.2</reflections.version>
+        <apache.common.version>3.14.0</apache.common.version>
 
 
         <!-- build version -->

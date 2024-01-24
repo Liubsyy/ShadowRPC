@@ -77,6 +77,9 @@ public class ServerManager {
 
 
     public Server start(){
+
+        serverConfig.checkValid();
+
         //序列化模块初始化
         serializeModule.init(serverConfig,packageNames);
 
@@ -84,9 +87,9 @@ public class ServerManager {
         serverModule.init(serverConfig,packageNames);
 
         //启动服务
-        server = new Server(serverConfig,"",serverConfig.getPort());
+        server = new Server(serverConfig,serverConfig.getGroup(),serverConfig.getPort());
         if(!StringUtil.isNullOrEmpty(serverConfig.getRegistryUrl())) {
-            server.registerServer(serverConfig.getRegistryUrl());
+            server.setRegistry(serverConfig.getRegistryUrl());
         }
         server.start();
 

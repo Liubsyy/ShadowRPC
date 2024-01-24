@@ -18,12 +18,12 @@ public class LoadBalanceContext {
     }
 
 
-    public int numOfConnections() {
-        return shadowClientGroup.getShadowClients().size();
+    public int numOfConnections(String group) {
+        return shadowClientGroup.getShadowClients(group).size();
     }
 
-    public ShadowClient getBalanceShadowClient(){
-        int nextBalance = pollingBalance.getNextBalance();
-        return shadowClientGroup.getShadowClients().get(nextBalance);
+    public ShadowClient getBalanceShadowClient(String group){
+        int nextBalance = pollingBalance.getNextBalance(group);
+        return shadowClientGroup.getShadowClients(group).get(nextBalance);
     }
 }

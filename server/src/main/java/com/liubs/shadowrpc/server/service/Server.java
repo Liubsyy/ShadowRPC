@@ -54,7 +54,7 @@ public class Server {
 
             //注册服务
             if(null != serviceRegistry) {
-                serviceRegistry.registerServer(new ServerNode(IPUtil.getLocalIp(),port));
+                serviceRegistry.registerServer(new ServerNode(group,IPUtil.getLocalIp(),port));
             }
 
             Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
@@ -67,7 +67,7 @@ public class Server {
 
 
 
-    public Server registerServer(String zkUrl) {
+    public Server setRegistry(String zkUrl) {
         serviceRegistry = new ServiceRegistry(zkUrl);
         return this;
     }

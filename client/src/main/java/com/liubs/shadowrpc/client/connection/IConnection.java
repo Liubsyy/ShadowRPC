@@ -9,7 +9,9 @@ import io.netty.channel.Channel;
 public interface IConnection {
     void init();
 
-    Channel getChannel();
+    <T> T createRemoteProxy(Class<T> serviceStub,String service);
+
+    Channel getChannel(String group);
 
     void close();
 }

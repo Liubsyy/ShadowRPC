@@ -1,7 +1,7 @@
 package com.liubs.shadowrpc.registry.access;
 
 import com.liubs.shadowrpc.registry.constant.ServerChangeType;
-import com.liubs.shadowrpc.registry.constant.ServiceRegistryConstant;
+import com.liubs.shadowrpc.registry.constant.ServiceRegistryPath;
 import com.liubs.shadowrpc.registry.entity.ServerNode;
 import com.liubs.shadowrpc.registry.listener.ServiceListener;
 import com.liubs.shadowrpc.registry.zk.ZooKeeperClient;
@@ -25,8 +25,9 @@ public class ServiceDiscovery {
         this.zooKeeperClient = new ZooKeeperClient(registryPath);
     }
 
-    public void watchService(ServiceListener serviceListener) {
-        zooKeeperClient.addChildrenListener(ServiceRegistryConstant.BASE_PATH, new PathChildrenCacheListener() {
+
+    public void watchService(String group,ServiceListener serviceListener) {
+        zooKeeperClient.addChildrenListener(ServiceRegistryPath.getServerGroupPath(group), new PathChildrenCacheListener() {
             @Override
             public void childEvent(CuratorFramework curatorFramework, PathChildrenCacheEvent event) throws Exception {
 

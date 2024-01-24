@@ -39,7 +39,7 @@ public class UploadClient {
         ShadowClient shadowClient = new ShadowClient("127.0.0.1",2023);
         shadowClient.init();
 
-        IUploadService uploadService = RemoteServerProxy.create(shadowClient,IUploadService.class,"uploadService");
+        IUploadService uploadService = RemoteServerProxy.create(shadowClient,IUploadService.class,"shadowrpc://DefaultGroup/uploadService");
 
         byte[] bytes = Files.readAllBytes(Paths.get("/Users/liubs/IdeaProjects/ShadowRPC/protocol/src/test/resources/proto/MyMessage.proto"));
         boolean upload = uploadService.upload("upload_MyMessage.proto", bytes);

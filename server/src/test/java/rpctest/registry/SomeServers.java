@@ -22,7 +22,7 @@ public class SomeServers {
 
     @BeforeClass
     public static void init(){
-
+        serverConfig.setGroup("LocalGroup");
         serverConfig.setRegistryUrl(ZK_URL);
         serverConfig.setQpsStat(true); //统计qps
         serverConfig.setSerializer(SerializerEnum.KRYO.name());

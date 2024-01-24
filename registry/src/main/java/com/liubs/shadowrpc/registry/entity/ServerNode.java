@@ -9,15 +9,23 @@ import com.liubs.shadowrpc.base.util.JsonUtil;
  * @date 2023/12/31
  **/
 public class ServerNode {
+    private String group;
     private String ip;
     private int port;
 
-    public ServerNode() {
-    }
 
-    public ServerNode(String ip, int port) {
+    public ServerNode(String group, String ip, int port) {
+        this.group = group;
         this.ip = ip;
         this.port = port;
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
     }
 
     public String getIp() {
@@ -36,10 +44,12 @@ public class ServerNode {
         this.port = port;
     }
 
+
     @Override
     public String toString() {
         return "ServerNode{" +
-                "ip='" + ip + '\'' +
+                "group='" + group + '\'' +
+                ", ip='" + ip + '\'' +
                 ", port=" + port +
                 '}';
     }

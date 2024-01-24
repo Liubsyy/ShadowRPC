@@ -38,7 +38,7 @@ public class HelloProtoClient {
         ShadowClient shadowClient = new ShadowClient("127.0.0.1",2024);
         shadowClient.init();
 
-        IHelloProto helloService = RemoteServerProxy.create(shadowClient,IHelloProto.class,"helloprotoservice");
+        IHelloProto helloService = RemoteServerProxy.create(shadowClient,IHelloProto.class,"shadowrpc://DefaultGroup/helloprotoservice");
         MyMessageProto.MyMessage message =  MyMessageProto.MyMessage.newBuilder()
                 .setNum(100)
                 .setContent("Hello, Server!")
@@ -61,7 +61,7 @@ public class HelloProtoClient {
         shadowClient.init();
 
         //调用远程RPC接口
-        IHelloProto helloService = RemoteServerProxy.create(shadowClient,IHelloProto.class,"helloprotoservice");
+        IHelloProto helloService = RemoteServerProxy.create(shadowClient,IHelloProto.class,"shadowrpc://DefaultGroup/helloprotoservice");
 
 
         MyMessageProto.MyMessage requestMsg =  MyMessageProto.MyMessage.newBuilder()

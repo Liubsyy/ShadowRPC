@@ -1,8 +1,10 @@
 package com.liubs.shadowrpc.registry.access;
 
-import com.liubs.shadowrpc.registry.constant.ServiceRegistryConstant;
+import com.liubs.shadowrpc.registry.constant.ServiceRegistryPath;
 import com.liubs.shadowrpc.registry.entity.ServerNode;
 import com.liubs.shadowrpc.registry.zk.ZooKeeperClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 服务注册器
@@ -10,6 +12,7 @@ import com.liubs.shadowrpc.registry.zk.ZooKeeperClient;
  * @date 2023/12/30
  **/
 public class ServiceRegistry {
+    private static final Logger logger = LoggerFactory.getLogger(ServiceRegistry.class);
 
     private String registryPath;
     private String zkNodePath;
@@ -23,7 +26,8 @@ public class ServiceRegistry {
 
     public void registerServer(ServerNode serverNode) {
         try {
-            String path = ServiceRegistryConstant.getServerNodeStr(serverNode.getPort());
+            String path = ServiceRegistryPath.getServerNodePath(serverNode.getGroup(),
+                    ServiceRegistryPath.uniqueKey(serverNode.getIp(),serverNode.getPort()));
             this.zkNodePath = zooKeeperClient.create(path, serverNode.toBytes());
         } catch (Exception e) {
             e.printStackTrace();
@@ -37,7 +41,7 @@ public class ServiceRegistry {
                 zooKeeperClient.delete(zkNodePath);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Remove registry node err ",e);
         }
 
         zooKeeperClient.close();

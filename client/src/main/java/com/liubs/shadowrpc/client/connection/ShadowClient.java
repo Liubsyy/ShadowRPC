@@ -4,6 +4,7 @@ import com.liubs.shadowrpc.base.config.ClientConfig;
 import com.liubs.shadowrpc.base.module.ModulePool;
 import com.liubs.shadowrpc.client.ClientModule;
 import com.liubs.shadowrpc.client.handler.ShadowChannelInitializer;
+import com.liubs.shadowrpc.client.proxy.RemoteServerProxy;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -61,6 +62,11 @@ public class ShadowClient implements IConnection{
         }
     }
 
+    @Override
+    public <T> T createRemoteProxy(Class<T> serviceStub, String service) {
+        return RemoteServerProxy.create(this,serviceStub,service);
+    }
+
 
     public String getRemoteIp() {
         return remoteIp;
@@ -79,7 +85,7 @@ public class ShadowClient implements IConnection{
     }
 
     @Override
-    public Channel getChannel() {
+    public Channel getChannel(String group) {
         return channel;
     }
 
