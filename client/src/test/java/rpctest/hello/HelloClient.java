@@ -42,7 +42,7 @@ public class HelloClient {
         shadowClient.init();
 
 
-        IHello helloService = RemoteServerProxy.create(shadowClient,IHello.class,"shadowrpc://DefaultGroup/helloservice");
+        IHello helloService = shadowClient.createRemoteProxy(IHello.class,"shadowrpc://DefaultGroup/helloservice");
 
         logger.info("发送 hello 消息");
         String helloResponse = helloService.hello("Tom");
@@ -66,7 +66,7 @@ public class HelloClient {
         shadowClient.init();
 
         //调用远程RPC接口
-        IHello helloService = RemoteServerProxy.create(shadowClient,IHello.class,"shadowrpc://DefaultGroup/helloservice");
+        IHello helloService = shadowClient.createRemoteProxy(IHello.class,"shadowrpc://DefaultGroup/helloservice");
 
         System.out.println("发送 hello 消息");
         String helloResponse = helloService.hello("Tom");
