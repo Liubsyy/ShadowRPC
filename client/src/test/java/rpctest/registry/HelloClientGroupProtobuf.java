@@ -68,6 +68,8 @@ public class HelloClientGroupProtobuf {
 
         IHelloProto helloProtoService = shadowClientGroup.createRemoteProxy(IHelloProto.class, "shadowrpc://MultiNodeGroup/helloprotoservice");
 
+        System.out.println("所有服务器: "+shadowClientGroup.getShadowClients("MultiNodeGroup").stream().map(c-> c.getRemoteIp()+":"+c.getRemotePort()).collect(Collectors.toList()));
+
         MyMessageProto.MyMessage requestMsg =  MyMessageProto.MyMessage.newBuilder()
                 .setNum(100)
                 .setContent("Hello, Server!")
