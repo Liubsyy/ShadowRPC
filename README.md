@@ -1,14 +1,16 @@
-### ShadowRPC
+## ShadowRPC
 一个基于netty的rpc开源框架，简单易用，零配置，可同步和异步调用，不断更新完善中...<br><br>
 
-主要模块
+### 主要模块
 - protocol : 协议层，包含应用层通信协议，以及序列化/反序列化，支持kryo和protobuf
 - registry : 注册模块，基于zookeeper作为注册中心，包含注册服务和服务发现
 - server : 服务端
 - client : 客户端
+- client-mini : 不依赖任何包的客户端，基于NIO
 
-使用步骤
-1. 定义实体, 加上注解
+### 使用步骤
+
+1.定义实体, 加上注解
 ```java
 @ShadowEntity
 public class MyMessage {
@@ -19,6 +21,7 @@ public class MyMessage {
     private int num;
 }
 ```
+
 如果是protobuf方式，编写proto文件
 ```proto
 message MyMessage {
@@ -29,7 +32,8 @@ message MyMessage {
 然后直接用maven插件protobuf-maven-plugin生成实体
 
 <br>
-2. 编写接口加上@ShadowInterface注解，如果是protobuf方式，因为要跨语言，所以所有函数参数类型和返回类型都必须是proto文件定义的类型
+
+2.编写接口加上@ShadowInterface注解
 
 ```java
 @ShadowInterface
@@ -38,6 +42,15 @@ public interface IHello {
     MyMessage say(MyMessage message);
 }
 ```
+
+如果采用protobuf作为通信协议，由于可实现跨语言，所以所有函数参数类型和返回类型都必须是proto文件定义的类型
+```java
+@ShadowInterface
+public interface IHelloProto {
+    MyMessageProto.MyMessage say(MyMessageProto.MyMessage message);
+}
+```
+
 
 然后编写服务实现类
 ```java
@@ -57,9 +70,9 @@ public class HelloService implements IHello {
 }
 ```
 
-3. 指定序列化类型和端口，启动服务端
-
 <br>
+
+3.指定序列化类型和端口，启动服务端<br>
 
   
 单点启动模式如下: 
@@ -93,7 +106,7 @@ ServerBuilder.newBuilder()
 
 
 
-4. 客户端用接口调用远程函数
+4.客户端用调用远程rpc接口
    
 ```java
 ModulePool.getModule(ClientModule.class).init(new ClientConfig());
@@ -101,7 +114,7 @@ ModulePool.getModule(ClientModule.class).init(new ClientConfig());
 ShadowClient shadowClient = new ShadowClient("127.0.0.1",2023);
 shadowClient.init();
 
-IHello helloService = RemoteServerProxy.create(shadowClient,IHello.class,"shadowrpc://DefaultGroup/helloservice");
+IHello helloService = shadowClient.createRemoteProxy(IHello.class,"shadowrpc://DefaultGroup/helloservice");
 
 logger.info("发送 hello 消息");
 String helloResponse = helloService.hello("Tom");
