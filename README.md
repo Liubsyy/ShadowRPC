@@ -10,6 +10,12 @@
 
 ### 使用步骤
 
+```
+注: 所有使用案例都在client和server的单测里面
+```
+
+<br>
+
 1.定义实体, 加上注解
 ```java
 @ShadowEntity
