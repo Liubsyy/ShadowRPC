@@ -16,8 +16,8 @@ public class PollingBalance implements IBalance {
     }
 
     @Override
-    public int getNextBalance(String group){
+    public int getNextBalance(){
         //原子性操作，获取下一个轮询节点
-        return visitIndex.updateAndGet(c -> (c + 1) % loadBalance.numOfConnections(group));
+        return visitIndex.updateAndGet(c -> (c + 1) % loadBalance.numOfConnections());
     }
 }

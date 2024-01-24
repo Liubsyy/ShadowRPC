@@ -5,5 +5,5 @@ package com.liubs.shadowrpc.client.loadbalance;
  * @date 2024/1/18
  **/
 public interface IBalance {
-    int getNextBalance(String group);
+    int getNextBalance();
 }

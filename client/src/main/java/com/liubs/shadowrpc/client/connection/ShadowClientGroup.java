@@ -25,6 +25,7 @@ public class ShadowClientGroup implements IConnection {
 
     private EventLoopGroup eventLoopGroup;
 
+    //注册中心
     private String registryUrl;
 
     //注册发现
@@ -33,15 +34,15 @@ public class ShadowClientGroup implements IConnection {
     //group=>所有远程连接
     private Map<String,List<ShadowClient>> shadowClientsMap;
 
-    //负载均衡
-    private LoadBalanceContext loadBalance;
+    //负载均衡 group=>负载context
+    private Map<String,LoadBalanceContext> loadBalances;
 
 
     public ShadowClientGroup(String registryUrl) {
         this.eventLoopGroup = new NioEventLoopGroup();;
         this.registryUrl = registryUrl;
         this.shadowClientsMap = new ConcurrentHashMap<>();
-        loadBalance = new LoadBalanceContext(this);
+        loadBalances = new ConcurrentHashMap<>();
     }
 
     public List<ShadowClient> getShadowClients(String group) {
@@ -97,6 +98,7 @@ public class ShadowClientGroup implements IConnection {
                         });
 
                         shadowClientsMap.put(group,finalShadowClients);
+                        loadBalances.put(group,new LoadBalanceContext(group,this));
                     }
                 }
             }
@@ -107,7 +109,7 @@ public class ShadowClientGroup implements IConnection {
 
     @Override
     public Channel getChannel(String group) {
-        return loadBalance.getBalanceShadowClient(group).getChannel(group);
+        return loadBalances.get(group).getBalanceShadowClient().getChannel(null);
     }
 
     @Override

@@ -9,21 +9,23 @@ import com.liubs.shadowrpc.client.connection.ShadowClientGroup;
  **/
 public class LoadBalanceContext {
 
+    private String group;
     private PollingBalance pollingBalance;
     private ShadowClientGroup shadowClientGroup;
 
-    public LoadBalanceContext(ShadowClientGroup shadowClientGroup) {
+    public LoadBalanceContext(String group,ShadowClientGroup shadowClientGroup) {
+        this.group = group;
         this.shadowClientGroup = shadowClientGroup;
         pollingBalance = new PollingBalance(this);
     }
 
 
-    public int numOfConnections(String group) {
+    public int numOfConnections() {
         return shadowClientGroup.getShadowClients(group).size();
     }
 
-    public ShadowClient getBalanceShadowClient(String group){
-        int nextBalance = pollingBalance.getNextBalance(group);
+    public ShadowClient getBalanceShadowClient(){
+        int nextBalance = pollingBalance.getNextBalance();
         return shadowClientGroup.getShadowClients(group).get(nextBalance);
     }
 }

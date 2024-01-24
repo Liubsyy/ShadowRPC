@@ -33,9 +33,10 @@ public class HelloClientGroup {
     @Test
     public void connectRegistryForServices()  {
         ShadowClientGroup shadowClientGroup = new ShadowClientGroup("localhost:2181");
+        shadowClientGroup.init();
 
-        IHello helloService = shadowClientGroup.createRemoteProxy(IHello.class, "shadowrpc://DefaultGroup/helloservice");
-        List<ShadowClient> shadowClientList = shadowClientGroup.getShadowClients("DefaultGroup");
+        IHello helloService = shadowClientGroup.createRemoteProxy(IHello.class, "shadowrpc://LocalGroup/helloservice");
+        List<ShadowClient> shadowClientList = shadowClientGroup.getShadowClients("LocalGroup");
 
         System.out.println("所有服务器: "+shadowClientList.stream().map(c-> c.getRemoteIp()+":"+c.getRemotePort()).collect(Collectors.toList()));
 

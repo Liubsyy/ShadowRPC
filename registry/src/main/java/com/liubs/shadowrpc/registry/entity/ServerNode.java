@@ -13,6 +13,9 @@ public class ServerNode {
     private String ip;
     private int port;
 
+    //这个无参构造函数给json用
+    public ServerNode() {
+    }
 
     public ServerNode(String group, String ip, int port) {
         this.group = group;
