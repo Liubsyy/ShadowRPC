@@ -64,21 +64,31 @@ public class HelloService implements IHello {
   
 单点启动模式如下: 
 ```java
-SerializerManager.getInstance().setSerializer(SerializerEnum.KRYO);
-ServerManager.getInstance()
-                .scanService("rpctest.hello")
-                .startServer(2023)
-                .keep();
+ServerConfig serverConfig = new ServerConfig();
+        serverConfig.setQpsStat(true); //统计qps
+        serverConfig.setPort(2023);
+
+ServerBuilder.newBuilder()
+        .serverConfig(serverConfig)
+        .addPackage("rpctest.hello")
+        .build()
+        .start();
 ```
 
 使用zk作为集群模式启动
 ```java
 String ZK_URL = "localhost:2181";
-SerializerManager.getInstance().setSerializer(SerializerEnum.KRYO);
-ServerManager.getInstance()
-                .scanService("rpctest.hello")
-                .startServer(ZK_URL,2023)
-                .keep();
+ServerConfig serverConfig = new ServerConfig();
+serverConfig.setGroup("DefaultGroup");
+serverConfig.setPort(2023);
+serverConfig.setRegistryUrl(ZK_URL);
+serverConfig.setQpsStat(true); //统计qps
+serverConfig.setSerializer(SerializerEnum.KRYO.name());
+ServerBuilder.newBuilder()
+                .serverConfig(serverConfig)
+                .addPackage("rpctest.hello")
+                .build()
+                .start();
 ```
 
 
@@ -86,15 +96,16 @@ ServerManager.getInstance()
 4. 客户端用接口调用远程函数
    
 ```java
-ShadowClient shadowClient = new ShadowClient();
-shadowClient.init("127.0.0.1",2023);
+ModulePool.getModule(ClientModule.class).init(new ClientConfig());
 
+ShadowClient shadowClient = new ShadowClient("127.0.0.1",2023);
+shadowClient.init();
 
-IHello helloService = RemoteServerProxy.create(shadowClient.getChannel(),IHello.class,"helloservice");
+IHello helloService = RemoteServerProxy.create(shadowClient,IHello.class,"shadowrpc://DefaultGroup/helloservice");
 
-System.out.println("发送 hello 消息");
+logger.info("发送 hello 消息");
 String helloResponse = helloService.hello("Tom");
-System.out.println("hello 服务端响应:"+helloResponse);
+logger.info("hello 服务端响应:"+helloResponse);
 
 MyMessage message = new MyMessage();
 message.setNum(100);
@@ -109,17 +120,21 @@ System.out.printf("接收服务端消息 : %s\n",response);
 
 使用zk作为服务发现负载均衡调用各个服务器：
 ```java
-String ZK_URL = "localhost:2181";
-ShadowClientsManager.getInstance().connectZk(ZK_URL);
-List<ShadowClient> shadowClientList = ShadowClientsManager.getInstance().getShadowClients();
+ClientConfig config = new ClientConfig();
+config.setSerializer(SerializerStrategy.KRYO.name());
+ModulePool.getModule(ClientModule.class).init(config);
+String ZK_URL=""localhost:2181"";
+ShadowClientGroup shadowClientGroup = new ShadowClientGroup(ZK_URL);
+shadowClientGroup.init();
 
-System.out.println("所有服务器: "+shadowClientList.stream().map(ShadowClient::getConnectionUrl).collect(Collectors.toList()));
+IHello helloService = shadowClientGroup.createRemoteProxy(IHello.class, "shadowrpc://DefaultGroup/helloservice");
+List<ShadowClient> shadowClientList = shadowClientGroup.getShadowClients("DefaultGroup");
 
-IHello helloService = RemoteServerProxy.create(IHello.class,"helloservice");
+System.out.println("所有服务器: "+shadowClientList.stream().map(c-> c.getRemoteIp()+":"+c.getRemotePort()).collect(Collectors.toList()));
 
-int helloCount = shadowClientList.size() * 5;
-for(int i = 0 ;i<helloCount; i++) {
-    helloService.hello(i+"");
+for(int i = 0 ;i<shadowClientList.size() * 5; i++) {
+    String hello = helloService.hello(i + "");
+    System.out.println(hello);
 }
 ```
 
