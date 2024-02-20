@@ -15,6 +15,7 @@ import java.lang.reflect.Proxy;
 import java.util.UUID;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author Liubsyy
@@ -79,16 +80,20 @@ public class RemoteProxy implements InvocationHandler {
             throw new WriteTimeoutException(String.format("发送请求%s失败",traceId),e);
         }
 
+
         try{
             JavaSerializeRPCResponse responseModel = (JavaSerializeRPCResponse)future.get(3, TimeUnit.SECONDS);
             if(responseModel != null) {
                 return responseModel.getResult();
             }else {
-                ReceiveHolder.getInstance().deleteWait(traceId);
-                logger.error("超时请求,抛弃消息{}",traceId);
+                logger.error("未获取到响应消息{}",traceId);
                 return null;
             }
-        }catch (Exception e) {
+        }catch (TimeoutException timeoutException) {
+            logger.error("超时请求,抛弃消息{}",traceId);
+            ReceiveHolder.getInstance().deleteWait(traceId);
+            return null;
+        } catch (Exception e) {
             if(clientConnection.isRunning()) {
                 throw e;
             }

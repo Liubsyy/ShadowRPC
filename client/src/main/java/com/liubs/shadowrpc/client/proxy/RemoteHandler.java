@@ -16,6 +16,7 @@ import java.lang.reflect.Method;
 import java.util.UUID;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author Liubsyy
@@ -68,7 +69,6 @@ public class RemoteHandler implements InvocationHandler {
             requestModel.setParams(args);
 
             IModelParser modelParser = serializeModule.getSerializer().getModelParser();
-            Future<?> future = ReceiveHolder.getInstance().initFuture(traceId);
 
             Channel channel = clientConnection.getChannel(group);
 
@@ -77,19 +77,21 @@ public class RemoteHandler implements InvocationHandler {
                 return null;
             }
 
+            Future<?> future = ReceiveHolder.getInstance().initFuture(traceId);
             try{
                 channel.writeAndFlush(modelParser.toRequest(requestModel)).sync();
             }catch (Exception e) {
                 logger.error("发送请求{}失败",traceId);
+                ReceiveHolder.getInstance().deleteWait(traceId);
                 return null;
             }
 
-            ResponseModel responseModel = (ResponseModel)future.get(3, TimeUnit.SECONDS);
-            if(responseModel != null) {
+            try{
+                ResponseModel responseModel = (ResponseModel)future.get(3, TimeUnit.SECONDS);
                 return responseModel.getResult();
-            }else {
-                ReceiveHolder.getInstance().deleteWait(traceId);
+            }catch (TimeoutException timeoutException) {
                 logger.error("超时请求,抛弃消息{}",traceId);
+                ReceiveHolder.getInstance().deleteWait(traceId);
                 return null;
             }
 

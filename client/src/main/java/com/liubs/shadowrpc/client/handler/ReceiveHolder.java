@@ -26,7 +26,10 @@ public class ReceiveHolder {
     }
 
     public void deleteWait(String uuid) {
-        futureMap.remove(uuid);
+        CompletableFuture<Object> remove = futureMap.remove(uuid);
+        if(null != remove) {
+            remove.cancel(true);
+        }
     }
 
 
