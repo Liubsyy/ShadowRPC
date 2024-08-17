@@ -1,6 +1,8 @@
 ## ShadowRPC
 一个基于netty的rpc开源框架，简单易用，零配置，可同步和异步调用，不断更新完善中...<br><br>
 
+> 精简版点到点全双工通信rpc框架详见[shadowrpc-fly](https://github.com/Liubsyy/shadowrpc-fly)，基于本ShadowRPC框架改造
+
 
 ### 主要模块
 - protocol : 协议层，包含应用层通信协议，以及序列化/反序列化，支持kryo和protobuf
