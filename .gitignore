@@ -35,7 +35,7 @@ target/
 *.iml
 *.ipr
 
-### Eclipse test ###
+### Eclipse ###
 .apt_generated
 .classpath
 .factorypath
